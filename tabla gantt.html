@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificación de Sprint - Tabla Gantt Mensual</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the Gantt bar visualization */
+        .gantt-bar {
+            background-color: #34d399; /* Tailwind green-400 */
+            height: 1.5rem;
+            border-radius: 0.375rem; /* rounded-md */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.75rem; /* text-xs */
+        }
+        /* Ensure table layout is fixed for consistent column widths */
+        table {
+            table-layout: fixed;
+            width: 100%; /* Make table take full width */
+        }
+        th, td {
+            white-space: normal; /* Allow text to wrap within cells */
+            word-wrap: break-word; /* Break long words */
+            vertical-align: top; /* Align content to the top */
+        }
+        /* Adjust column widths for better display on smaller screens */
+        @media (max-width: 768px) {
+            .table-container {
+                overflow-x: auto; /* Enable horizontal scrolling for small screens */
+            }
+            th:nth-child(1), td:nth-child(1) { min-width: 150px; } /* Tarea */
+            th:nth-child(2), td:nth-child(2) { min-width: 80px; } /* Responsable */
+            th:nth-child(3), td:nth-child(3) { min-width: 60px; text-align: center; } /* Duración */
+            /* Weekly columns - ensure they are small enough but visible */
+            th:nth-child(n+4), td:nth-child(n+4) {
+                min-width: 50px; /* Minimum width for weekly cells */
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans p-4 sm:p-6 lg:p-8">
+    <div class="max-w-full mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+        <div class="p-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-t-lg">
+            <h1 class="text-3xl font-bold mb-2">Planificación de Sprint</h1>
+            <p class="text-lg">Visualización de tareas del Sprint actual (del 05 de Junio al 07 de Julio de 2025)</p>
+            <p class="text-sm mt-1">Este gráfico proporciona una vista temporal de las tareas asignadas para el sprint, dividida por semanas.</p>
+        </div>
+
+        <div class="p-6 table-container">
+            <table class="min-w-full border-collapse">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-700 text-sm">
+                        <th class="border border-gray-300 p-2 text-left rounded-tl-md">Tarea/Historia de Usuario</th>
+                        <th class="border border-gray-300 p-2 text-left">Responsable</th>
+                        <th class="border border-gray-300 p-2 text-center">Duración estimada (semanas)</th>
+                        <th class="border border-gray-300 p-2 text-center" colspan="5">Periodo del Sprint (05/06 - 07/07)</th>
+                    </tr>
+                    <tr class="bg-gray-200 text-gray-700 text-sm">
+                        <th class="border border-gray-300 p-2 text-left"></th>
+                        <th class="border border-gray-300 p-2 text-left"></th>
+                        <th class="border border-gray-300 p-2 text-center"></th>
+                        <th class="border border-gray-300 p-2 text-center">Semana 1 (Jun 05-11)</th>
+                        <th class="border border-gray-300 p-2 text-center">Semana 2 (Jun 12-18)</th>
+                        <th class="border border-gray-300 p-2 text-center">Semana 3 (Jun 19-25)</th>
+                        <th class="border border-gray-300 p-2 text-center">Semana 4 (Jun 26-Jul 02)</th>
+                        <th class="border border-gray-300 p-2 text-center rounded-tr-md">Semana 5 (Jul 03-07)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Renato's Tasks (Interfaz y Login) -->
+                    <tr class="bg-blue-50">
+                        <td class="border border-gray-300 p-2 font-semibold" colspan="8">Tareas de Renato (Interfaz y Login)</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU1: Desarrollar y aplicar animaciones</td>
+                        <td class="border border-gray-300 p-2">Renato</td>
+                        <td class="border border-gray-300 p-2 text-center">2</td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU1: Aplicación coherente de colores institucionales</td>
+                        <td class="border border-gray-300 p-2">Renato</td>
+                        <td class="border border-gray-300 p-2 text-center">1</td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU5: Mejorar seguridad del sistema de login</td>
+                        <td class="border border-gray-300 p-2">Renato</td>
+                        <td class="border border-gray-300 p-2 text-center">3</td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU5: Optimizar velocidad del sistema de login</td>
+                        <td class="border border-gray-300 p-2">Renato</td>
+                        <td class="border border-gray-300 p-2 text-center">2</td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+
+                    <!-- Fernanda's Tasks -->
+                    <tr class="bg-blue-50">
+                        <td class="border border-gray-300 p-2 font-semibold" colspan="8">Tareas de Fernanda</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU1: Investigar y seleccionar librerías UI/UX</td>
+                        <td class="border border-gray-300 p-2">Fernanda</td>
+                        <td class="border border-gray-300 p-2 text-center">1</td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU1: Simplificar exceso de texto y mejorar visualización</td>
+                        <td class="border border-gray-300 p-2">Fernanda</td>
+                        <td class="border border-gray-300 p-2 text-center">2</td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU4: Diseñar estructura de avisos/notificaciones</td>
+                        <td class="border border-gray-300 p-2">Fernanda</td>
+                        <td class="border border-gray-300 p-2 text-center">1.5</td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU9: Diseñar y desarrollar directorio visual</td>
+                        <td class="border border-gray-300 p-2">Fernanda</td>
+                        <td class="border border-gray-300 p-2 text-center">2.5</td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                    </tr>
+
+                    <!-- Alberto's Tasks -->
+                    <tr class="bg-blue-50">
+                        <td class="border border-gray-300 p-2 font-semibold" colspan="8">Tareas de Alberto</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU1: Diseñar mockups y wireframes de la nueva interfaz</td>
+                        <td class="border border-gray-300 p-2">Alberto</td>
+                        <td class="border border-gray-300 p-2 text-center">2</td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU4: Implementar sistema de avisos/notificaciones</td>
+                        <td class="border border-gray-300 p-2">Alberto</td>
+                        <td class="border border-gray-300 p-2 text-center">3</td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU6: Rediseñar y optimizar estructura de notas y asistencia</td>
+                        <td class="border border-gray-300 p-2">Alberto</td>
+                        <td class="border border-gray-300 p-2 text-center">3</td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU10: Crear página enlazada con Mineduc (Becas)</td>
+                        <td class="border border-gray-300 p-2">Alberto</td>
+                        <td class="border border-gray-300 p-2 text-center">1.5</td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                    </tr>
+
+                    <!-- Fernando's Tasks -->
+                    <tr class="bg-blue-50">
+                        <td class="border border-gray-300 p-2 font-semibold" colspan="8">Tareas de Fernando</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU1: Implementar diseño responsivo</td>
+                        <td class="border border-gray-300 p-2">Fernando</td>
+                        <td class="border border-gray-300 p-2 text-center">3</td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU3: Desarrollar e implementar botón reporte errores (notas)</td>
+                        <td class="border border-gray-300 p-2">Fernando</td>
+                        <td class="border border-gray-300 p-2 text-center">2</td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU7: Mostrar nombres de asignaturas en horario</td>
+                        <td class="border border-gray-300 p-2">Fernando</td>
+                        <td class="border border-gray-300 p-2 text-center">1.5</td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+
+                    <!-- Alex's Tasks -->
+                    <tr class="bg-blue-50">
+                        <td class="border border-gray-300 p-2 font-semibold" colspan="8">Tareas de Alex</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU2: Integrar calendario visible al inicio de sesión</td>
+                        <td class="border border-gray-300 p-2">Alex</td>
+                        <td class="border border-gray-300 p-2 text-center">2</td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU2: Implementar advertencia/notificación de pruebas/avisos</td>
+                        <td class="border border-gray-300 p-2">Alex</td>
+                        <td class="border border-gray-300 p-2 text-center">1.5</td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+
+                    <!-- Pablo's Tasks -->
+                    <tr class="bg-blue-50">
+                        <td class="border border-gray-300 p-2 font-semibold" colspan="8">Tareas de Pablo</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU1: Limpiar y eliminar links innecesarios y páginas en blanco</td>
+                        <td class="border border-gray-300 p-2">Pablo</td>
+                        <td class="border border-gray-300 p-2 text-center">1</td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">HU8: Crear sección segura de datos personales/financieros</td>
+                        <td class="border border-gray-300 p-2">Pablo</td>
+                        <td class="border border-gray-300 p-2 text-center">3</td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+
+                    <!-- Diego's Tasks -->
+                    <tr class="bg-blue-50">
+                        <td class="border border-gray-300 p-2 font-semibold" colspan="8">Tareas de Diego</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2">GRL: Configurar entorno WordPress con Local</td>
+                        <td class="border border-gray-300 p-2">Diego</td>
+                        <td class="border border-gray-300 p-2 text-center">1.5</td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+
+                    <!-- Pablo Cavieres (Asesoramiento) -->
+                    <tr class="bg-blue-50">
+                        <td class="border border-gray-300 p-2 font-semibold" colspan="8">Tareas de Pablo Cavieres (Asesoramiento)</td>
+                    </tr>
+                     <tr>
+                        <td class="border border-gray-300 p-2">GRL: Investigación Actualizar vs. Crear Plataforma</td>
+                        <td class="border border-gray-300 p-2">Pablo Cavieres</td>
+                        <td class="border border-gray-300 p-2 text-center">2</td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"><div class="gantt-bar"></div></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                        <td class="border border-gray-300 p-1"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="p-6 bg-gray-100 rounded-b-lg text-gray-700 text-sm">
+            <h3 class="font-semibold text-base mb-2">Notas Importantes:</h3>
+            <ul class="list-disc list-inside">
+                <li>Las duraciones son estimaciones en *semanas* y pueden ajustarse durante los Daily Scrums.</li>
+                <li>Este formato es una visualización lineal; en Scrum, la flexibilidad y la adaptación son clave.</li>
+                <li>Cada columna representa una semana dentro del sprint.</li>
+                <li>Los cuadros verdes representan el periodo en el que se espera que la tarea esté activa.</li>
+                <li>La tarea de Fernando "Implementar diseño responsivo" tiene una duración estimada de 3 semanas, lo cual es manejable dentro del sprint.</li>
+                <li>La tarea de Pablo "Crear sección segura de datos personales/financieros" tiene una duración estimada de 3 semanas, lo cual es manejable dentro del sprint.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
