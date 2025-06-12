@@ -1,0 +1,2122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Estudiantil Minimalista - Horario de Clases</title> <!-- Título actualizado -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Incluye Tailwind CSS para el estilo rápido y responsivo del calendario -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* ====================================================================
+           SECCIÓN: ESTILOS GENERALES Y RESETEO
+           Descripción: Define variables CSS para colores y espaciados, y resetea
+                        los estilos por defecto de los navegadores.
+           ====================================================================
+        */
+        :root {
+            --color-primario: #0056b3; /* Un azul institucional (Original) */
+            --color-secundario: #f0f2f5; /* Gris claro para fondos (Original) */
+            --color-texto: #333; /* Original */
+            --color-texto-claro: #666; /* Original */
+            --color-exito: #28a745; /* Original */
+            --color-advertencia: #ffc107; /* Original */
+            --color-error: #dc3545; /* Original */
+            --espaciado-md: 20px; /* Original */
+            --espaciado-lg: 40px; /* Original */
+            --borde-radio: 8px; /* Original */
+            --sombra-suave: 0 4px 6px rgba(0, 0, 0, 0.1); /* Original */
+
+            --color-modulo-azul: #007bff; /* Original */
+            --color-modulo-naranja: #fd7e14; /* Original */
+            --color-modulo-verde: #28a745; /* Original */
+
+            /* Nuevas variables del login para sobrescribir o complementar */
+            --primary-login-color: #2E8B57; /* Verde (nuevo login) */
+            --secondary-login-color: #1565C0; /* Azul (nuevo login) */
+            --accent-login-color: #FF8C00; /* Naranja (nuevo login) */
+            --text-login-color: #4B5563; /* Gris oscuro (nuevo login) */
+            --heading-login-color: #111827; /* Casi negro (nuevo login) */
+            --error-login-color: #EF4444; /* Rojo (nuevo login) */
+            --success-login-color: #10B981; /* Verde (nuevo login) */
+            --background-login-color: #F9FAFB; /* Gris claro (nuevo login) */
+            --card-background-login: #ffffff; /* Blanco (nuevo login) */
+            --input-border-login: #E5E7EB; /* Gris muy claro (nuevo login) */
+            --input-focus-login: #2E8B57; /* Verde para el foco (nuevo login) */
+            --animation-duration: 0.3s; /* Nuevo login */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--color-texto);
+            background-image: url('https://placehold.co/1920x1080/F0F2F5/333?text=Sede+Paillaco'); /* Placeholder for Sede-Paillaco-e1741632105401.jpg */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: var(--espaciado-md);
+            border-bottom: 1px solid #eee;
+            box-shadow: var(--sombra-suave);
+        }
+
+        .content-section, .modal-content, .module-card, .profile-detail-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: var(--espaciado-lg);
+            border-radius: var(--borde-radio);
+            box-shadow: var(--sombra-suave);
+            margin-bottom: var(--espaciado-md);
+            text-align: center;
+        }
+
+        /* ====================================================================
+           SECCIÓN: CONTENEDOR PRINCIPAL
+           ====================================================================
+        */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--espaciado-md);
+        }
+
+        /* ====================================================================
+           SECCIÓN: ENCABEZADO (HEADER) Y NAVEGACIÓN
+           Descripción: Estilos para el logo, la barra de navegación y el menú de perfil.
+           ====================================================================
+        */
+        header .container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: var(--color-primario);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            margin-right: var(--espaciado-md);
+        }
+        
+        .logo img {
+            max-height: 50px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        nav {
+            flex-grow: 1;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        #profile-nav-link {
+            position: relative;
+            display: none; /* Controlado por JS para mostrar/ocultar */
+            margin-left: auto; /* Empuja el perfil a la derecha en desktop */
+        }
+        
+        /* Dropdown de Perfil (Solo en Desktop) */
+        .profile-dropdown-content {
+            display: none; /* Oculto por defecto */
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.95);
+            min-width: 180px;
+            box-shadow: var(--sombra-suave);
+            z-index: 10;
+            right: 0;
+            top: calc(100% + 5px);
+            border-radius: var(--borde-radio);
+            overflow: hidden;
+            animation: fadeInScaleUp var(--animation-duration) ease-out forwards;
+            transform-origin: top right;
+            padding: 10px 0;
+        }
+
+        .profile-dropdown-content.show {
+            display: block;
+        }
+
+        .profile-dropdown-content .dropdown-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 5px;
+        }
+
+        .profile-dropdown-content #dropdown-profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+            border: 2px solid var(--color-primario);
+        }
+
+        .profile-dropdown-content #dropdown-username {
+            font-weight: 600;
+            color: var(--color-primario);
+            font-size: 1em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: calc(100% - 50px);
+        }
+
+        .profile-dropdown-content a {
+            color: var(--color-texto);
+            padding: 8px 15px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95em;
+            transition: background-color var(--animation-duration) ease;
+        }
+
+        .profile-dropdown-content a:hover {
+            background-color: var(--color-secundario);
+        }
+
+        nav ul li a.btn-nav-link {
+            background-color: var(--color-secundario);
+            color: var(--color-texto);
+            padding: 8px 15px;
+            border-radius: var(--borde-radio);
+            transition: background-color var(--animation-duration) ease, color var(--animation-duration) ease;
+        }
+        nav ul li a.btn-nav-link:hover {
+            background-color: var(--color-primario);
+            color: #fff;
+        }
+
+        nav ul li a:hover {
+            color: var(--color-primario);
+        }
+
+        #nav-profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--color-primario);
+            transition: border-color var(--animation-duration) ease, transform 0.2s ease;
+            cursor: pointer;
+        }
+        #nav-profile-pic:hover {
+            border-color: #004085;
+            transform: scale(1.05);
+        }
+
+        /* Oculta el botón de menú móvil por defecto */
+        .menu-toggle {
+            display: none; 
+            font-size: 2em;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--color-primario);
+            margin-left: auto;
+        }
+
+        /* ====================================================================
+           SECCIÓN: CONTENIDO PRINCIPAL Y BOTONES
+           Descripción: Estilos para las secciones de contenido, el botón de retroceso
+                        y los botones de acción principales.
+           ====================================================================
+        */
+        main {
+            flex-grow: 1;
+            padding: var(--espaciado-lg) 0;
+        }
+
+        .content-section {
+            display: none;
+            position: relative;
+        }
+        .content-section.active-section {
+            display: block;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .content-section h1 {
+            color: var(--color-primario);
+            margin-bottom: var(--espaciado-md);
+            font-size: 2.2em;
+        }
+
+        .content-section p {
+            color: var(--color-texto-claro);
+            font-size: 1.1em;
+            margin-bottom: var(--espaciado-md);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: var(--color-secundario);
+            color: var(--color-texto);
+            border: none;
+            border-radius: var(--borde-radio);
+            padding: 8px 15px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color var(--animation-duration) ease, color var(--animation-duration) ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: var(--sombra-suave);
+        }
+
+        .back-button:hover {
+            background-color: var(--color-primario);
+            color: #fff;
+            transform: translateX(-3px);
+        }
+
+        .back-button::before {
+            content: '←';
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .btn-primario, .btn-secundario {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: var(--borde-radio);
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color var(--animation-duration) ease, transform 0.2s ease;
+            cursor: pointer;
+            margin: 5px;
+            border: none;
+        }
+        .btn-primario {
+            background-color: var(--color-primario);
+            color: #fff;
+        }
+        .btn-secundario {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        .btn-primario:hover {
+            background-color: #004085;
+            transform: translateY(-2px);
+        }
+        .btn-secundario:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        /* ====================================================================
+           SECCIÓN: MÓDULOS
+           Descripción: Estilos para la cuadrícula de módulos y las tarjetas individuales.
+           ====================================================================
+        */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--espaciado-md);
+            margin-top: var(--espaciado-lg);
+            display: none;
+        }
+        .modules-grid.active-section {
+            display: grid;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .module-card {
+            padding: var(--espaciado-md);
+            border-radius: var(--borde-radio);
+            box-shadow: var(--sombra-suave);
+            text-align: center;
+            transition: transform var(--animation-duration) ease, background-color var(--animation-duration) ease;
+            cursor: pointer;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Colores de hover para las tarjetas de módulo */
+        .module-card.hover-blue:hover { background-color: var(--color-modulo-azul); color: #fff; }
+        .module-card.hover-blue:hover .icon,
+        .module-card.hover-blue:hover h3,
+        .module-card.hover-blue:hover p { color: #fff; }
+
+        .module-card.hover-orange:hover { background-color: var(--color-modulo-naranja); color: #fff; }
+        .module-card.hover-orange:hover .icon,
+        .module-card.hover-orange:hover h3,
+        .module-card.hover-orange:hover p { color: #fff; }
+
+        .module-card.hover-green:hover { background-color: var(--color-modulo-verde); color: #fff; }
+        .module-card.hover-green:hover .icon,
+        .module-card.hover-green:hover h3,
+        .module-card.hover-green:hover p { color: #fff; }
+
+        .module-card .icon {
+            font-size: 3em;
+            color: var(--color-primario);
+            margin-bottom: 10px;
+            transition: color var(--animation-duration) ease;
+        }
+
+        .module-card h3 {
+            color: var(--color-texto);
+            margin-bottom: 5px;
+            transition: color var(--animation-duration) ease;
+        }
+
+        .module-card p {
+            font-size: 0.9em;
+            color: var(--color-texto-claro);
+            transition: color var(--animation-duration) ease;
+        }
+
+        /* ====================================================================
+           SECCIÓN: MODAL DE AUTENTICACIÓN (LOGIN/REGISTRO) - INTEGRADO DEL NUEVO CÓDIGO
+           ====================================================================
+        */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.show {
+            display: flex;
+            animation: fadeInOverlay var(--animation-duration) ease-out;
+        }
+
+        .modal-content {
+            margin: auto;
+            background-color: var(--card-background-login); /* Usar variable del nuevo login */
+            border-radius: 0.75rem; /* Usar borde-radius del nuevo login */
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); /* Usar sombra del nuevo login */
+            overflow: hidden;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            animation: scaleIn var(--animation-duration) ease-out;
+            transform: translateY(0); /* Propiedades de animación del nuevo login */
+            transition: transform var(--animation-duration) ease-in-out, 
+                        box-shadow var(--animation-duration) ease-in-out;
+        }
+        .modal-content:hover { /* Hover del nuevo login */
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .close-button {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+            transition: color var(--animation-duration) ease;
+            z-index: 100; /* Asegura que el botón de cierre esté por encima del header */
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--color-texto);
+        }
+        
+        /* Estilos del header del nuevo login */
+        .login-header {
+            background: linear-gradient(135deg, var(--primary-login-color), var(--secondary-login-color));
+            color: white;
+            padding: 2rem 2rem 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.05),
+                rgba(255, 255, 255, 0.05) 20px,
+                transparent 20px,
+                transparent 40px
+            );
+            animation: headerPattern 30s linear infinite;
+        }
+
+        @keyframes headerPattern {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg);}
+        }
+
+        .login-logo {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-circle {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-circle i {
+            font-size: 2.5rem;
+            color: var(--accent-login-color); /* Naranja para el ícono */
+        }
+
+        .login-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: white; /* Ensure title color is white as per new login */
+        }
+
+        .login-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            color: white; /* Ensure subtitle color is white as per new login */
+        }
+
+        .login-form {
+            padding: 2rem;
+            text-align: left; /* Align form content to left */
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-login-color); /* Usar variable del nuevo login */
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: color var(--animation-duration) ease;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--input-border-login);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all var(--animation-duration) ease;
+            background-color: #f9fafb;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--input-focus-login);
+            box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.2);
+            background-color: white;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-login-color);
+            transition: color var(--animation-duration) ease;
+        }
+
+        .input-group input:focus + i {
+            color: var(--input-focus-login);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(to right, var(--primary-login-color), var(--secondary-login-color));
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--animation-duration) ease;
+            position: relative;
+            overflow: hidden;
+            display: flex; /* Para centrar spinner y texto */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transition: all 0.6s ease;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 139, 87, 0.3);
+        }
+
+        .btn-login:hover::before {
+            left: 100%;
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .forgot-password a {
+            color: var(--accent-login-color); /* Naranja para el enlace */
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color var(--animation-duration) ease;
+        }
+        
+        .forgot-password a:hover {
+            color: var(--primary-login-color); /* Verde al hacer hover */
+        }
+
+        .modal-content p.message {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: var(--color-texto-claro); /* Usar variable original */
+            text-align: center;
+        }
+
+        .modal-content p.message a {
+            color: var(--primary-login-color); /* Usar variable del nuevo login */
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .login-footer {
+            text-align: center;
+            padding: 1.5rem 2rem; /* Añadir padding para que no se pegue al fondo */
+            color: var(--text-login-color); /* Usar variable del nuevo login */
+            font-size: 0.875rem;
+            border-top: 1px solid var(--input-border-login); /* Separador */
+        }
+        
+        .login-footer span {
+            opacity: 0.8;
+        }
+
+        /* Notificaciones (del nuevo login) */
+        .notification {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateX(150%);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            max-width: 400px;
+        }
+        
+        .notification i {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+        }
+        
+        .notification.error {
+            background-color: #FEF2F2;
+            border-left: 4px solid var(--error-login-color);
+            color: var(--error-login-color);
+        }
+        
+        .notification.success {
+            background-color: #ECFDF5;
+            border-left: 4px solid var(--success-login-color);
+            color: var(--success-login-color);
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Loading spinner (del nuevo login) */
+        .loading-spinner {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.5rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+        
+        .btn-login.loading .loading-spinner {
+            display: inline-block;
+        }
+        
+        @keyframes spin {
+            to {transform: rotate(360deg);}
+        }
+
+        /* Form shake animation (del nuevo login) */
+        @keyframes shake {
+            0%, 100% {transform: translateX(0);}
+            10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
+            20%, 40%, 60%, 80% {transform: translateX(5px);}
+        }
+        
+        .shake {
+            animation: shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+
+        /* Success animation (del nuevo login) */
+        @keyframes success-pulse {
+            0% {transform: scale(1);}
+            50% {transform: scale(1.05);}
+            100% {transform: scale(1);}
+        }
+        
+        .success-pulse {
+            animation: success-pulse 0.5s ease-in-out;
+        }
+
+
+        /* ====================================================================
+           SECCIÓN: PERFIL DETALLADO
+           Descripción: Estilos para la sección de edición y visualización del perfil.
+           ====================================================================
+        */
+        .profile-detail-card {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .profile-detail-card h2 {
+            color: var(--color-primario);
+            margin-bottom: var(--espaciado-md);
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .profile-detail-card .form-group {
+            margin-bottom: 15px;
+        }
+
+        .profile-detail-card label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--color-texto);
+        }
+
+        .profile-detail-card input[type="text"],
+        .profile-detail-card input[type="email"],
+        .profile-detail-card input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--borde-radio);
+            font-size: 1em;
+        }
+
+        .profile-detail-card .button-group {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .profile-pic-container {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        #profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--color-primario);
+            cursor: pointer;
+            transition: border-color var(--animation-duration) ease, transform 0.2s ease;
+        }
+
+        #profile-pic:hover {
+            border-color: #004085;
+            transform: scale(1.03);
+        }
+
+        #profile-image-upload {
+            display: none;
+        }
+
+        .btn-delete-pic {
+            background-color: var(--color-error);
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: var(--borde-radio);
+            border: none;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color var(--animation-duration) ease;
+            margin-top: 10px;
+        }
+        .btn-delete-pic:hover {
+            background-color: #a71d2a;
+        }
+
+
+        /* ====================================================================
+           SECCIÓN: PIE DE PÁGINA (FOOTER)
+           ====================================================================
+        */
+        footer {
+            background-color: var(--color-texto);
+            color: #fff;
+            text-align: center;
+            padding: var(--espaciado-md);
+            margin-top: auto;
+        }
+
+        /* ====================================================================
+           SECCIÓN: ESTILOS ESPECÍFICOS DEL CALENDARIO / HORARIO DE CLASES
+           ====================================================================
+        */
+        .schedule-container {
+            background-color: #ffffff;
+            border-radius: 12px; /* Esquinas redondeadas para el contenedor principal */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            padding: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            overflow-x: auto; /* Permite el scroll horizontal en pantallas pequeñas */
+            margin: 0 auto; /* Centrar el contenedor del horario */
+            margin-top: var(--espaciado-md); /* Espacio superior */
+        }
+        .schedule-container h1 {
+            color: #1a202c; /* Color de texto más oscuro para el título del horario */
+        }
+        table {
+            width: 100%;
+            border-collapse: separate; /* Permite bordes redondeados en las celdas */
+            border-spacing: 0;
+            min-width: 900px; /* Asegura que la tabla no sea demasiado pequeña en pantallas estrechas */
+            margin: 0 auto; /* Centrar la tabla */
+        }
+        th, td {
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid #e2e8f0; /* Borde suave para las celdas */
+        }
+        th {
+            background-color: #2a61a7; /* Color de encabezado que coincide con el de la imagen */
+            color: #ffffff;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        tr:nth-child(even) {
+            background-color: #f8fafc; /* Color de fila par */
+        }
+        .time-slot {
+            background-color: #f0f4f8; /* Color de fondo para las horas */
+            font-weight: 500;
+            color: #4a5568;
+        }
+        .subject-cell {
+            background-color: #10B981; /* Verde esmeralda para las asignaturas */
+            color: #ffffff;
+            font-weight: 600;
+            border-radius: 8px; /* Esquinas redondeadas para las celdas de asignatura */
+            padding: 0.75rem;
+            margin: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%; /* Asegura que la celda de asignatura ocupe todo el espacio disponible */
+            box-sizing: border-box;
+        }
+        /* Estilos responsivos para el calendario usando Tailwind CSS */
+        @media (max-width: 768px) {
+            .schedule-container {
+                padding: 1rem;
+            }
+            th, td {
+                padding: 0.75rem;
+                font-size: 0.875rem; /* Reduce el tamaño de fuente en pantallas pequeñas */
+            }
+            .subject-cell {
+                font-size: 0.75rem;
+                padding: 0.5rem;
+            }
+        }
+
+        /* ====================================================================
+           SECCIÓN: ANIMACIONES CSS
+           ====================================================================
+        */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInOverlay {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes fadeInScaleUp {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ====================================================================
+           SECCIÓN: DISEÑO RESPONSIVO (MOBILE FIRST - max-width)
+           Descripción: Ajustes de diseño para pantallas de hasta 768px de ancho.
+                        Aquí se gestiona el menú móvil y cómo se muestran los
+                        elementos de perfil en la navegación.
+           ====================================================================
+        */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .logo {
+                margin-right: 0; 
+                margin-bottom: 10px; 
+            }
+
+            /* El botón de menú móvil ahora solo se muestra si el body tiene la clase 'logged-in' */
+            body.logged-in .menu-toggle {
+                display: block; /* Muestra el botón de menú móvil */
+                align-self: flex-end; /* Lo alinea a la derecha del header en móvil */
+            }
+
+            nav {
+                width: 100%;
+                margin-top: var(--espaciado-md);
+                margin-left: 0; 
+            }
+
+            nav ul {
+                flex-direction: column;
+                display: none; /* Oculto por defecto en móvil, mostrado con .active */
+                width: 100%;
+                text-align: center;
+                gap: 10px; 
+                background-color: rgba(255, 255, 255, 0.98); 
+                padding: 15px 0;
+                border-radius: var(--borde-radio);
+                box-shadow: var(--sombra-suave);
+            }
+
+            nav ul.active {
+                display: flex; /* Muestra el menú cuando está activo */
+                align-items: center; 
+                justify-content: center; 
+            }
+
+            /* Resetea el margin-left: auto para el perfil en móvil */
+            #profile-nav-link {
+                margin-left: 0 !important;
+                width: 100%;
+                display: block !important; 
+            }
+            
+            /* Ocultar la pequeña foto de perfil en la barra de navegación cuando el menú móvil está activo */
+            #profile-nav-link > a { 
+                display: none !important; 
+            }
+
+            /* Transforma el .profile-dropdown-content para que sus enlaces sean elementos
+               directos del menú móvil.
+            */
+            .profile-dropdown-content {
+                position: static !important; /* Desactiva el posicionamiento absoluto */
+                display: block !important; /* Fuerza a que el contenido se muestre como bloque */
+                width: 100%; /* Ocupa todo el ancho */
+                box-shadow: none !important; /* Elimina la sombra */
+                border-radius: 0 !important; /* Elimina bordes redondeados */
+                padding: 0 !important; /* Elimina padding, los 'a' tendrán su propio padding */
+                background-color: transparent !important; /* Fondo transparente */
+                margin-top: 0; /* Elimina margen superior */
+            }
+            
+            /* Ocultar el encabezado del dropdown (foto y nombre) en el menú móvil */
+            .profile-dropdown-content .dropdown-header {
+                display: none !important; 
+            }
+
+            /* Estilos para los enlaces "Ver Perfil Completo" y "Cerrar Sesión" en el menú móvil */
+            .profile-dropdown-content a {
+                color: var(--color-texto);
+                padding: 10px 20px;
+                text-decoration: none;
+                display: block;
+                font-size: 1em;
+                transition: background-color var(--animation-duration) ease;
+                border-bottom: 1px solid #eee; /* Separador entre enlaces */
+            }
+            .profile-dropdown-content a:last-child {
+                border-bottom: none;
+            }
+            .profile-dropdown-content a:hover {
+                background-color: var(--color-primario);
+                color: #fff;
+            }
+
+            .back-button {
+                top: 15px;
+                left: 15px;
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+
+            /* Responsive adjustments for new login (from the provided code) */
+            @media (max-width: 500px) {
+                .modal-content { /* Renamed from .login-container */
+                    max-width: 100%;
+                }
+                
+                .login-header {
+                    padding: 1.5rem 1.5rem 2rem;
+                }
+                
+                .login-form {
+                    padding: 1.5rem;
+                }
+                
+                .notification {
+                    top: 1rem;
+                    right: 1rem;
+                    left: 1rem;
+                    max-width: unset;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="#" class="logo" data-section="main-menu">
+                <img src="https://placehold.co/50x50/0056b3/fff?text=Logo" alt="Logo CFT Los Ríos"> <!-- Placeholder for cropped-Recurso-2.png -->
+            </a>
+            <button class="menu-toggle" aria-label="Abrir menú">&#9776;</button>
+            <nav>
+                <ul>
+                    <li><a href="https://cftdelosrios.cl/" target="_blank" class="btn-nav-link">Página Oficial</a></li>
+                    
+                    <li id="profile-nav-link" style="display: none;">
+                        <a href="#"> 
+                            <img id="nav-profile-pic" src="https://placehold.co/35x35/D3D3D3/000?text=Avatar" alt="Mi Perfil"> <!-- Placeholder for default-avatar.png -->
+                        </a>
+                        <div id="profile-dropdown" class="profile-dropdown-content">
+                            <div class="dropdown-header">
+                                <img id="dropdown-profile-pic" src="https://placehold.co/40x40/D3D3D3/000?text=Avatar" alt="Foto de Perfil"> <!-- Placeholder for default-avatar.png -->
+                                <span id="dropdown-username"></span>
+                            </div>
+                            <a href="#" data-section="user-profile-detail">Ver Perfil Completo</a>
+                            <a href="#" data-action="logout">Cerrar Sesión</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section id="home-section" class="content-section active-section">
+                <h1>Bienvenido, CFTINO!</h1>
+                <p>Tu portal de CFT viene mas cerca que nunca.</p>
+                <button class="btn-primario" data-action="open-login-modal">Iniciar Sesión</button>
+            </section>
+
+            <section id="profile-section" class="content-section" style="display: none;">
+                <h1>Mi Perfil</h1>
+                <p>Bienvenido/a, <span id="user-email-display"></span>!</p>
+                <p>Aquí verás tus datos personales y otra información.</p>
+            </section>
+
+            <section id="user-profile-detail-section" class="content-section">
+                <button class="back-button" data-target-section="modules">Volver</button>
+                <div class="profile-detail-card">
+                    <h2>Detalles de mi Perfil</h2>
+                    <form id="profile-form">
+                        <div class="profile-pic-container">
+                            <img id="profile-pic" src="https://placehold.co/120x120/D3D3D3/000?text=Avatar" alt="Foto de Perfil"> <!-- Placeholder for default-avatar.png -->
+                            <input type="file" id="profile-image-upload" accept="image/*">
+                            <br>
+                            <button type="button" class="btn-delete-pic" id="delete-profile-pic-btn" style="display:none;">Eliminar Foto</button>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profile-name">Nombre Completo:</label>
+                            <input type="text" id="profile-name" value="Nombre del Estudiante" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-email">Correo Electrónico:</label>
+                            <input type="email" id="profile-email" value="estudiante@cftlosrios.cl" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-phone">Número de Teléfono:</label>
+                            <input type="tel" id="profile-phone" value="+56 9 1234 5678" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-rut">RUT Chileno:</label>
+                            <input type="text" id="profile-rut" value="12.345.678-K" disabled placeholder="Ej: 12.345.678-K">
+                            <small style="color: var(--color-texto-claro);">Este campo es solo decorativo y no se validará.</small>
+                        </div>
+                        <div class="button-group">
+                            <button type="button" class="btn-primario" id="edit-profile-btn">Editar Perfil</button>
+                            <button type="submit" class="btn-primario" id="save-profile-btn" style="display: none;">Guardar Cambios</button>
+                            <button type="button" class="btn-secundario" id="cancel-edit-btn" style="display: none;">Cancelar</button>
+                        </div>
+                        <p id="profile-message" style="margin-top: 15px;"></p>
+                    </form>
+                </div>
+            </section>
+
+            <section id="modules-section" class="modules-grid">
+                 <div class="module-card hover-blue" data-section="notes-attendance">
+                    <span class="icon">&#128220;</span> <h3>Notas y Asistencia</h3>
+                    <p>Accede rápidamente a tus calificaciones y registro de asistencia.</p>
+                </div>
+                <div class="module-card hover-orange" data-section="academic-calendar">
+                    <span class="icon">&#128197;</span> <h3>Calendario Académico</h3>
+                    <p>Mantente al día con los eventos y fechas importantes.</p>
+                </div>
+                <div class="module-card hover-green" data-section="notifications">
+                    <span class="icon">&#128276;</span> <h3>Notificaciones</h3>
+                    <p>Revisa avisos y comunicados importantes del sistema.</p>
+                </div>
+                <div class="module-card hover-blue" data-section="directory">
+                    <span class="icon">&#128204;</span> <h3>Directorio</h3>
+                    <p>Encuentra información de docentes y personal administrativo.</p>
+                </div>
+                <div class="module-card hover-orange" data-section="scholarships">
+                    <span class="icon">&#128188;</span> <h3>Becas y Beneficios</h3>
+                    <p>Información relevante sobre ayudas económicas.</p>
+                </div>
+                <div class="module-card hover-green" data-section="report-issue">
+                    <span class="icon">&#128736;</span> <h3>Reportar Problema</h3>
+                    <p>Ayúdanos a mejorar reportando cualquier error del sistema.</p>
+                </div>
+            </section>
+
+            <section id="notes-attendance-section" class="content-section">
+                <button class="back-button" data-target-section="modules">Volver</button>
+                <h1>Notas y Asistencia</h1>
+                <p>Detalles de tus notas y registro de asistencia aquí.</p>
+            </section>
+
+            <section id="academic-calendar-section" class="content-section">
+                <button class="back-button" data-target-section="modules">Volver</button>
+                <!-- Contenido del Calendario Académico -->
+                <div class="schedule-container rounded-lg">
+                    <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Horario de Clases</h1>
+                    <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                        <thead class="bg-blue-800 text-white">
+                            <tr>
+                                <th class="py-3 px-4 rounded-tl-lg">Mod</th>
+                                <th class="py-3 px-4">Hora</th>
+                                <th class="py-3 px-4">Lunes</th>
+                                <th class="py-3 px-4">Martes</th>
+                                <th class="py-3 px-4">Miércoles</th>
+                                <th class="py-3 px-4">Jueves</th>
+                                <th class="py-3 px-4 rounded-tr-lg">Viernes</th>
+                                <!-- Sábado y Domingo no tienen clases según el horario, así que se omiten o se dejan vacíos -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Mod 1 -->
+                            <tr>
+                                <td class="time-slot rounded-bl-lg">1</td>
+                                <td class="time-slot">08:30-09:15</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <!-- Mod 2 -->
+                            <tr>
+                                <td class="time-slot">2</td>
+                                <td class="time-slot">09:15-10:00</td>
+                                <td><div class="subject-cell">TALLER DE APRESTO LABORAL</div></td>
+                                <td><div class="subject-cell">NIVELACIÓN DE MATEMÁTICAS</div></td>
+                                <td></td>
+                                <td><div class="subject-cell">INTRODUCCIÓN A LA PROGRAMACIÓN</div></td>
+                                <td></td>
+                            </tr>
+                            <!-- Mod 3 -->
+                            <tr>
+                                <td class="time-slot">3</td>
+                                <td class="time-slot">10:15-11:00</td>
+                                <td><div class="subject-cell">TALLER DE APRESTO LABORAL</div></td>
+                                <td><div class="subject-cell">NIVELACIÓN DE MATEMÁTICAS</div></td>
+                                <td></td>
+                                <td><div class="subject-cell">INTRODUCCIÓN A LA PROGRAMACIÓN</div></td>
+                                <td></td>
+                            </tr>
+                            <!-- Mod 4 -->
+                            <tr>
+                                <td class="time-slot">4</td>
+                                <td class="time-slot">11:00-11:45</td>
+                                <td><div class="subject-cell">NIVELACIÓN DE MATEMÁTICAS</div></td>
+                                <td></td>
+                                <td><div class="subject-cell">TALLER DE APRESTO LABORAL</div></td>
+                                <td><div class="subject-cell">INTRODUCCIÓN A LA PROGRAMACIÓN</div></td>
+                                <td></td>
+                            </tr>
+                            <!-- Mod 5 -->
+                            <tr>
+                                <td class="time-slot">5</td>
+                                <td class="time-slot">11:55-12:40</td>
+                                <td><div class="subject-cell">NIVELACIÓN DE MATEMÁTICAS</div></td>
+                                <td><div class="subject-cell">INTRODUCCIÓN A LA PROGRAMACIÓN</div></td>
+                                <td><div class="subject-cell">TALLER DE APRESTO LABORAL</div></td>
+                                <td><div class="subject-cell">TIC</div></td>
+                                <td></td>
+                            </tr>
+                            <!-- Mod 6 -->
+                            <tr>
+                                <td class="time-slot">6</td>
+                                <td class="time-slot">12:40-13:20</td>
+                                <td></td>
+                                <td><div class="subject-cell">INTRODUCCIÓN A LA PROGRAMACIÓN</div></td>
+                                <td><div class="subject-cell">FUNDAMENTOS DATA SCIENCE</div></td>
+                                <td><div class="subject-cell">TIC</div></td>
+                                <td></td>
+                            </tr>
+                            <!-- Mod 7 -->
+                            <tr>
+                                <td class="time-slot">7</td>
+                                <td class="time-slot">13:35-14:20</td>
+                                <td><div class="subject-cell">INGLÉS I</div></td>
+                                <td></td>
+                                <td><div class="subject-cell">FUNDAMENTOS DATA SCIENCE</div></td>
+                                <td><div class="subject-cell">TIC</div></td>
+                                <td></td>
+                            </tr>
+                            <!-- Mod 8 -->
+                            <tr>
+                                <td class="time-slot">8</td>
+                                <td class="time-slot">14:20-15:05</td>
+                                <td><div class="subject-cell">INGLÉS I</div></td>
+                                <td></td>
+                                <td><div class="subject-cell">FUNDAMENTOS DATA SCIENCE</div></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <!-- Mod 9 -->
+                            <tr>
+                                <td class="time-slot">9</td>
+                                <td class="time-slot">15:15-16:00</td>
+                                <td><div class="subject-cell">INGLÉS I</div></td>
+                                <td></td>
+                                <td><div class="subject-cell">FUNDAMENTOS DATA SCIENCE</div></td>
+                                <td><div class="subject-cell">INGLÉS I</div></td>
+                                <td></td>
+                            </tr>
+                            <!-- Mod 10 -->
+                            <tr>
+                                <td class="time-slot">10</td>
+                                <td class="time-slot">16:00-16:45</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><div class="subject-cell">INGLÉS I</div></td>
+                                <td></td>
+                            </tr>
+                            <!-- Resto de módulos sin clases, se mantienen vacíos o se pueden omitir si no son relevantes -->
+                            <tr>
+                                <td class="time-slot">11</td>
+                                <td class="time-slot">16:50-17:35</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="time-slot">12</td>
+                                <td class="time-slot">17:35-18:20</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="time-slot">13</td>
+                                <td class="time-slot">18:30-19:10</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="time-slot">14</td>
+                                <td class="time-slot">19:10-19:50</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="time-slot">15</td>
+                                <td class="time-slot">19:50 - 20:30</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="time-slot">16</td>
+                                <td class="time-slot">20:30-21:10</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="time-slot">17</td>
+                                <td class="time-slot">21:10-21:50</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="time-slot rounded-br-lg">18</td>
+                                <td class="time-slot">21:50-22:30</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 @elwaoo. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div id="login-modal" class="modal">
+        <!-- Contenido del modal de login, integrado del nuevo código -->
+        <div class="modal-content" id="loginContainerMain">
+            <span class="close-button">&times;</span>
+            <div class="login-header">
+                <div class="login-logo">
+                    <div class="logo-circle">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                </div>
+                <h1 class="login-title" id="modal-title">Intranet CFT Los Ríos</h1>
+                <p class="login-subtitle">Ingresa tus credenciales para acceder</p>
+            </div>
+            
+            <form class="login-form" id="auth-form">
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder="usuario@cftrl.cl" required>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Contraseña (RUT)</label>
+                    <div class="input-group">
+                        <input type="password" id="password" placeholder="Ingresa tu RUT sin puntos con guión" required>
+                        <i class="fas fa-lock"></i>
+                    </div>
+                </div>
+                
+                <button class="btn-login" id="loginBtn" type="submit">
+                    <span class="loading-spinner"></span>
+                    <span class="btn-text">Iniciar Sesión</span>
+                </button>
+                
+                <div class="forgot-password">
+                    <a href="#" id="modal-toggle-form">¿No tienes cuenta? Regístrate aquí</a>
+                </div>
+            </form>
+            
+            <div class="login-footer">
+                <span>&copy; 2023 CFT Los Ríos. Todos los derechos reservados.</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notificaciones, añadidas al body principal -->
+    <div class="notification error" id="errorNotification">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="errorMessage"></span>
+    </div>
+    
+    <div class="notification success" id="successNotification">
+        <i class="fas fa-check-circle"></i>
+        <span id="successMessage"></span>
+    </div>
+
+    <script>
+        /*
+           ====================================================================
+           SECCIÓN: VARIABLES Y CONSTANTES GLOBALES
+           Descripción: Declaración de todas las referencias a elementos del DOM
+                        y valores constantes para fácil acceso y modificación.
+           ====================================================================
+        */
+        // Users database (5 random users with @cftrl.cl emails and RUT passwords)
+        // Estos son los datos de usuario "actualizados" que mencionaste.
+        const users = [
+            {
+                name: "Carlos Rodríguez",
+                email: "crodriguez@cftrl.cl",
+                password: "12345678-9"
+            },
+            {
+                name: "María González",
+                email: "mgonzalez@cftrl.cl",
+                password: "18765432-1"
+            },
+            {
+                name: "Juan Pérez",
+                email: "jperez@cftrl.cl",
+                password: "15678901-2" 
+            },
+            {
+                name: "Ana Silva",
+                email: "asilva@cftrl.cl",
+                password: "20123456-7"
+            },
+            {
+                name: "Diego Morales",
+                email: "dmorales@cftrl.cl",
+                password: "17890123-4"
+            }
+        ];
+
+        // Elementos de navegación
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navUl = document.querySelector('nav ul');
+        const profileNavLink = document.getElementById('profile-nav-link');
+        const navProfilePic = document.getElementById('nav-profile-pic');
+
+        // Elementos de contenido y secciones
+        const allContentSections = document.querySelectorAll('.content-section, .modules-grid');
+        const homeSection = document.getElementById('home-section');
+        const modulesSection = document.getElementById('modules-section');
+        const userProfileDetailSection = document.getElementById('user-profile-detail-section');
+        const backButtons = document.querySelectorAll('.back-button');
+
+        // Elementos del Modal de Autenticación (actualizados para el nuevo login)
+        const loginModal = document.getElementById('login-modal');
+        const closeModalButton = document.querySelector('.close-button');
+        const modalTitle = document.getElementById('modal-title'); // Título dentro del login-header
+        const authForm = document.getElementById('auth-form'); // El formulario principal del login
+        const emailInput = document.getElementById('email'); // Campo de email del nuevo login
+        const passwordInput = document.getElementById('password'); // Campo de contraseña del nuevo login
+        const loginBtn = document.getElementById('loginBtn'); // Botón de login del nuevo login
+        const modalToggleFormLink = document.getElementById('modal-toggle-form'); // Enlace para alternar entre login/registro
+        const loginContainerMain = document.getElementById('loginContainerMain'); // El contenedor principal del formulario de login para animaciones
+        
+        // Elementos de Notificación (del nuevo login)
+        const errorNotification = document.getElementById('errorNotification');
+        const successNotification = document.getElementById('successNotification');
+        const errorMessageSpan = document.getElementById('errorMessage');
+        const successMessageSpan = document.getElementById('successMessage');
+
+        // Elementos del Dropdown de Perfil (en Header)
+        const profileDropdown = document.getElementById('profile-dropdown');
+        const dropdownProfilePic = document.getElementById('dropdown-profile-pic');
+        const dropdownUsername = document.getElementById('dropdown-username');
+
+        // Elementos de la sección de Perfil Detallado
+        const profileForm = document.getElementById('profile-form');
+        const profilePic = document.getElementById('profile-pic');
+        const profileImageUpload = document.getElementById('profile-image-upload');
+        const deleteProfilePicBtn = document.getElementById('delete-profile-pic-btn');
+        const profileNameInput = document.getElementById('profile-name');
+        const profileEmailInput = document.getElementById('profile-email');
+        const profilePhoneInput = document.getElementById('profile-phone');
+        const profileRutInput = document.getElementById('profile-rut');
+        const editProfileBtn = document.getElementById('edit-profile-btn');
+        const saveProfileBtn = document.getElementById('save-profile-btn');
+        const cancelEditBtn = document.getElementById('cancel-edit-btn');
+        const profileMessage = document.getElementById('profile-message');
+
+        // Constantes
+        const DEFAULT_AVATAR_PATH = 'https://placehold.co/120x120/D3D3D3/000?text=Avatar'; // Ruta a una imagen de avatar por defecto
+        let isRegistering = false; // Estado para el formulario de autenticación (registro vs. login)
+
+
+        /*
+           ====================================================================
+           SECCIÓN: FUNCIONES DE UTILIDAD (HELPERS)
+           Descripción: Funciones genéricas y reutilizables para tareas comunes.
+           ====================================================================
+        */
+
+        /**
+         * Obtiene el valor de una variable CSS definida en :root.
+         * @param {string} variableName - El nombre de la variable CSS (ej. '--color-primario').
+         * @returns {string} El valor de la variable CSS.
+         */
+        function getCssVariable(variableName) {
+            return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
+        }
+
+        /**
+         * Oculta todas las secciones de contenido activas.
+         */
+        function hideAllSections() {
+            allContentSections.forEach(section => {
+                section.classList.remove('active-section');
+            });
+        }
+
+        /**
+         * Muestra una sección específica y oculta las demás.
+         * Realiza comprobaciones de autenticación para secciones protegidas.
+         * @param {string} sectionId - El ID de la sección a mostrar (sin '-section', ej. 'home', 'modules').
+         */
+        function showSection(sectionId) {
+            const loggedInUser = localStorage.getItem('currentUserEmail');
+            const protectedSections = ['user-profile-detail', 'notes-attendance', 'academic-calendar', 'notifications', 'directory', 'scholarships', 'report-issue'];
+
+            // Lógica para el logo (si se hace clic en él)
+            if (sectionId === 'main-menu') {
+                sectionId = loggedInUser ? 'modules' : 'home';
+            }
+
+            // Redirige a login si intenta acceder a una sección protegida sin autenticación
+            if (protectedSections.includes(sectionId) && !loggedInUser) {
+                hideAllSections();
+                homeSection.classList.add('active-section');
+                openLoginModal();
+                showNotification('error', 'Debes iniciar sesión para acceder a esta función.');
+                return;
+            }
+
+            hideAllSections(); // Oculta todas antes de mostrar la deseada
+
+            const targetSectionElement = document.getElementById(`${sectionId}-section`);
+            if (targetSectionElement) {
+                targetSectionElement.classList.add('active-section');
+            }
+
+            // Asegura que la sección de módulos se active solo cuando corresponde
+            if (loggedInUser && sectionId === 'modules') {
+                modulesSection.classList.add('active-section');
+            } else {
+                modulesSection.classList.remove('active-section');
+            }
+
+            // Carga datos del perfil si se va a la sección de detalles del perfil
+            if (sectionId === 'user-profile-detail' && loggedInUser) {
+                loadProfileData(loggedInUser);
+                setProfileFormState(false); // Por defecto, el formulario de perfil está en modo de visualización
+            }
+
+            // Manejo de la visibilidad de los botones de retroceso
+            backButtons.forEach(button => {
+                const parentSection = button.closest('.content-section');
+                if (parentSection) {
+                    const parentSectionId = parentSection.id.replace('-section', '');
+                    if (sectionId === parentSectionId && sectionId !== 'home' && sectionId !== 'modules') {
+                        button.style.display = 'flex';
+                    } else {
+                        button.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        /**
+         * Muestra una notificación temporal en la esquina superior derecha.
+         * @param {string} type - 'success' o 'error'.
+         * @param {string} message - El mensaje a mostrar.
+         */
+        function showNotification(type, message) {
+            const notificationElement = type === 'success' ? successNotification : errorNotification;
+            const messageSpan = type === 'success' ? successMessageSpan : errorMessageSpan;
+
+            // Hide the other notification if it's currently showing
+            const otherNotification = type === 'success' ? errorNotification : successNotification;
+            otherNotification.classList.remove('show');
+            otherNotification.classList.remove(type === 'success' ? 'error' : 'success'); // Remove class to prevent conflicts
+
+            messageSpan.textContent = message;
+            notificationElement.classList.add('show');
+            notificationElement.classList.add(type); // Add the specific type class
+
+            setTimeout(() => {
+                notificationElement.classList.remove('show');
+                notificationElement.classList.remove(type); // Remove type class after hiding
+            }, 3000); // Notification visible for 3 seconds
+        }
+
+
+        /*
+           ====================================================================
+           SECCIÓN: LÓGICA DE AUTENTICACIÓN Y MODAL
+           Descripción: Funciones para abrir/cerrar el modal de login/registro,
+                        gestionar el estado del formulario y manejar la autenticación.
+           ====================================================================
+        */
+
+        /**
+         * Abre el modal de inicio de sesión/registro.
+         */
+        function openLoginModal() {
+            loginModal.classList.add('show');
+            emailInput.value = '';
+            passwordInput.value = '';
+            setFormToLoginMode(); // Asegurarse de que el formulario empiece en modo login
+        }
+
+        /**
+         * Cierra el modal de inicio de sesión/registro.
+         */
+        function closeLoginModal() {
+            loginModal.classList.remove('show');
+            // Ensure no lingering shake effect
+            if (loginContainerMain.classList.contains('shake')) {
+                loginContainerMain.classList.remove('shake');
+            }
+        }
+
+        /**
+         * Configura el formulario del modal en modo "Iniciar Sesión".
+         */
+        function setFormToLoginMode() {
+            isRegistering = false;
+            modalTitle.textContent = 'Intranet CFT Los Ríos'; // Título del nuevo login
+            document.querySelector('.login-subtitle').textContent = 'Ingresa tus credenciales para acceder';
+            loginBtn.querySelector('.btn-text').textContent = 'Iniciar Sesión';
+            modalToggleFormLink.textContent = '¿No tienes cuenta? Regístrate aquí';
+            // Clear any previous error messages
+            errorMessageSpan.textContent = '';
+            successMessageSpan.textContent = '';
+            errorNotification.classList.remove('show');
+            successNotification.classList.remove('show');
+        }
+
+        /**
+         * Configura el formulario del modal en modo "Registrarse".
+         */
+        function setFormToRegisterMode() {
+            isRegistering = true;
+            modalTitle.textContent = 'Registrarse en CFT Los Ríos';
+            document.querySelector('.login-subtitle').textContent = 'Crea tu cuenta para acceder';
+            loginBtn.querySelector('.btn-text').textContent = 'Registrarse';
+            modalToggleFormLink.textContent = 'Ya tengo cuenta, Iniciar Sesión';
+            // Clear any previous error messages
+            errorMessageSpan.textContent = '';
+            successMessageSpan.textContent = '';
+            errorNotification.classList.remove('show');
+            successNotification.classList.remove('show');
+        }
+
+        /**
+         * Muestra/oculta el spinner de carga en el botón de login.
+         * @param {boolean} isLoading - True para mostrar, false para ocultar.
+         */
+        function setLoading(isLoading) {
+            if (isLoading) {
+                loginBtn.classList.add('loading');
+                loginBtn.disabled = true;
+            } else {
+                loginBtn.classList.remove('loading');
+                loginBtn.disabled = false;
+            }
+        }
+
+        /**
+         * Actualiza la interfaz de usuario de la barra de navegación en función del estado de autenticación.
+         * Muestra/oculta el enlace de perfil y actualiza la foto/nombre.
+         * También gestiona la visibilidad del botón de menú móvil.
+         */
+        function updateAuthUI() {
+            const loggedInUser = localStorage.getItem('currentUserEmail');
+            if (loggedInUser) {
+                document.body.classList.add('logged-in'); // Añade la clase al body
+                profileNavLink.style.display = 'list-item'; // Muestra el li del perfil
+
+                const profile = getProfileData(loggedInUser); // Obtiene los datos del perfil
+                navProfilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
+                dropdownProfilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
+                dropdownUsername.textContent = profile.name || loggedInUser;
+                showSection('modules'); // Redirige a la sección de módulos al iniciar sesión
+            } else {
+                document.body.classList.remove('logged-in'); // Elimina la clase del body
+                profileNavLink.style.display = 'none'; // Oculta el li del perfil
+                profileDropdown.classList.remove('show'); // Asegura que el dropdown esté oculto
+                showSection('home'); // Redirige a la sección de inicio si no está logueado
+            }
+        }
+
+
+        /*
+           ====================================================================
+           SECCIÓN: LÓGICA DE GESTIÓN DE PERFIL
+           Descripción: Funciones para cargar, guardar y editar los datos del perfil,
+                        incluyendo la foto de perfil.
+           ====================================================================
+        */
+
+        /**
+         * Obtiene los datos del perfil de un usuario del localStorage.
+         * Si no existe, devuelve un perfil por defecto.
+         * @param {string} email - El email del usuario.
+         * @returns {object} Un objeto con los datos del perfil.
+         */
+        function getProfileData(email) {
+            const profileKey = `profile_${email}`;
+            const storedProfile = localStorage.getItem(profileKey);
+            if (storedProfile) {
+                return JSON.parse(storedProfile);
+            } else {
+                return {
+                    name: 'Estudiante CFT',
+                    email: email,
+                    phone: '+56 9 1234 5678',
+                    rut: '12.345.678-K',
+                    profilePic: DEFAULT_AVATAR_PATH
+                };
+            }
+        }
+
+        /**
+         * Guarda los datos de un perfil en el localStorage y actualiza la UI si es el usuario actual.
+         * @param {string} email - El email del usuario.
+         * @param {object} profile - El objeto con los datos del perfil a guardar.
+         */
+        function saveProfileData(email, profile) {
+            const profileKey = `profile_${email}`;
+            localStorage.setItem(profileKey, JSON.stringify(profile));
+            const loggedInUser = localStorage.getItem('currentUserEmail');
+            if (loggedInUser === email) {
+                navProfilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
+                dropdownProfilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
+                dropdownUsername.textContent = profile.name || loggedInUser;
+            }
+        }
+
+        /**
+         * Carga los datos del perfil del usuario actual en el formulario de detalles de perfil.
+         * @param {string} email - El email del usuario actual.
+         */
+        function loadProfileData(email) {
+            const profile = getProfileData(email);
+            profileNameInput.value = profile.name;
+            profileEmailInput.value = profile.email;
+            profilePhoneInput.value = profile.phone;
+            profileRutInput.value = profile.rut;
+            profilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
+            
+            // Determina si se muestra el botón de eliminar foto
+            const isDefaultPic = profile.profilePic === DEFAULT_AVATAR_PATH || (window.location.origin + '/' + DEFAULT_AVATAR_PATH) === profile.profilePic;
+            deleteProfilePicBtn.style.display = isDefaultPic ? 'none' : 'inline-block';
+            profileMessage.textContent = '';
+        }
+
+        /**
+         * Establece el estado del formulario de perfil (edición o visualización).
+         * Habilita/deshabilita campos y muestra/oculta botones.
+         * @param {boolean} isEditing - `true` para modo edición, `false` para modo visualización.
+         */
+        function setProfileFormState(isEditing) {
+            profileNameInput.disabled = !isEditing;
+            profilePhoneInput.disabled = !isEditing;
+            profileRutInput.disabled = !isEditing;
+
+            profilePic.style.cursor = isEditing ? 'pointer' : 'default';
+
+            editProfileBtn.style.display = isEditing ? 'none' : 'inline-block';
+            saveProfileBtn.style.display = isEditing ? 'inline-block' : 'none';
+            cancelEditBtn.style.display = isEditing ? 'inline-block' : 'none';
+            
+            // El botón de eliminar foto solo se muestra si está editando Y no es la foto por defecto
+            const isDefaultPic = profilePic.src === (window.location.origin + '/' + DEFAULT_AVATAR_PATH);
+            deleteProfilePicBtn.style.display = (isEditing && !isDefaultPic) ? 'inline-block' : 'none';
+        }
+
+        /**
+         * Maneja la subida de una nueva foto de perfil.
+         * Convierte la imagen a Data URL y la guarda en localStorage.
+         * @param {Event} e - El evento de cambio del input file.
+         */
+        function handleProfileImageUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    profilePic.src = event.target.result;
+                    const loggedInUser = localStorage.getItem('currentUserEmail');
+                    if (loggedInUser) {
+                        const currentProfile = getProfileData(loggedInUser);
+                        currentProfile.profilePic = event.target.result;
+                        saveProfileData(loggedInUser, currentProfile);
+                        profileMessage.textContent = 'Foto de perfil cargada. Haz clic en "Guardar Cambios".';
+                        profileMessage.style.color = getCssVariable('--color-advertencia');
+                        deleteProfilePicBtn.style.display = 'inline-block';
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        /**
+         * Elimina la foto de perfil del usuario, volviendo al avatar por defecto.
+         */
+        function handleDeleteProfilePic() {
+            const loggedInUser = localStorage.getItem('currentUserEmail');
+            if (loggedInUser) {
+                const currentProfile = getProfileData(loggedInUser);
+                currentProfile.profilePic = DEFAULT_AVATAR_PATH;
+                profilePic.src = DEFAULT_AVATAR_PATH;
+                saveProfileData(loggedInUser, currentProfile);
+                profileMessage.textContent = 'Foto de perfil eliminada. Haz clic en "Guardar Cambios".';
+                profileMessage.style.color = getCssVariable('--color-advertencia');
+                deleteProfilePicBtn.style.display = 'none';
+            }
+        }
+
+        /*
+           ====================================================================
+           SECCIÓN: CONFIGURACIÓN DE EVENT LISTENERS
+           Descripción: Agrupa todos los escuchadores de eventos para mejorar
+                        la organización y la legibilidad.
+           ====================================================================
+        */
+
+        /**
+         * Configura todos los escuchadores de eventos de la aplicación.
+         */
+        function setupEventListeners() {
+            // Navegación y menú móvil
+            menuToggle.addEventListener('click', () => {
+                navUl.classList.toggle('active');
+                profileDropdown.classList.remove('show'); // Asegura que el dropdown de perfil se cierre al abrir/cerrar el menú móvil
+            });
+
+            // Clic en el enlace del perfil en la navegación (para mostrar/ocultar dropdown en desktop)
+            profileNavLink.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                if (navUl.classList.contains('active')) {
+                    // Si el menú móvil está activo, navega a la sección de perfil
+                    navUl.classList.remove('active');
+                    showSection('user-profile-detail');
+                } else {
+                    // Si no, alterna el dropdown de perfil (en desktop)
+                    profileDropdown.classList.toggle('show');
+                }
+            });
+
+            // Delegación de eventos para la barra de navegación (logo y enlaces generales)
+            document.querySelector('header .container').addEventListener('click', (e) => {
+                let target = e.target;
+                if ((target.tagName === 'IMG' && target.closest('.logo')) || target.classList.contains('logo')) {
+                    target = target.closest('.logo');
+                }
+                if (target.tagName === 'A' && target.dataset.section) {
+                    e.preventDefault();
+                    navUl.classList.remove('active');
+                    showSection(target.dataset.section);
+                }
+            });
+
+            // Clics dentro del dropdown de perfil (Ver Perfil, Cerrar Sesión)
+            profileDropdown.addEventListener('click', (e) => {
+                e.stopPropagation(); // Evita que el clic se propague al documento
+                const target = e.target;
+                if (target.tagName === 'A') {
+                    e.preventDefault();
+                    profileDropdown.classList.remove('show'); // Cierra el dropdown
+                    navUl.classList.remove('active'); // Asegura que el menú móvil también se cierre
+                    if (target.dataset.section === 'user-profile-detail') {
+                        showSection('user-profile-detail');
+                    } else if (target.dataset.action === 'logout') {
+                        localStorage.removeItem('currentUserEmail');
+                        updateAuthUI(); // Actualiza la UI después del logout
+                    }
+                }
+            });
+
+            // Clics en las tarjetas de módulo
+            document.querySelectorAll('.module-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const targetSection = card.dataset.section;
+                    if (targetSection) {
+                        showSection(targetSection);
+                    }
+                });
+            });
+
+            // Botón "Iniciar Sesión" en la sección de bienvenida
+            document.querySelector('#home-section .btn-primario').addEventListener('click', openLoginModal);
+            
+            // Cerrar modal
+            closeModalButton.addEventListener('click', closeLoginModal);
+            window.addEventListener('click', (e) => {
+                if (e.target === loginModal) {
+                    closeLoginModal();
+                }
+            });
+
+            // Toggle entre registro y login dentro del modal
+            modalToggleFormLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Remove shake class before changing mode
+                loginContainerMain.classList.remove('shake');
+                isRegistering ? setFormToLoginMode() : setFormToRegisterMode();
+            });
+
+            // Envío del formulario de autenticación (loginBtn submit)
+            authForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                setLoading(true); // Show loading spinner
+                loginContainerMain.classList.remove('shake'); // Remove shake animation if present
+
+                const email = emailInput.value.trim();
+                const password = passwordInput.value.trim();
+
+                if (email.length < 5 || password.length < 4) {
+                    showNotification('error', 'El email debe tener al menos 5 caracteres y la contraseña al menos 4.');
+                    loginContainerMain.classList.add('shake'); // Add shake animation
+                    setLoading(false);
+                    return;
+                }
+
+                if (isRegistering) {
+                    // Check if email exists in the hardcoded 'users' array
+                    const userExists = users.some(user => user.email === email);
+                    if (userExists || localStorage.getItem(email)) { // Also check local storage for consistency
+                        showNotification('error', 'Este email ya está registrado o en uso.');
+                        loginContainerMain.classList.add('shake');
+                        setLoading(false);
+                    } else {
+                        // For demonstration, register directly to localStorage and add to our 'users' array
+                        localStorage.setItem(email, password);
+                        // Add to in-memory 'users' array for immediate use
+                        users.push({ name: 'Nuevo Estudiante', email: email, password: password }); 
+                        
+                        // Initialize basic profile data for new user in localStorage
+                        saveProfileData(email, { name: 'Nuevo Estudiante', email: email, phone: '', rut: '', profilePic: DEFAULT_AVATAR_PATH });
+                        
+                        localStorage.setItem('currentUserEmail', email);
+                        showNotification('success', '¡Registro exitoso! Has iniciado sesión.');
+                        loginContainerMain.classList.add('success-pulse'); // Add success animation
+                        setTimeout(() => { 
+                            closeLoginModal(); 
+                            updateAuthUI(); 
+                            loginContainerMain.classList.remove('success-pulse'); // Remove pulse after transition
+                            setLoading(false);
+                        }, 1000); // Allow time for success message and animation
+                    }
+                } else { // Login
+                    const foundUser = users.find(user => user.email === email && user.password === password);
+                    const storedPassword = localStorage.getItem(email); // Also check localStorage for dynamically registered users
+
+                    if (foundUser || (storedPassword && storedPassword === password)) {
+                        localStorage.setItem('currentUserEmail', email);
+                        showNotification('success', '¡Inicio de sesión exitoso! Entrando a la Intranet de CFT Los Ríos.');
+                        loginContainerMain.classList.add('success-pulse'); // Add success animation
+                        setTimeout(() => { 
+                            closeLoginModal(); 
+                            updateAuthUI(); 
+                            loginContainerMain.classList.remove('success-pulse'); // Remove pulse after transition
+                            setLoading(false);
+                        }, 1000); // Allow time for success message and animation
+                    } else {
+                        showNotification('error', 'Credenciales no válidas, Intente nuevamente.');
+                        loginContainerMain.classList.add('shake'); // Add shake animation
+                        setLoading(false);
+                    }
+                }
+            });
+
+            // Perfil detallado - Edición, Guardar, Cancelar
+            editProfileBtn.addEventListener('click', () => {
+                setProfileFormState(true);
+                profileMessage.textContent = '';
+            });
+
+            cancelEditBtn.addEventListener('click', () => {
+                const loggedInUser = localStorage.getItem('currentUserEmail');
+                if (loggedInUser) loadProfileData(loggedInUser);
+                setProfileFormState(false);
+                profileMessage.textContent = 'Edición cancelada.';
+                profileMessage.style.color = getCssVariable('--color-advertencia');
+            });
+
+            profileForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const loggedInUser = localStorage.getItem('currentUserEmail');
+                if (!loggedInUser) {
+                    profileMessage.textContent = 'Error: Debes iniciar sesión para guardar tu perfil.';
+                    profileMessage.style.color = getCssVariable('--color-error');
+                    return;
+                }
+
+                if (!profileNameInput.value.trim() || !profileEmailInput.value.trim() || !profileEmailInput.value.includes('@')) {
+                    profileMessage.textContent = 'Por favor, completa los campos requeridos con datos válidos.';
+                    profileMessage.style.color = getCssVariable('--color-error');
+                    return;
+                }
+
+                const currentProfile = getProfileData(loggedInUser);
+                const updatedProfile = {
+                    name: profileNameInput.value.trim(),
+                    email: profileEmailInput.value.trim(), // Email no se puede editar, pero se mantiene en el objeto
+                    phone: profilePhoneInput.value.trim(),
+                    rut: profileRutInput.value.trim(),
+                    profilePic: currentProfile.profilePic
+                };
+                saveProfileData(loggedInUser, updatedProfile);
+                profileMessage.textContent = '¡Perfil actualizado exitosamente!';
+                profileMessage.style.color = getCssVariable('--color-exito');
+                setProfileFormState(false);
+            });
+
+            // Gestión de foto de perfil
+            profilePic.addEventListener('click', () => {
+                if (!profileNameInput.disabled) profileImageUpload.click(); // Permite clickear solo en modo edición
+            });
+            profileImageUpload.addEventListener('change', handleProfileImageUpload);
+            deleteProfilePicBtn.addEventListener('click', handleDeleteProfilePic);
+
+            // Botones de retroceso
+            backButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const loggedInUser = localStorage.getItem('currentUserEmail');
+                    showSection(loggedInUser ? 'modules' : 'home');
+                });
+            });
+
+            // Cierra el dropdown de perfil si se hace clic fuera de él (en desktop)
+            document.addEventListener('click', (e) => {
+                if (!profileNavLink.contains(e.target) && profileDropdown.classList.contains('show') && !navUl.classList.contains('active')) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
+        }
+
+        /*
+           ====================================================================
+           SECCIÓN: INICIALIZACIÓN
+           Descripción: Función que se ejecuta cuando el DOM está completamente
+                        cargado para configurar la aplicación.
+           ====================================================================
+        */
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners(); // Configura todos los eventos
+            updateAuthUI(); // Actualiza la interfaz de usuario según el estado de autenticación inicial
+        });
+    </script>
+</body>
+</html>
