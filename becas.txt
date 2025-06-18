@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Becas para la Educación Superior en Chile</title>
+    <style>
+        /* Estilos básicos para el diseño interactivo */
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 900px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h2, h3 { color: #0056b3; }
+        .beca-item { border: 1px solid #ddd; border-radius: 5px; margin-bottom: 15px; overflow: hidden; }
+        .beca-header { background-color: #007bff; color: white; padding: 10px 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .beca-header h3 { margin: 0; color: white; }
+        .beca-content { padding: 15px; background-color: #f9f9f9; display: none; }
+        .beca-content p { margin-bottom: 10px; }
+        .toggle-icon { font-size: 1.2em; } /* Icono para expandir/colapsar */
+        .highlight { background-color: #e6f7ff; padding: 10px; border-left: 5px solid #007bff; margin-bottom: 15px; }
+        ul { list-style-type: disc; margin-left: 20px; }
+        li { margin-bottom: 5px; }
+        a { color: #007bff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Guía de Becas para la Educación Superior en Chile (Ministerio de Educación)</h1>
+        <p>¡Hola! Como interesado en la educación superior en Chile, he recopilado la información esencial sobre las becas que ofrece el Ministerio de Educación (Mineduc) para que puedas dar el siguiente paso en tu formación. Esta guía te ayudará a entender los distintos beneficios disponibles para el año académico 2025.</p>
+
+        <div class="highlight">
+            <h2>Puntos Clave para Postular:</h2>
+            <ul>
+                <li>La mayoría de las becas se postulan a través del <a href="https://fuas.cl/" target="_blank">Formulario Único de Acreditación Socioeconómica (FUAS)</a>.</li>
+                <li>Es fundamental tener tu <a href="https://www.registrosocial.gob.cl/" target="_blank">Registro Social de Hogares (RSH)</a> actualizado.</li>
+                <li>Las fechas de postulación son publicadas anualmente por el Mineduc. Revisa constantemente el portal de Beneficios Estudiantiles.</li>
+                <li>La acreditación de la institución y/o carrera es un requisito común.</li>
+            </ul>
+        </div>
+
+        <h2>Becas de Arancel del Mineduc</h2>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Gratuidad</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Cubre el 100% del arancel y la matrícula de la carrera, para estudiantes que cumplan con los requisitos socioeconómicos y se matriculen en una institución adscrita.</p>
+                <p><strong>Requisitos principales:</strong></p>
+                <ul>
+                    <li>Pertenecer al 60% de los hogares de menores ingresos según el RSH.</li>
+                    <li>Estar matriculado en una institución de educación superior adscrita a la Gratuidad.</li>
+                    <li>Ser chileno o extranjero con permanencia definitiva/residencia y enseñanza media completa en Chile.</li>
+                    <li>No haber excedido la duración formal de la carrera (para estudiantes de cursos superiores).</li>
+                </ul>
+                <p><strong>Monto:</strong> Cubre el 100% del arancel y matrícula referencial.</p>
+                <p><strong>Compatibilidad:</strong> No es compatible con otras becas de arancel del Mineduc.</p>
+            </div>
+        </div>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Beca Bicentenario (BB)</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Apoya el pago de tu carrera en universidades con al menos cuatro años de acreditación.</p>
+                <p><strong>Requisitos principales:</strong></p>
+                <ul>
+                    <li>Pertenecer al 70% de la población de menores ingresos según el RSH.</li>
+                    <li>Haber obtenido 500 puntos o más en la PAES (o PSU/PDT).</li>
+                    <li>Para renovantes: 60% de ramos aprobados en 1er año, 70% desde 2do año.</li>
+                    <li>No tener un título profesional o técnico superior.</li>
+                </ul>
+                <p><strong>Monto:</strong> Hasta el 100% del arancel de referencia (varía entre $500.000 y el arancel de referencia máximo).</p>
+            </div>
+        </div>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Beca Nuevo Milenio (BNM)</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Financia carreras técnico profesionales en CFT o IP acreditados.</p>
+                <p><strong>Requisitos principales:</strong></p>
+                <ul>
+                    <li>Pertenecer al 70% de la población de menores ingresos según el RSH.</li>
+                    <li>Promedio NEM igual o superior a 5.0 (BNM I) o pertenecer a los deciles 5 y 6 (BNM II).</li>
+                </ul>
+                <p><strong>Monto:</strong> Hasta $600.000 (BNM I) o hasta $860.000 (BNM II) anuales.</p>
+            </div>
+        </div>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Beca Juan Gómez Millas (BJGM)</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Apoyo para financiar tus estudios en cualquier institución de educación superior acreditada.</p>
+                <p><strong>Requisitos principales:</strong></p>
+                <ul>
+                    <li>Pertenecer al 70% de la población de menores ingresos según el RSH.</li>
+                    <li>Haber obtenido 500 puntos o más en la PAES (o PSU/PDT).</li>
+                    <li>No tener un título profesional o técnico superior.</li>
+                </ul>
+                <p><strong>Monto:</strong> Hasta $1.150.000 anuales.</p>
+            </div>
+        </div>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Beca Vocación de Profesor (BVP)</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Cubre el costo total de la carrera de Pedagogía. Varias modalidades:</p>
+                <ul>
+                    <li><strong>BVP Pedagogías:</strong> Para estudiantes que ingresan a Pedagogía con alto puntaje PAES (más de 625 puntos).</li>
+                    <li><strong>BVP Licenciados y Profesionales:</strong> Para quienes ya tienen un título y quieren formarse como docentes.</li>
+                    <li><strong>BVP Licenciaturas:</strong> Para estudiantes renovantes que continúan su formación pedagógica desde una licenciatura.</li>
+                </ul>
+                <p><strong>Monto:</strong> Cubre el costo total de la carrera.</p>
+            </div>
+        </div>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Beca Distinción a las Trayectorias Educativas (DTE)</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Para estudiantes que obtuvieron una de las Distinciones a las Trayectorias Educativas (DTE) en la PAES.</p>
+                <p><strong>Requisitos:</strong> Haber obtenido una DTE en la PAES.</p>
+                <p><strong>Monto:</strong> Financiamiento del arancel de la carrera.</p>
+            </div>
+        </div>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Beca Excelencia Académica (BEA)</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Para estudiantes con las notas más altas de su generación en la enseñanza media.</p>
+                <p><strong>Requisitos:</strong> Pertenecer al 80% de la población de menores ingresos y tener un NEM destacado.</p>
+                <p><strong>Monto:</strong> Varía, ayuda a financiar el arancel.</p>
+            </div>
+        </div>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Beca Excelencia Técnica (BET)</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Apoya a los mejores egresados de Enseñanza Media que ingresan a carreras técnico profesionales.</p>
+                <p><strong>Requisitos:</strong> Pertenecer al 80% de la población de menores ingresos y tener un NEM destacado.</p>
+                <p><strong>Monto:</strong> Varía.</p>
+            </div>
+        </div>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Beca para Hijas e Hijos de Profesionales de la Educación (BHP)</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Para hijos e hijas de profesionales o asistentes de la educación.</p>
+                <p><strong>Requisitos:</strong> Ser hijo/a de profesional o asistente docente con contrato vigente, pertenecer al 80% de menores ingresos, y obtener 500 puntos o más en la PAES (o PSU/PDT).</p>
+                <p><strong>Monto:</strong> Hasta $500.000 anuales.</p>
+            </div>
+        </div>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Beca de Articulación</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Para quienes tienen un título técnico y desean obtener un título profesional en la misma área.</p>
+                <p><strong>Requisitos:</strong> Tener título técnico de nivel superior, pertenecer al 70% de menores ingresos, y matricularse en carrera profesional afín.</p>
+                <p><strong>Monto:</strong> Varía.</p>
+            </div>
+        </div>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Beca para Estudiantes en Situación de Discapacidad</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Beca especial para estudiantes en situación de discapacidad.</p>
+                <p><strong>Requisitos:</strong> Contar con certificado de discapacidad del RND y cumplir requisitos generales.</p>
+                <p><strong>Monto:</strong> Varía.</p>
+            </div>
+        </div>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Becas de Reparación (Valech I y Valech II)</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Para personas en el listado de la Comisión Valech o sus descendientes directos.</p>
+                <p><strong>Requisitos:</strong> Estar en el listado Valech o ser hijo/a/nieto/a de alguien en el listado.</p>
+                <p><strong>Monto:</strong> Cubre el 100% del arancel y matrícula.</p>
+            </div>
+        </div>
+
+        <h2>Otros Beneficios Estudiantiles</h2>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Fondo Solidario de Crédito Universitario (FSCU)</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Crédito para estudiantes de universidades del Consejo de Rectores.</p>
+                <p><strong>Requisitos:</strong> Pertenecer a los deciles 1 al 8 de ingreso y cumplir con requisitos académicos. Se postula vía FUAS.</p>
+            </div>
+        </div>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Crédito con Garantía Estatal (CAE)</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Crédito para financiar estudios en instituciones acreditadas, gestionado por la Comisión Ingresa.</p>
+                <p><strong>Requisitos:</strong> Postulación a través del sitio de Ingresa.cl.</p>
+            </div>
+        </div>
+
+        <div class="beca-item">
+            <div class="beca-header" onclick="toggleBeca(this)">
+                <h3>Becas JUNAEB (Mantención y Alimentación)</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="beca-content">
+                <p><strong>Descripción:</strong> Aportes económicos para gastos de mantención y alimentación.</p>
+                <ul>
+                    <li><strong>Beca de Alimentación para la Educación Superior (BAES):</strong> Tarjeta para comprar alimentos.</li>
+                    <li><strong>Beca Indígena (BI):</strong> Para estudiantes de ascendencia indígena.</li>
+                    <li><strong>Beca Presidente de la República (BPR):</strong> Para estudiantes con alto rendimiento y bajos recursos.</li>
+                    <li><strong>Beca de Mantención para la Educación Superior (BMES):</strong> Aporte en dinero para gastos de mantención.</li>
+                </ul>
+                <p><strong>Postulación:</strong> Generalmente se postulan y/o renuevan a través del Portal de Becas JUNAEB (<a href="https://portalbecas.junaeb.cl/" target="_blank">portalbecas.junaeb.cl</a>).</p>
+            </div>
+        </div>
+
+        <h2>¿Cómo Postular?</h2>
+        <p>El proceso de postulación a la mayoría de las becas y beneficios del Mineduc comienza con el llenado del <a href="https://fuas.cl/" target="_blank">Formulario Único de Acreditación Socioeconómica (FUAS)</a> en los períodos que el Mineduc define anualmente.</p>
+        <p>Una vez completado el FUAS, el Mineduc realiza la preselección y asignación de los beneficios. Es importante estar atento a los resultados y, si es necesario, a los períodos de apelación.</p>
+
+        <h2>Más Información y Contacto</h2>
+        <p>Para información oficial y actualizada sobre fechas, requisitos específicos y el estado de tu postulación, te recomiendo visitar los siguientes sitios web:</p>
+        <ul>
+            <li><a href="https://portal.beneficiosestudiantiles.cl/" target="_blank">Portal de Beneficios Estudiantiles (Mineduc)</a></li>
+            <li><a href="https://fuas.cl/" target="_blank">FUAS.cl</a></li>
+            <li>Call Center Ayuda Mineduc: <strong>600 600 2626</strong></li>
+            <li><a href="https://www.junaeb.cl/" target="_blank">JUNAEB.cl</a> (para becas de mantención y alimentación)</li>
+        </ul>
+    </div>
+
+    <script>
+        function toggleBeca(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.toggle-icon');
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                icon.textContent = "+";
+            } else {
+                content.style.display = "block";
+                icon.textContent = "-";
+            }
+        }
+    </script>
+</body>
+</html>
