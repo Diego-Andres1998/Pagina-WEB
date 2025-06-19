@@ -20,15 +20,26 @@
         :root {
             --color-primario: #0056b3; /* Un azul institucional (Original) */
             --color-secundario: #f0f2f5; /* Gris claro para fondos (Original) */
-            --color-texto: #333; /* Original */
-            --color-texto-claro: #666; /* Original */
-            --color-exito: #28a745; /* Original */
-            --color-advertencia: #ffc107; /* Original */
-            --color-error: #dc3545; /* Original */
-            --espaciado-md: 20px; /* Original */
-            --espaciado-lg: 40px; /* Original */
-            --borde-radio: 8px; /* Original */
-            --sombra-suave: 0 4px 6px rgba(0, 0, 0, 0.1); /* Original */
+            --color-terciario: #e0e6ec; /* Gris un poco más oscuro para bordes o fondos */
+            --color-texto: #333; /* Color de texto principal */
+            --color-texto-claro: #f8f9fa; /* Blanco grisáceo para texto sobre fondos oscuros */
+            --color-borde: #ddd; /* Color de borde general */
+            --color-fondo-claro: #ffffff; /* Blanco para tarjetas y contenedores */
+            --color-exito: #28a745; /* Verde para mensajes de éxito */
+            --color-error: #dc3545; /* Rojo para mensajes de error */
+            --color-advertencia: #ffc107; /* Amarillo para advertencias */
+            --espaciado-xs: 4px; /* Añadido de problema.html para consistencia */
+            --espaciado-sm: 0.5rem;
+            --espaciado-md: 1rem;
+            --espaciado-lg: 1.5rem;
+            --espaciado-xl: 2rem; /* Añadido de problema.html para consistencia */
+            --sombra-suave: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transicion-rapida: all 0.3s ease-in-out;
+            --radio-borde: 8px; /* Ajustado de --borde-radio a --radio-borde para consistencia con problema.html */
+            --radio-borde-circular: 9999px; /* Añadido de problema.html */
+            --font-size-base: 1rem; /* Añadido de problema.html */
+            --font-size-sm: 0.875rem; /* Añadido de problema.html */
+            --font-size-lg: 1.125rem; /* Añadido de problema.html */
 
             --color-modulo-azul: #007bff; /* Original */
             --color-modulo-naranja: #fd7e14; /* Original */
@@ -57,14 +68,14 @@
             --cft-texto-notas: #333333; /* Mantener si es un texto específico para notas */
         }
 
-        * {
+        *, *::before, *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
         }
 
         body {
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--color-texto);
             background-image: url('https://cftdelosrios.cl/wp-content/uploads/2024/08/Sede-Paillaco-e1741632105401-1024x1024.jpeg'); /* Placeholder for Sede-Paillaco-e1741632105401.jpg */
@@ -87,7 +98,7 @@
         .content-section, .modal-content, .module-card, .profile-detail-card {
             background-color: rgba(255, 255, 255, 0.9);
             padding: var(--espaciado-lg);
-            border-radius: var(--borde-radio);
+            border-radius: var(--radio-borde); /* Usar la variable unificada */
             box-shadow: var(--sombra-suave);
             margin-bottom: var(--espaciado-md);
             text-align: center;
@@ -160,7 +171,7 @@
             z-index: 10;
             right: 0;
             top: calc(100% + 5px);
-            border-radius: var(--borde-radio);
+            border-radius: var(--radio-borde); /* Usar la variable unificada */
             overflow: hidden;
             animation: fadeInScaleUp var(--animation-duration) ease-out forwards;
             transform-origin: top right;
@@ -215,7 +226,7 @@
             background-color: var(--color-secundario);
             color: var(--color-texto);
             padding: 8px 15px;
-            border-radius: var(--borde-radio);
+            border-radius: var(--radio-borde); /* Usar la variable unificada */
             transition: background-color var(--animation-duration) ease, color var(--animation-duration) ease;
         }
         nav ul li a.btn-nav-link:hover {
@@ -291,7 +302,7 @@
             background-color: var(--color-secundario);
             color: var(--color-texto);
             border: none;
-            border-radius: var(--borde-radio);
+            border-radius: var(--radio-borde); /* Usar la variable unificada */
             padding: 8px 15px;
             font-size: 1em;
             cursor: pointer;
@@ -317,7 +328,7 @@
         .btn-primario, .btn-secundario {
             display: inline-block;
             padding: 12px 25px;
-            border-radius: var(--borde-radio);
+            border-radius: var(--radio-borde); /* Usar la variable unificada */
             text-decoration: none;
             font-weight: 600;
             transition: background-color var(--animation-duration) ease, transform 0.2s ease;
@@ -362,7 +373,7 @@
 
         .module-card {
             padding: var(--espaciado-md);
-            border-radius: var(--borde-radio);
+            border-radius: var(--radio-borde); /* Usar la variable unificada */
             box-shadow: var(--sombra-suave);
             text-align: center;
             transition: transform var(--animation-duration) ease, background-color var(--animation-duration) ease;
@@ -794,7 +805,7 @@
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
-            border-radius: var(--borde-radio);
+            border-radius: var(--radio-borde); /* Usar la variable unificada */
             font-size: 1em;
         }
 
@@ -832,7 +843,7 @@
             background-color: var(--color-error);
             color: #fff;
             padding: 8px 15px;
-            border-radius: var(--borde-radio);
+            border-radius: var(--radio-borde); /* Usar la variable unificada */
             border: none;
             cursor: pointer;
             font-size: 0.9em;
@@ -995,7 +1006,7 @@
                 gap: 10px; 
                 background-color: rgba(255, 255, 255, 0.98); 
                 padding: 15px 0;
-                border-radius: var(--borde-radio);
+                border-radius: var(--radio-borde); /* Usar la variable unificada */
                 box-shadow: var(--sombra-suave);
             }
 
@@ -1367,7 +1378,7 @@
         /* Styles from becas.txt, adapted */
         #scholarships-section .beca-item {
             border: 1px solid #ddd;
-            border-radius: 8px; /* Using var(--borde-radio) */
+            border-radius: 8px; /* Using var(--radio-borde) */
             margin-bottom: 15px;
             overflow: hidden;
             box-shadow: var(--sombra-suave); /* Using existing shadow */
@@ -1387,6 +1398,10 @@
             margin: 0;
             color: white;
             font-size: 1.1em; /* Adjusted for consistency */
+        }
+        #scholarships-section .toggle-icon {
+            font-size: 1.2em; /* Icono para expandir/colapsar */
+            font-weight: bold;
         }
         #scholarships-section .beca-content {
             padding: 15px;
@@ -1411,10 +1426,6 @@
         #scholarships-section .beca-content li {
             margin-bottom: 5px;
             font-size: 0.95em;
-        }
-        #scholarships-section .toggle-icon {
-            font-size: 1.2em; /* Icono para expandir/colapsar */
-            font-weight: bold;
         }
         #scholarships-section .highlight {
             background-color: #e6f7ff; /* Keeping original light blue */
@@ -1445,7 +1456,183 @@
             text-decoration: underline;
         }
 
+        /* ====================================================================
+           SECCIÓN: REPORTAR PROBLEMAS (Integración de problema.html)
+           ====================================================================
+        */
+        .report-problem-container { /* Renamed from .report-container to avoid conflict */
+            background-color: var(--color-fondo-claro);
+            border-radius: var(--radio-borde);
+            box-shadow: var(--sombra-suave);
+            padding: var(--espaciado-xl);
+            max-width: 550px;
+            width: 100%;
+            text-align: center;
+            margin: var(--espaciado-lg) auto; /* Centrar el contenedor */
+        }
 
+        .report-problem-container h1 {
+            color: var(--color-primario);
+            margin-bottom: var(--espaciado-xl);
+            font-weight: 700;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--espaciado-md);
+        }
+
+        .report-problem-container h1 i {
+            font-size: 1.8rem;
+        }
+
+        .report-problem-container .form-group {
+            margin-bottom: var(--espaciado-md);
+            text-align: left;
+        }
+
+        .report-problem-container label {
+            display: block;
+            margin-bottom: var(--espaciado-xs);
+            font-weight: 600;
+            color: var(--color-texto);
+            font-size: var(--font-size-sm);
+        }
+
+        .report-problem-container input[type="text"],
+        .report-problem-container input[type="email"], /* Added email type for consistency */
+        .report-problem-container select,
+        .report-problem-container textarea {
+            width: 100%;
+            padding: var(--espaciado-sm);
+            border: 1px solid var(--color-borde);
+            border-radius: var(--radio-borde);
+            font-size: var(--font-size-base);
+            transition: var(--transicion-rapida);
+            background-color: var(--color-fondo-claro);
+            color: var(--color-texto);
+        }
+
+        .report-problem-container input[type="text"]:focus,
+        .report-problem-container input[type="email"]:focus,
+        .report-problem-container select:focus,
+        .report-problem-container textarea:focus {
+            border-color: var(--color-primario);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2);
+        }
+
+        .report-problem-container textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        /* Specific styles for select element in problem report */
+        .report-problem-container select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%230056b3%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13.2-6.5H18.6c-5.1%200-9.8%202.6-13.2%206.5-6.6%207.9-6.6%2020.8%200%2028.7l126.6%20153.2c3.4%203.9%208.2%206.5%2013.2%206.5s9.8-2.6%2013.2-6.5L287%2098.1c6.6-7.9%206.6-20.8-.1-28.7z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 0.7em top 50%;
+            background-size: 0.65em auto;
+            padding-right: 2em;
+        }
+
+        /* Styles for the submit button in problem report */
+        .report-problem-container #submitReportBtn {
+            background-color: var(--color-advertencia); /* Orange */
+            color: var(--color-texto-claro);
+            border-radius: var(--radio-borde-circular);
+            padding: var(--espaciado-md) var(--espaciado-xl);
+            margin-top: var(--espaciado-md);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--espaciado-sm);
+        }
+
+        .report-problem-container #submitReportBtn:hover {
+            background-color: #e09f00;
+            transform: translateY(-2px);
+            box-shadow: var(--sombra-suave);
+        }
+
+        .report-problem-container #submitReportBtn:active {
+            background-color: #c08000;
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .report-problem-container #submitReportBtn:disabled {
+            background-color: var(--color-terciario);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        /* Messages for problem report form */
+        #reportIssueForm .message {
+            padding: var(--espaciado-md);
+            margin-top: var(--espaciado-md);
+            border-radius: var(--radio-borde);
+            text-align: center;
+            font-weight: 600;
+            display: none;
+            font-size: var(--font-size-sm);
+            animation: fadeInMessage 0.5s ease-out;
+        }
+
+        #reportIssueForm .message.success {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--color-exito);
+            border: 1px solid var(--color-exito);
+        }
+
+        #reportIssueForm .message.error {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--color-error);
+            border: 1px solid var(--color-error);
+        }
+
+        #reportIssueForm .message.info {
+            background-color: rgba(0, 86, 179, 0.1);
+            color: var(--color-primario);
+            border: 1px solid var(--color-primario);
+        }
+
+
+        /* ===================================================================
+           SECCIÓN: MEDIAS QUERIES (RESPONSIVE)
+           ====================================================================
+        */
+        @media (max-width: 768px) {
+            .report-problem-container {
+                padding: var(--espaciado-lg);
+            }
+            .report-problem-container h1 {
+                font-size: 1.75rem;
+                gap: var(--espaciado-sm);
+            }
+            .report-problem-container h1 i {
+                font-size: 1.5rem;
+            }
+            .report-problem-container #submitReportBtn {
+                padding: var(--espaciado-sm) var(--espaciado-md); /* Menos padding horizontal en móvil */
+                font-size: var(--font-size-sm);
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: var(--espaciado-md) var(--espaciado-xs);
+            }
+            .report-problem-container {
+                padding: var(--espaciado-md);
+            }
+            .report-problem-container h1 {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2486,6 +2673,48 @@
                 </ul>
             </section>
 
+            <!-- Sección de Reportar Problema - INTEGRADA DESDE PROBLEMA.HTML -->
+            <section id="report-issue-section" class="content-section">
+                <button class="back-button" data-target-section="modules">Volver</button>
+                <div class="report-problem-container">
+                    <h1><i class="fas fa-exclamation-triangle"></i> Reportar un Problema</h1>
+
+                    <form id="reportIssueForm">
+                        <div class="form-group">
+                            <label for="nombreEstudiante">Tu Nombre:</label>
+                            <input type="text" id="nombreEstudiante" name="nombreEstudiante" placeholder="Ej: Juan Pérez" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="carreraEstudiante">Tu Carrera:</label>
+                            <select id="carreraEstudiante" name="carreraEstudiante" required>
+                                <option value="">-- Selecciona tu Carrera --</option>
+                                <option value="Programacion y Data Science">Programación y Data Science</option>
+                                <option value="Enfermeria">Enfermería</option>
+                                <option value="Podologia">Podología</option>
+                                <option value="Administracion">Administración</option>
+                                <option value="Electricidad">Electricidad</option>
+                                <option value="Construccion">Construcción</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profesorCarrera">Nombre del Profesor</label>
+                            <input type="text" id="profesorCarrera" name="profesorCarrera" placeholder="Opcional">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="motivoReporte">Describe el Problema:</label>
+                            <textarea id="motivoReporte" name="motivoReporte" rows="5" placeholder="Explica detalladamente el problema que deseas reportar..." required></textarea>
+                        </div>
+
+                        <button type="submit" id="submitReportBtn"><i class="fas fa-paper-plane"></i> Enviar Reporte</button>
+
+                        <div id="formMessage" class="message"></div>
+                    </form>
+                </div>
+            </section>
+
         </div>
     </main>
 
@@ -2708,6 +2937,7 @@
         const academicCalendarSection = document.getElementById('academic-calendar-section'); // Agregado para consistencia
         const notificationsSection = document.getElementById('notifications-section'); // Agregado para consistencia
         const scholarshipsSection = document.getElementById('scholarships-section'); // NUEVO
+        const reportIssueSection = document.getElementById('report-issue-section'); // NUEVO para el formulario de problemas
         const backButtons = document.querySelectorAll('.back-button');
 
         // Elementos del Modal de Autenticación (actualizados para el nuevo login)
@@ -2759,6 +2989,11 @@
         const closeContactDetailsModalBtn = document.getElementById('close-contact-details-modal');
         const contactDetailsTitle = document.getElementById('contact-details-title');
         const contactDetailsOutput = document.getElementById('contact-details-output');
+
+        // Elementos del Formulario de Reportar Problemas (NUEVOS - desde problema.html)
+        const reportIssueForm = document.getElementById('reportIssueForm');
+        const formMessage = document.getElementById('formMessage'); // Mensaje dentro del formulario de reporte
+        const submitReportBtn = document.getElementById('submitReportBtn');
 
 
         // Constantes
@@ -2827,6 +3062,8 @@
                 } else if (sectionId === 'scholarships') { // NUEVO: Inicializa la sección de becas
                     // No hay lógica JS compleja para la sección de becas, solo asegura que los enlaces toggleBeca funcionen.
                     // La función toggleBeca ya está globalmente disponible, por lo que no se necesita una llamada de inicialización específica aquí.
+                } else if (sectionId === 'report-issue') { // NUEVO: para el formulario de reporte de problemas
+                    // Puedes añadir lógica específica si es necesario al mostrar esta sección
                 }
             }
 
@@ -2896,6 +3133,33 @@
                 responseMessageNotificationDiv.classList.add('bg-red-100', 'text-red-800');
             } else {
                 responseMessageNotificationDiv.classList.add('bg-blue-100', 'text-blue-800');
+            }
+            // Muestra el mensaje
+            responseMessageNotificationDiv.style.display = 'block';
+            // Ocultar automáticamente mensajes de éxito/info después de 5 segundos
+            if (type === 'success' || type === 'info') {
+                setTimeout(() => {
+                    responseMessageNotificationDiv.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+
+        /**
+         * Función para mostrar mensajes en el formulario de reporte de problemas.
+         * Es una versión adaptada de showFormMessage para este formulario específico.
+         * @param {string} message - El mensaje a mostrar.
+         * @param {string} type - 'success', 'error' o 'info'.
+         */
+        function showReportFormMessage(message, type) {
+            formMessage.textContent = message;
+            formMessage.className = `message ${type}`; // Elimina clases anteriores y añade la nueva
+            formMessage.style.display = 'block'; // Muestra el mensaje
+            // Ocultar automáticamente mensajes de éxito/info después de 5 segundos
+            if (type === 'success' || type === 'info') {
+                setTimeout(() => {
+                    formMessage.style.display = 'none';
+                }, 5000);
             }
         }
 
@@ -3546,6 +3810,68 @@
                 if (e.target === contactDetailsModal) {
                     closeContactDetailsModal();
                 }
+            });
+
+            // Lógica del Formulario de Reportar Problemas (NUEVO - integrado de problema.html)
+            reportIssueForm.addEventListener('submit', async (e) => {
+                e.preventDefault(); // Evita el envío tradicional del formulario
+
+                // Deshabilita el botón y cambia el texto mientras se envía
+                submitReportBtn.disabled = true;
+                submitReportBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+                // Recopila los datos del formulario
+                const nombre = document.getElementById('nombreEstudiante').value;
+                const carrera = document.getElementById('carreraEstudiante').value; // Obtener valor del select
+                const profesor = document.getElementById('profesorCarrera').value;
+                const motivo = document.getElementById('motivoReporte').value;
+
+                // Simple validación
+                // Asegúrate de que la carrera seleccionada no sea la opción por defecto vacía
+                if (!nombre || !carrera || carrera === "" || !motivo) {
+                    showReportFormMessage('Por favor, completa todos los campos requeridos (Nombre, Carrera, Motivo).', 'error');
+                    submitReportBtn.disabled = false; // Re-habilita el botón
+                    submitReportBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Reporte';
+                    return;
+                }
+
+                showReportFormMessage('Enviando reporte...', 'info');
+                
+                await new Promise(resolve => setTimeout(resolve, 2500)); // Simula un retraso de 2.5 segundos
+
+                // Aquí es donde normalmente enviarías los datos a un servidor.
+                // Ejemplo con fetch API (descomenta y adapta a tu backend real):
+                /*
+                try {
+                    const response = await fetch('/api/reportar-problema', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ nombre, carrera, profesor, motivo }),
+                    });
+
+                    if (response.ok) {
+                        showReportFormMessage('Reporte enviado con éxito. ¡Gracias por tu retroalimentación!', 'success');
+                        reportIssueForm.reset(); // Limpia el formulario al éxito
+                    } else {
+                        const errorData = await response.json();
+                        showReportFormMessage(`Error al enviar el reporte: ${errorData.message || 'Inténtalo de nuevo.'}`, 'error');
+                    }
+                } catch (error) {
+                    console.error('Error de red o del servidor:', error);
+                    showReportFormMessage('Hubo un problema de conexión. Por favor, inténtalo más tarde.', 'error');
+                } finally {
+                    submitReportBtn.disabled = false; // Siempre re-habilita el botón
+                    submitReportBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Reporte';
+                }
+                */
+
+                // Para esta simulación, asumimos éxito
+                showReportFormMessage('Reporte enviado con éxito. ¡Gracias por tu retroalimentación!', 'success');
+                reportIssueForm.reset(); // Limpia el formulario después de la simulación
+                submitReportBtn.disabled = false; // Re-habilita el botón
+                submitReportBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Reporte';
             });
 
         }
