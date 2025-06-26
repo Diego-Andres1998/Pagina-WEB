@@ -17,6 +17,869 @@
                         los estilos por defecto de los navegadores.
            ====================================================================
         */
+
+        /* Estilos del Formulario de Admisión Integrados y Adaptados */
+        #admision-section .form-container { 
+            background-color: var(--color-fondo-claro); 
+            padding: var(--espaciado-xl); 
+            border-radius: var(--radio-borde); /* Usa variable existente */
+            box-shadow: var(--sombra-suave); /* Usa variable existente */
+            width: 100%;
+            max-width: 700px;
+            box-sizing: border-box;
+            margin: var(--espaciado-lg) auto; /* Centrar y espaciar */
+            text-align: left; /* Para que labels y inputs se alineen bien */
+        }
+        #admision-section .form-container h2 {
+            color: var(--color-primario); /* Usa variable existente */
+            text-align: center;
+            margin-bottom: var(--espaciado-sm); /* Usa variable existente */
+            font-size: 2em; /* Ajustar tamaño si es necesario */
+        }
+        #admision-section .form-container .divider {
+            width: 80px;
+            height: 4px;
+            background-color: var(--color-advertencia); /* Usa variable existente (naranja) */
+            margin: 0 auto var(--espaciado-lg) auto; /* Usa variable existente */
+            border-radius: 2px;
+        }
+        #admision-section .form-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--espaciado-md); /* Usa variable existente */
+        }
+        #admision-section .input-group label {
+            display: block; /* Asegurar que la etiqueta esté en su propia línea */
+            margin-bottom: var(--espaciado-xs); /* Usa variable existente */
+            color: var(--color-texto); /* Usa variable existente */
+            font-size: var(--font-size-sm); /* Usa variable existente */
+            font-weight: 600; /* Consistencia con otros labels */
+        }
+        #admision-section .input-group input,
+        #admision-section .input-group select {
+            width: 100%;
+            padding: var(--espaciado-sm); /* Usa variable existente */
+            border: 1px solid var(--color-borde); /* Usa variable existente */
+            border-radius: var(--radio-borde); /* Usa variable existente */
+            box-sizing: border-box;
+            font-size: var(--font-size-base); /* Usa variable existente */
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        #admision-section .input-group input:focus,
+        #admision-section .input-group select:focus {
+            outline: none;
+            border-color: var(--color-primario); /* Usa variable existente */
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2); /* Consistencia con otros focus */
+        }
+        #admision-section .input-group select:disabled {
+            background-color: var(--color-terciario); /* Usa variable existente */
+            cursor: not-allowed;
+        }
+        #admision-section .submit-button {
+            background-color: var(--color-advertencia); /* Usa variable existente (naranja) */
+            color: var(--color-texto-claro); /* Usa variable existente */
+            padding: var(--espaciado-md); /* Usa variable existente */
+            border: none;
+            border-radius: var(--radio-borde); /* Usa variable existente */
+            cursor: pointer;
+            width: 100%;
+            font-size: var(--font-size-lg); /* Usa variable existente */
+            font-weight: bold;
+            margin-top: var(--espaciado-md); /* Usa variable existente */
+            grid-column: 1 / -1;
+            transition: background-color 0.3s;
+        }
+        #admision-section .submit-button:hover {
+            background-color: #004085; /* Un azul más oscuro para hover, consistencia */
+        }
+        /* Responsive para el grid del formulario de admisión */
+        @media (max-width: 600px) {
+            #admision-section .form-fields {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Estilos para la sección Vida Estudiantil */
+        #vida-estudiantil-section .vida-estudiantil-content-wrapper {
+            max-width: 1200px;
+            margin: auto;
+            text-align: left; /* Asegurar que el texto dentro de esta sección esté alineado a la izquierda */
+        }
+
+        #vida-estudiantil-section .section-title {
+            color: var(--color-primario);
+            margin-bottom: var(--espaciado-lg);
+            font-size: 2.2em;
+            text-align: center;
+        }
+        #vida-estudiantil-section h2 { /* Títulos de subsecciones dentro de Vida Estudiantil */
+            color: var(--color-primario); /* Usar color primario para consistencia */
+            text-align: left; /* Alinear a la izquierda para mejor flujo de lectura */
+            margin-top: var(--espaciado-lg);
+            margin-bottom: var(--espaciado-md);
+            font-size: 1.8em; /* Un poco más pequeño que el título principal de la sección */
+            border-bottom: 1px solid var(--color-borde); /* Separador sutil */
+            padding-bottom: var(--espaciado-xs);
+        }
+        #vida-estudiantil-section p {
+            color: var(--color-texto); /* Usar color de texto principal del portal */
+            font-size: 1em; /* Tamaño de fuente estándar del portal */
+            margin-bottom: var(--espaciado-md);
+        }
+        #vida-estudiantil-section hr {
+            border: none;
+            border-top: 1px solid var(--color-borde); /* Usar variable de borde del portal */
+            margin: var(--espaciado-lg) 0;
+        }
+        #vida-estudiantil-section .grid-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: var(--espaciado-md); 
+        }
+        #vida-estudiantil-section .card { 
+            background-color: var(--color-fondo-claro); /* Fondo de tarjeta consistente */
+            padding: var(--espaciado-md); 
+            border-radius: var(--radio-borde); 
+            box-shadow: var(--sombra-suave); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            color: var(--color-texto);
+        }
+        #vida-estudiantil-section .card p {
+            color: var(--color-texto); 
+            font-size: 0.95em;
+        }
+        #vida-estudiantil-section .card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1); 
+        }
+        #vida-estudiantil-section .card h3 {
+            color: var(--color-primario); /* Títulos de card con color primario */
+            margin-top: 0;
+            margin-bottom: var(--espaciado-sm);
+            font-size: 1.25em;
+        }
+        #vida-estudiantil-section .card a {
+            display: inline-block;
+            margin-top: var(--espaciado-sm);
+            color: var(--color-modulo-azul); /* Color de enlace del portal */
+            text-decoration: none;
+            border-bottom: 1px solid var(--color-borde); 
+            padding-bottom: 2px;
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+        #vida-estudiantil-section .card a:hover {
+            color: var(--color-primario); 
+            border-color: var(--color-primario);
+        }
+        #vida-estudiantil-section .gallery { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: var(--espaciado-sm); 
+        }
+        #vida-estudiantil-section .gallery img { 
+            width: 100%; 
+            height: 200px; 
+            object-fit: cover; 
+            border-radius: var(--radio-borde); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        }
+        #vida-estudiantil-section .gallery img:hover { 
+            transform: scale(1.03); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        #vida-estudiantil-section #enlaces-vida ul { /* ID específico para esta sección */
+            list-style: none; 
+            padding: 0; 
+            text-align: center;
+        }
+        #vida-estudiantil-section #enlaces-vida li { 
+            margin-bottom: var(--espaciado-sm); 
+        }
+        #vida-estudiantil-section #enlaces-vida a {
+            color: var(--color-texto);
+            text-decoration: none;
+            padding: var(--espaciado-xs) var(--espaciado-sm);
+            border: 1px solid var(--color-borde);
+            border-radius: var(--radio-borde);
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            display: inline-block;
+        }
+        #vida-estudiantil-section #enlaces-vida a:hover {
+            background-color: var(--color-secundario);
+            color: var(--color-primario);
+            border-color: var(--color-primario);
+        }
+        #vida-estudiantil-section .faq-item {
+            background-color: var(--color-secundario); /* Fondo más suave */
+            padding: var(--espaciado-md);
+            border-radius: var(--radio-borde);
+            margin-bottom: var(--espaciado-sm);
+            color: var(--color-texto);
+        }
+        #vida-estudiantil-section .faq-item p {
+            color: var(--color-texto); 
+            font-size: 0.95em;
+             margin-bottom: 0; /* Evitar doble margen si es el último elemento */
+        }
+        #vida-estudiantil-section .faq-item h3 {
+            color: var(--color-primario);
+            margin-top: 0;
+            margin-bottom: var(--espaciado-xs);
+            font-size: 1.1em;
+        }
+        /* Fin de estilos para Vida Estudiantil */
+
+        /* Estilos para la sección Noticias */
+        #noticias-section {
+            /* La imagen de fondo del body de noticias.html se omite para usar la de index.html */
+            /* font-family: 'Poppins', sans-serif; -- Se usará Inter de index.html */
+        }
+
+        #noticias-section .noticias-header-container { /* Renombrado desde .header-container */
+            padding: 2rem 0 1.5rem; /* Reducido el padding vertical */
+            /* Se mantiene el gradiente y la imagen de fondo, pero se podrían ajustar los colores a la paleta del portal */
+            background: linear-gradient(rgba(0, 86, 179, 0.85), rgba(46, 139, 87, 0.85)), 
+                        url('https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            color: var(--blanco);
+            text-align: center;
+            margin-bottom: 2rem; /* Ajustado */
+            border-radius: 0 0 var(--radio-borde) var(--radio-borde); /* Usar variable */
+            box-shadow: var(--sombra-suave); /* Usar variable */
+        }
+
+        #noticias-section .logo-container { /* Estilos para el logo dentro del header de noticias */
+            width: 100px; /* Reducido */
+            height: 100px; /* Reducido */
+            margin: 0 auto 1rem;
+            background: var(--blanco);
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            padding: 10px;
+            transition: transform 0.4s ease;
+        }
+        #noticias-section .logo-container:hover {
+            transform: scale(1.05);
+        }
+        #noticias-section .logo-container img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 50%;
+        }
+
+        #noticias-section .header-title { /* Título principal dentro del header de noticias */
+            font-weight: 700;
+            color: var(--blanco);
+            font-size: 2em; /* Ajustado */
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            margin-top: 0.5rem;
+        }
+        #noticias-section .header-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            font-size: 1.1em; /* Ajustado */
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #noticias-section .filter-container {
+            background-color: var(--color-fondo-claro); /* Variable del portal */
+            border-radius: var(--radio-borde);
+            padding: var(--espaciado-md);
+            box-shadow: var(--sombra-suave);
+            margin: -30px auto var(--espaciado-lg) auto; /* Ajuste para superposición y margen inferior */
+            max-width: 800px; /* Ajustado */
+            position: relative;
+            z-index: 5; /* Menor que el header principal para que no se superponga incorrectamente */
+        }
+        #noticias-section .filter-title {
+            font-size: 1.1em; /* Ajustado */
+            font-weight: 600;
+            color: var(--color-texto); /* Variable del portal */
+            margin-bottom: var(--espaciado-sm);
+            text-align: center;
+        }
+        #noticias-section .filter-btn-wrapper { /* Nuevo wrapper para centrar botones si es necesario */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--espaciado-xs);
+        }
+        #noticias-section .filter-btn {
+            background: transparent;
+            border: 1px solid var(--color-borde); /* Variable del portal */
+            padding: var(--espaciado-xs) var(--espaciado-md); /* Ajustado */
+            border-radius: var(--radio-borde-circular); /* Más redondeado */
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0; /* Eliminado margen individual, controlado por gap del wrapper */
+            color: var(--color-texto);
+            font-size: 0.9em;
+        }
+        #noticias-section .filter-btn:hover, 
+        #noticias-section .filter-btn.active {
+            color: var(--blanco);
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        /* Colores de filtro adaptados a variables del portal si es posible, o mantenidos */
+        #noticias-section .filter-btn[data-filter="valdivia"]:hover, 
+        #noticias-section .filter-btn[data-filter="valdivia"].active { background-color: var(--color-exito); } /* Verde */
+        #noticias-section .filter-btn[data-filter="paillaco"]:hover, 
+        #noticias-section .filter-btn[data-filter="paillaco"].active { background-color: var(--color-advertencia); } /* Naranja */
+        #noticias-section .filter-btn[data-filter="panguipulli"]:hover, 
+        #noticias-section .filter-btn[data-filter="panguipulli"].active { background-color: var(--color-primario); } /* Azul */
+        #noticias-section .filter-btn[data-filter="la-union"]:hover, 
+        #noticias-section .filter-btn[data-filter="la-union"].active { background-color: #6a1b9a; } /* Morado mantenido */
+        #noticias-section .filter-btn[data-filter="all"]:hover, 
+        #noticias-section .filter-btn[data-filter="all"].active {
+            background: linear-gradient(to right, var(--color-exito), var(--color-primario));
+        }
+
+        #noticias-section .noticias-main-container { /* Renombrado desde .main-container */
+            background-color: transparent; /* El fondo ya está en la sección principal */
+            border-radius: 0; /* Sin bordes redondeados aquí */
+            box-shadow: none; /* Sin sombra aquí */
+            padding: 0; /* Sin padding aquí, se maneja por las cards */
+            margin-bottom: var(--espaciado-lg);
+        }
+        #noticias-section .news-container {
+             /* Contenedor para las tarjetas de noticias */
+        }
+        #noticias-section .news-row { /* Reemplazo de .row de Bootstrap */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Grid responsivo */
+            gap: var(--espaciado-md); /* Espacio entre tarjetas */
+        }
+        #noticias-section .news-col { /* Reemplazo de .col-md-6 .col-lg-4 */
+            /* No se necesita width aquí, el grid lo maneja */
+        }
+
+        #noticias-section .news-card {
+            border-radius: var(--radio-borde);
+            overflow: hidden;
+            box-shadow: var(--sombra-suave);
+            transition: all 0.3s ease;
+            height: 100%; /* Para que todas las tarjetas en una fila tengan la misma altura si están en un flex/grid container */
+            background: var(--color-fondo-claro);
+            border: 1px solid var(--color-borde);
+            display: flex; /* Para mejor alineación interna */
+            flex-direction: column;
+        }
+        #noticias-section .news-card:hover {
+            transform: translateY(-5px); /* Sutil levantamiento */
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        #noticias-section .card-img-top {
+            height: 200px; /* Altura fija para imágenes */
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        #noticias-section .news-card:hover .card-img-top {
+            transform: scale(1.03);
+        }
+        #noticias-section .category-tag {
+            position: absolute;
+            top: var(--espaciado-sm);
+            right: var(--espaciado-sm);
+            background: rgba(255,255,255,0.9); /* Fondo semi-transparente */
+            padding: var(--espaciado-xs) var(--espaciado-sm);
+            border-radius: var(--radio-borde);
+            font-weight: 600;
+            font-size: 0.8rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            z-index: 1; /* Para estar sobre la imagen */
+        }
+        /* Colores de tags adaptados */
+        #noticias-section .valdivia .category-tag { color: var(--color-exito); border-left: 3px solid var(--color-exito); }
+        #noticias-section .paillaco .category-tag { color: var(--color-advertencia); border-left: 3px solid var(--color-advertencia); }
+        #noticias-section .panguipulli .category-tag { color: var(--color-primario); border-left: 3px solid var(--color-primario); }
+        #noticias-section .la-union .category-tag { color: #6a1b9a; border-left: 3px solid #6a1b9a; }
+        #noticias-section .general .category-tag { color: var(--color-error); border-left: 3px solid var(--color-error); } /* Rojo para general */
+
+        #noticias-section .card-body {
+            padding: var(--espaciado-md);
+            flex-grow: 1; /* Para que el cuerpo de la tarjeta ocupe el espacio disponible */
+            display: flex;
+            flex-direction: column;
+        }
+        #noticias-section .card-date {
+            color: #6c757d; /* Mantenido por ser específico */
+            font-size: 0.85rem;
+            margin-bottom: var(--espaciado-xs);
+            display: flex;
+            align-items: center;
+        }
+        #noticias-section .card-date i {
+            margin-right: var(--espaciado-xs);
+            font-size: 0.9rem;
+        }
+        #noticias-section .card-title {
+            font-weight: 600;
+            font-size: 1.15rem; /* Ajustado */
+            margin-bottom: var(--espaciado-sm);
+            color: var(--color-texto);
+            line-height: 1.3;
+        }
+        #noticias-section .card-text {
+            color: var(--color-texto); 
+            font-size: 0.95rem; /* Ajustado */
+            margin-bottom: var(--espaciado-md);
+            line-height: 1.5;
+            flex-grow: 1; /* Para empujar el enlace "Leer más" hacia abajo */
+        }
+        #noticias-section .read-more {
+            color: var(--color-primario); /* Usar color primario del portal */
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            margin-top: auto; /* Empuja al final del card-body */
+        }
+        #noticias-section .read-more i {
+            margin-left: var(--espaciado-xs);
+            transition: transform 0.3s ease;
+        }
+        #noticias-section .read-more:hover {
+            color: var(--color-modulo-azul); /* Un azul más brillante para hover */
+        }
+        #noticias-section .read-more:hover i {
+            transform: translateX(4px);
+        }
+        /* Fin de estilos para Noticias */
+
+        .search-highlight {
+            outline: 2px solid var(--color-advertencia); /* Resaltado para resultados de búsqueda */
+            box-shadow: 0 0 10px hsla(from var(--color-advertencia) h s l / 0.5); /* Sombra suave */
+        }
+
+        /* Ajuste para que los elementos de lista de carreras mantengan su estilo de viñeta al ser resaltados */
+        #carreras-info-section li.search-highlight {
+            display: list-item !important; /* Asegurar que se muestre como item de lista y anular otros display:none */
+        }
+        /* Ajuste para que las cards de módulos (que son grid items) se muestren correctamente al ser resaltadas */
+        #modules-section .module-card.search-highlight {
+            display: block !important; /* O el display original si era grid/flex item directo */
+        }
+         /* Ajuste para que las cards de vida estudiantil se muestren correctamente */
+        #vida-estudiantil-section .card.search-highlight, #vida-estudiantil-section .faq-item.search-highlight {
+            display: block !important; /* O el display original si era grid/flex item directo */
+        }
+        /* Ajuste para que las cards de noticias se muestren correctamente */
+        #noticias-section .news-card.search-highlight {
+            display: flex !important; /* O el display original si era grid/flex item directo */
+        }
+
+
+        /* Variables de Tema Claro (Default) */
+        :root {
+            --color-primario: #0056b3; 
+            --color-secundario: #f0f2f5; 
+            --color-terciario: #e0e6ec; 
+            --color-texto: #333333; /* Texto principal oscuro */
+            --color-texto-claro: #6c757d; /* Gris oscuro para textos secundarios, buena legibilidad en fondos claros */
+            --color-texto-header-footer: #f8f9fa; /* Para texto en header/footer oscuro */
+            --color-borde: #ddd; 
+            --color-fondo-claro: #ffffff; 
+            --color-fondo-principal: #f8f8f8; /* Fondo general del body */
+            --color-fondo-tarjeta: #ffffff; /* Fondo para cards, modales, etc. */
+            --color-sombra: rgba(0, 0, 0, 0.1);
+            --color-exito: #28a745; 
+            --color-error: #dc3545; 
+            --color-advertencia: #ffc107; 
+            --espaciado-xs: 4px; 
+            --espaciado-sm: 0.5rem;
+            --espaciado-md: 1rem;
+            --espaciado-lg: 1.5rem;
+            --espaciado-xl: 2rem; 
+            --sombra-suave: 0 4px 6px var(--color-sombra);
+            --transicion-rapida: all 0.3s ease-in-out;
+            --radio-borde: 8px; 
+            --radio-borde-circular: 9999px; 
+            --font-size-base: 1rem; 
+            --font-size-sm: 0.875rem; 
+            --font-size-lg: 1.125rem; 
+
+            --color-modulo-azul: #007bff; 
+            --color-modulo-naranja: #fd7e14; 
+            --color-modulo-verde: #28a745; 
+
+            /* Variables específicas del login (pueden o no cambiar con el tema) */
+            --primary-login-color: #2E8B57; 
+            --secondary-login-color: #1565C0; 
+            --accent-login-color: #FF8C00; 
+            --text-login-color: #4B5563; 
+            --heading-login-color: #111827; 
+            --error-login-color: #EF4444; 
+            --success-login-color: #10B981; 
+            --background-login-color: #F9FAFB; 
+            --card-background-login: #ffffff; 
+            --input-border-login: #E5E7EB; 
+            --input-focus-login: #2E8B57; 
+            --animation-duration: 0.3s; 
+
+            /* Variables de notas (pueden o no cambiar) */
+            --cft-verde-notas: #006837; 
+            --cft-azul-notas: #0056a3;  
+            --cft-naranjo-notas: #f15a24; 
+            --cft-gris-claro-notas: #f5f5f5; 
+            --cft-gris-medio-notas: #e0e0e0; 
+            --cft-texto-notas: #333333; 
+        }
+
+        /* Variables de Tema Oscuro */
+        body.theme-dark {
+            --color-primario: #58a6ff; /* Azul más brillante para tema oscuro */
+            --color-secundario: #2c3035; /* Fondo de elementos secundarios */
+            --color-terciario: #373e47; /* Bordes o fondos ligeramente más claros */
+            --color-texto: #c9d1d9;    /* Texto claro principal */
+            --color-texto-claro: #b0bac6; /* Texto claro secundario */
+            --color-texto-header-footer: #24292e; /* Texto oscuro para header/footer claro */
+            --color-borde: #444c56;     /* Bordes más oscuros */
+            --color-fondo-claro: #22272e; /* Fondos de elementos como tarjetas */
+            --color-fondo-principal: #1c2128; /* Fondo general del body */
+            --color-fondo-tarjeta: #22272e;
+            --color-sombra: rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+            
+            --color-exito: #56d364;
+            --color-error: #f85149;
+            --color-advertencia: #e3b341;
+
+            --color-modulo-azul: #58a6ff;
+            --color-modulo-naranja: #ffa657;
+            --color-modulo-verde: #56d364;
+            
+            /* Ajustes específicos para login en tema oscuro si es necesario */
+            --text-login-color: #c9d1d9;
+            --heading-login-color: #f0f6fc;
+            --background-login-color: #1c2128;
+            --card-background-login: #22272e;
+            --input-border-login: #444c56;
+            --input-focus-login: #58a6ff;
+
+            --cft-texto-notas: #c9d1d9;
+            --cft-gris-claro-notas: #2c3035;
+            --cft-gris-medio-notas: #373e47;
+        }
+
+        /* Aplicación base de colores de tema */
+        body {
+            background-color: var(--color-fondo-principal);
+            color: var(--color-texto);
+            /* La imagen de fondo del body se mantiene, pero el color de fondo cambia */
+        }
+
+        header { /* Header principal del portal */
+            background-color: var(--color-fondo-tarjeta); /* Adaptar al tema */
+            border-bottom: 1px solid var(--color-borde);
+            box-shadow: var(--sombra-suave);
+        }
+         header .logo {
+            color: var(--color-primario); /* El logo puede usar el color primario del tema */
+        }
+        nav ul li a.btn-nav-link { /* Botones de navegación como "Página Oficial" */
+            background-color: var(--color-secundario);
+            color: var(--color-texto); /* Texto principal */
+            border: 1px solid var(--color-borde); /* Añadir borde para mejor definición en tema oscuro */
+        }
+        nav ul li a.btn-nav-link:hover {
+            background-color: var(--color-primario);
+            color: var(--blanco); /* Texto blanco sobre fondo primario */
+            border-color: var(--color-primario);
+        }
+        
+        /* Ajuste general para botones de acción primarios y secundarios */
+        .btn-primario {
+            background-color: var(--color-primario);
+            color: var(--blanco); /* Asumir texto blanco sobre color primario */
+        }
+        .btn-primario:hover {
+            background-color: hsl(from var(--color-primario) h s calc(l - 10%)); /* oscurecer un poco */
+        }
+        .btn-secundario {
+            background-color: var(--color-terciario);
+            color: var(--color-texto);
+        }
+        .btn-secundario:hover {
+            background-color: hsl(from var(--color-terciario) h s calc(l - 10%)); 
+        }
+
+
+        .content-section, 
+        .profile-detail-card,
+        #admision-section .form-container, /* Contenedor del form de admisión */
+        #noticias-section .filter-container, /* Contenedor de filtros de noticias */
+        #noticias-section .news-card /* Tarjetas de noticias */
+        {
+            background-color: var(--color-fondo-tarjeta); /* Fondo de tarjetas/secciones */
+            box-shadow: var(--sombra-suave);
+            border: 1px solid var(--color-borde); /* Borde sutil para tema oscuro */
+        }
+        
+        /* Párrafos dentro de content-section deben usar el color de texto principal */
+        .content-section p, 
+        .profile-detail-card p,
+        #carreras-info-section p, /* Párrafos en sección carreras */
+        #vida-estudiantil-section p, /* Párrafos en vida estudiantil */
+        #noticias-section .card-text, /* Texto en tarjetas de noticias */
+        #noticias-section .header-subtitle /* Subtítulo header noticias */
+        {
+            color: var(--color-texto); 
+        }
+        
+        /* Títulos dentro de content-section */
+        .content-section h1, .content-section h2, .content-section h3,
+        .profile-detail-card h2,
+        #carreras-info-section h1, #carreras-info-section h2,
+        #vida-estudiantil-section .section-title, #vida-estudiantil-section h2, #vida-estudiantil-section .card h3, #vida-estudiantil-section .faq-item h3,
+        #noticias-section .header-title, #noticias-section .filter-title, #noticias-section .card-title
+         {
+            color: var(--color-primario); /* Títulos con color primario del tema */
+        }
+        #noticias-section .category-tag { /* Tags de categorías en noticias */
+            background: var(--color-fondo-principal); /* Fondo principal para contraste */
+             /* El color del texto y borde izquierdo se maneja por clases específicas (valdivia, paillaco, etc.) */
+        }
+
+
+        /* Inputs y Selects generales (ej. perfil, reporte problema, admisión) */
+        input[type="text"], input[type="email"], input[type="tel"], input[type="password"], select, textarea {
+            background-color: var(--color-fondo-principal); /* Fondo del input */
+            color: var(--color-texto); /* Texto del input */
+            border: 1px solid var(--color-borde);
+        }
+        input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="password"]:focus, select:focus, textarea:focus {
+            border-color: var(--color-primario);
+            box-shadow: 0 0 0 2px hsla(from var(--color-primario) h s l / 0.2);
+        }
+        /* Placeholder color */
+        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: var(--color-texto-claro);
+            opacity: 1; /* Firefox */
+        }
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: var(--color-texto-claro);
+        }
+        ::-ms-input-placeholder { /* Microsoft Edge */
+            color: var(--color-texto-claro);
+        }
+
+
+        /* Modal de login */
+        .modal-content { /* Ya tiene .modal-content como clase base */
+             background-color: var(--card-background-login); /* Usa la variable de login que puede o no cambiar */
+        }
+        .login-header { /* El header del login tiene su propio gradiente, podría mantenerse o adaptarse */
+            /* background: linear-gradient(135deg, var(--primary-login-color), var(--secondary-login-color)); */
+            /* color: white;  -- ya está definido */
+        }
+        .login-form label {
+            color: var(--text-login-color);
+        }
+        .input-group input { /* Inputs específicos del login */
+            border: 1px solid var(--input-border-login);
+            background-color: var(--color-fondo-principal); /* Fondo de input del tema */
+            color: var(--color-texto); /* Texto del input del tema */
+        }
+        .input-group input:focus {
+            border-color: var(--input-focus-login);
+            box-shadow: 0 0 0 3px hsla(from var(--input-focus-login) h s l / 0.2);
+        }
+        .input-group i { /* Iconos en inputs de login */
+            color: var(--text-login-color);
+        }
+        .input-group input:focus + i {
+            color: var(--input-focus-login);
+        }
+        .login-footer {
+            color: var(--text-login-color);
+            border-top: 1px solid var(--input-border-login);
+        }
+
+        /* Módulos (tarjetas) */
+        .module-card {
+            background-color: var(--color-fondo-tarjeta);
+            border: 1px solid var(--color-borde);
+        }
+        .module-card .icon {
+            color: var(--color-primario);
+        }
+        .module-card h3 {
+            color: var(--color-texto); /* Texto principal para títulos de módulo */
+        }
+        .module-card p {
+            color: var(--color-texto-claro); /* Texto secundario para descripción */
+        }
+        /* Hovers de módulos, los colores de fondo se mantienen, pero el texto interior debe ser blanco */
+        .module-card.hover-blue:hover, 
+        .module-card.hover-orange:hover, 
+        .module-card.hover-green:hover { 
+            color: var(--blanco); /* Asegurar que el color de texto general sea blanco */
+        }
+        .module-card.hover-blue:hover .icon, .module-card.hover-blue:hover h3, .module-card.hover-blue:hover p,
+        .module-card.hover-orange:hover .icon, .module-card.hover-orange:hover h3, .module-card.hover-orange:hover p,
+        .module-card.hover-green:hover .icon, .module-card.hover-green:hover h3, .module-card.hover-green:hover p {
+            color: var(--blanco); /* Forzar blanco para todos los elementos internos en hover */
+        }
+
+
+        /* Calendario académico (tabla) */
+        .schedule-container {
+            background-color: var(--color-fondo-tarjeta);
+            border: 1px solid var(--color-borde);
+        }
+        .schedule-container h1 { /* Título del horario */
+            color: var(--color-primario);
+        }
+        table th { /* Encabezados de tabla */
+            background-color: var(--color-primario); 
+            color: var(--blanco); /* Texto blanco sobre fondo primario */
+            border: 1px solid var(--color-borde);
+        }
+        table td {
+            border: 1px solid var(--color-borde);
+            color: var(--color-texto);
+        }
+        tr:nth-child(even) { /* Filas pares de la tabla */
+            background-color: var(--color-secundario); 
+        }
+        .time-slot { /* Celda de hora */
+            background-color: var(--color-terciario); 
+            color: var(--color-texto);
+        }
+        .subject-cell { /* Celda de asignatura */
+            /* Los colores de fondo de las asignaturas son específicos, pero el texto debe ser blanco */
+            color: var(--blanco); 
+        }
+
+        /* Notas y Asistencia */
+        #notes-attendance-section .materia-card {
+            background: var(--color-fondo-tarjeta);
+            border: 1px solid var(--color-borde);
+        }
+        #notes-attendance-section .materia-header {
+            background-color: var(--color-primario);
+            color: var(--blanco);
+        }
+        #notes-attendance-section .materia-header h3 { color: var(--blanco); } /* Asegurar blanco */
+        #notes-attendance-section .unidad {
+            background-color: var(--color-secundario);
+        }
+        #notes-attendance-section .unidad h4 {
+            color: var(--color-primario);
+        }
+        #notes-attendance-section .nota-label {
+            color: var(--color-texto-claro);
+        }
+        /* .nota-value se colorea por JS, pero el texto debe ser blanco */
+        #notes-attendance-section .nota-value { color: var(--blanco); }
+
+        #notes-attendance-section .promedio-container {
+             background-color: hsla(from var(--accent-login-color) h s l / 0.1); /* Tinte del color de acento */
+        }
+        #notes-attendance-section .promedio-label, #notes-attendance-section .promedio-value {
+            color: var(--accent-login-color); /* Mantener color de acento */
+        }
+         #notes-attendance-section .asistencia {
+            background-color: var(--color-fondo-tarjeta); /* Fondo de tarjeta */
+            border-top: 1px solid var(--color-borde);
+        }
+        #notes-attendance-section .asistencia-value {
+            color: var(--color-exito); /* Verde éxito */
+        }
+        #notes-attendance-section .progress-bar {
+            background-color: var(--color-secundario);
+        }
+        #notes-attendance-section .progress {
+            background-color: var(--color-exito);
+        }
+
+
+        /* Becas */
+        #scholarships-section .beca-item {
+            border: 1px solid var(--color-borde);
+            background-color: var(--color-fondo-tarjeta);
+        }
+        #scholarships-section .beca-header {
+            background-color: var(--color-modulo-azul); /* Mantener color distintivo o mapear a primario */
+            color: var(--blanco);
+        }
+        #scholarships-section .beca-header h3 { color: var(--blanco); }
+        #scholarships-section .beca-content {
+            background-color: var(--color-secundario);
+        }
+        #scholarships-section .beca-content p, #scholarships-section .beca-content li {
+            color: var(--color-texto);
+        }
+        #scholarships-section .highlight {
+            background-color: hsla(from var(--color-modulo-azul) h s l / 0.1); /* Tinte del color del módulo */
+            border-left: 5px solid var(--color-modulo-azul);
+        }
+        #scholarships-section .highlight h2 { color: var(--color-primario); }
+        #scholarships-section .highlight ul { color: var(--color-texto); }
+        #scholarships-section a { color: var(--color-modulo-azul); }
+        #scholarships-section a:hover { color: var(--color-primario); }
+
+
+        /* Directorio */
+        #directory-section .sede-title {
+            color: var(--color-primario);
+            border-bottom: 2px solid var(--color-primario);
+        }
+        #directory-section .directory-card {
+            background-color: var(--color-fondo-tarjeta);
+            border: 1px solid var(--color-borde);
+        }
+        #directory-section .directory-card .icon { color: var(--color-primario); }
+        #directory-section .directory-card h3 { color: var(--color-texto); }
+        #directory-section .directory-card p { color: var(--color-texto-claro); }
+        
+        /* Modal de detalles de contacto */
+        #contact-details-modal .modal-content {
+            background-color: var(--color-fondo-tarjeta);
+            color: var(--color-texto);
+        }
+        #contact-details-modal h2 { color: var(--color-primario); border-bottom: 1px solid var(--color-borde); }
+        #contact-details-modal p strong { color: var(--color-primario); }
+        #contact-details-modal a { color: var(--color-modulo-azul); }
+
+
+        /* Footer principal del portal */
+        footer {
+            background-color: var(--color-texto); /* Fondo oscuro */
+            color: var(--color-texto-header-footer); /* Texto claro para footer */
+        }
+        
+        /* Botón de cambio de tema */
+        .theme-toggle-button {
+            border: 1px solid var(--color-borde);
+            color: var(--color-texto);
+        }
+        .theme-toggle-button:hover {
+            border-color: var(--color-primario);
+            color: var(--color-primario);
+        }
+        /* Enlaces de navegación (perfil, cerrar sesión) en dropdown */
+        .profile-dropdown-content {
+            background-color: var(--color-fondo-tarjeta);
+             border: 1px solid var(--color-borde);
+        }
+        .profile-dropdown-content .dropdown-header {
+            border-bottom: 1px solid var(--color-borde);
+        }
+        .profile-dropdown-content #dropdown-username {
+            color: var(--color-primario);
+        }
+        .profile-dropdown-content a {
+            color: var(--color-texto);
+        }
+        .profile-dropdown-content a:hover {
+            background-color: var(--color-secundario);
+        }
+
+
         :root {
             --color-primario: #0056b3; /* Un azul institucional (Original) */
             --color-secundario: #f0f2f5; /* Gris claro para fondos (Original) */
@@ -153,6 +1016,61 @@
             padding: 0;
             margin: 0;
             width: 100%;
+        }
+
+        #carreras-nav-link, #admision-nav-link, #vida-estudiantil-nav-link, #noticias-nav-link { /* Estilos para enlaces de navegación */
+            margin-right: var(--espaciado-sm); 
+        }
+
+        .nav-search-container {
+            display: flex;
+            align-items: center;
+            margin-left: var(--espaciado-md); /* Espacio a la izquierda de la búsqueda */
+        }
+
+        .nav-search-container input[type="search"] {
+            padding: 6px 10px;
+            font-size: 0.9em;
+            border: 1px solid var(--color-borde);
+            border-radius: var(--radio-borde);
+            margin-right: var(--espaciado-xs);
+            width: 150px; /* Ancho inicial, podría expandirse con JS/CSS */
+            transition: width 0.3s ease-in-out;
+        }
+        .nav-search-container input[type="search"]:focus {
+            width: 250px; /* Expandir al enfocar */
+            border-color: var(--color-primario);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.1);
+        }
+
+        .nav-search-container button {
+            padding: 6px 10px;
+            background-color: var(--color-primario);
+            color: var(--blanco);
+            border: none;
+            border-radius: var(--radio-borde);
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        .nav-search-container button:hover {
+            background-color: #004085; /* Un azul más oscuro */
+        }
+
+        .theme-toggle-button {
+            background: none;
+            border: 1px solid var(--color-borde);
+            color: var(--color-texto);
+            padding: 6px 10px;
+            border-radius: var(--radio-borde);
+            cursor: pointer;
+            font-size: 1.2em; /* Tamaño del icono */
+            margin-left: var(--espaciado-md);
+            line-height: 1; /* Para alinear bien el icono verticalmente */
+        }
+        .theme-toggle-button:hover {
+            border-color: var(--color-primario);
+            color: var(--color-primario);
         }
 
         #profile-nav-link {
@@ -297,8 +1215,9 @@
 
         .back-button {
             position: absolute;
-            top: 20px;
+            top: 20px; /* Ajustado para más espacio si es necesario, o usar margin-top */
             left: 20px;
+            z-index: 10; /* Asegurar que esté sobre otros elementos si es necesario */
             background-color: var(--color-secundario);
             color: var(--color-texto);
             border: none;
@@ -1645,7 +2564,26 @@
             <nav>
                 <ul>
                     <li><a href="https://cftdelosrios.cl/" target="_blank" class="btn-nav-link">Página Oficial</a></li>
+                    <li id="carreras-nav-link" style="display: none;"><a href="#" data-section="carreras-info" class="btn-nav-link">Carreras</a></li> 
+                    <li id="admision-nav-link" style="display: none;"><a href="#" data-section="admision" class="btn-nav-link">Admisión</a></li>
+                    <li id="vida-estudiantil-nav-link" style="display: none;"><a href="#" data-section="vida-estudiantil" class="btn-nav-link">Vida Estudiantil</a></li>
+                    <li id="noticias-nav-link" style="display: none;"><a href="#" data-section="noticias" class="btn-nav-link">Noticias</a></li>
                     
+                    <!-- Contenedor de Búsqueda en Navegación -->
+                    <li id="nav-search-li" style="display: none;"> <!-- Se controla visibilidad con JS -->
+                        <div class="nav-search-container">
+                            <input type="search" id="nav-search-input" placeholder="Buscar en el sitio...">
+                            <button id="nav-search-button"><i class="fas fa-search"></i></button>
+                        </div>
+                    </li>
+                    
+                    <!-- Botón de Cambio de Tema -->
+                    <li id="theme-toggle-li" style="display: list-item; margin-left: auto;"> <!-- Se muestra siempre, alineado a la derecha antes del perfil -->
+                         <button id="theme-toggle-button" aria-label="Cambiar tema">
+                            <i class="fas fa-moon"></i> <!-- Icono inicial (luna para tema claro) -->
+                        </button>
+                    </li>
+
                     <li id="profile-nav-link" style="display: none;">
                         <a href="#"> 
                             <img id="nav-profile-pic" src="https://placehold.co/35x35/D3D3D3/000?text=Avatar" alt="Mi Perfil"> <!-- Placeholder for default-avatar.png -->
@@ -1742,6 +2680,44 @@
                     <span class="icon">&#128736;</span> <h3>Reportar Problema</h3>
                     <p>Ayúdanos a mejorar reportando cualquier error del sistema.</p>
                 </div>
+            </section>
+
+            <section id="carreras-info-section" class="content-section" style="text-align: left; color: var(--color-texto);"> <!-- NUEVA SECCIÓN PARA INFORMACIÓN DE CARRERAS -->
+                <button class="back-button" data-target-section="modules">Volver</button>
+                <h1>Oferta de Carreras CFT Estatal de Los Ríos</h1>
+                <p style="color: var(--color-texto); font-size: 1.1em; margin-bottom: var(--espaciado-md);">A continuación, se detalla la oferta de carreras:</p>
+                <ul style="list-style-type: disc; margin-left: 20px; color: var(--color-texto); margin-bottom: var(--espaciado-md);">
+                    <li>TNS en Podología Clínica</li>
+                    <li>TNS en Electricidad mención Energías Renovables</li>
+                    <li>TNS en Enfermería</li>
+                    <li>TNS en Comunicación Audiovisual</li>
+                    <li>TNS en Automatización</li>
+                    <li>TNS en Construcción mención Eficiencia Energética</li>
+                    <li>TNS en Agroindustria e Innovación Alimentaria</li>
+                    <li>TNS en Informática y Data Science</li>
+                    <li>TNS en Refrigeración y Climatización</li>
+                    <li>TNS en Administración Pública Privada</li>
+                    <li>TNS en Turismo de Intereses Especiales</li>
+                </ul>
+
+                <h2 style="color: var(--color-primario); margin-bottom: var(--espaciado-sm); margin-top: var(--espaciado-lg); font-size: 1.8em;">Nuevas Carreras para 2025</h2>
+                <p style="color: var(--color-texto); font-size: 1.1em; margin-bottom: var(--espaciado-md);">Para el año académico 2025, se han destacado algunas nuevas carreras:</p>
+                <ul style="list-style-type: disc; margin-left: 20px; color: var(--color-texto); margin-bottom: var(--espaciado-md);">
+                    <li><strong>TNS en Agroindustria e Innovación Alimentaria</strong> es una nueva carrera para el 2025.</li>
+                    <li><strong>TNS en Informática y Data Science</strong> también se presenta como una nueva carrera para el 2025.</li>
+                    <li>En la Sede Paillaco, se ofrece como <strong>NUEVA CARRERA</strong> la <strong>TNS en Administración Pública y Privada</strong>.</li>
+                </ul>
+
+                <h2 style="color: var(--color-primario); margin-bottom: var(--espaciado-sm); margin-top: var(--espaciado-lg); font-size: 1.8em;">Información Adicional</h2>
+                <p style="color: var(--color-texto); font-size: 1.1em; margin-bottom: var(--espaciado-sm);">
+                    El CFT Estatal de Los Ríos está adscrito a Gratuidad, lo que permite a los estudiantes formarse en sus sedes ubicadas en La Unión, Paillaco, Panguipulli y Valdivia.
+                </p>
+                <p style="color: var(--color-texto); font-size: 1.1em; margin-bottom: var(--espaciado-sm);">
+                    La institución busca formar técnicos que lideren el desarrollo de la Región de los Ríos.
+                </p>
+                <p style="color: var(--color-texto); font-size: 1.1em; margin-bottom: var(--espaciado-md);">
+                    Su sello educativo promueve el desarrollo de Habilidades Sociales, Innovación y Emprendimiento en sus estudiantes.
+                </p>
             </section>
 
             <section id="notes-attendance-section" class="content-section">
@@ -2715,11 +3691,264 @@
                 </div>
             </section>
 
+        <!-- Sección de Admisión - NUEVA E INTEGRADA -->
+        <section id="admision-section" class="content-section">
+            <button class="back-button" data-target-section="modules">Volver</button>
+            <div class="form-container" style="background-color: rgba(255, 255, 255, 0.95); margin-top: 20px;">
+                <h2>¿Qué carrera te interesa?</h2>
+                <div class="divider"></div>
+                <form id="admisionForm" action="#" method="POST">
+                    <div class="form-fields">
+                        <div class="input-group">
+                            <label for="admision-nombre">Nombre *</label>
+                            <input type="text" id="admision-nombre" name="nombre" required>
+                        </div>
+                        <div class="input-group">
+                             <label for="admision-sede">Selecciona una Sede *</label>
+                            <select id="admision-sede" name="sede" required>
+                                <option value="" disabled selected>-- Elige una sede --</option>
+                                <option value="valdivia">Sede Valdivia</option>
+                                <option value="launion">Sede La Unión</option>
+                                <option value="paillaco">Sede Paillaco</option>
+                                <option value="panguipulli">Sede Panguipulli</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="admision-apellido">Apellido *</label>
+                            <input type="text" id="admision-apellido" name="apellido" required>
+                        </div>
+                        <div class="input-group">
+                             <label for="admision-carrera">Selecciona una Carrera *</label>
+                            <select id="admision-carrera" name="carrera" required disabled>
+                                <option value="" disabled selected>-- Primero elige una sede --</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="admision-telefono">Teléfono *</label>
+                            <input type="tel" id="admision-telefono" name="telefono" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="admision-email">Email *</label>
+                            <input type="email" id="admision-email" name="email" required>
+                        </div>
+                         <button type="submit" class="submit-button">Enviar Info</button>
+                    </div>
+                </form>
+            </div>
+            <!-- El icono de WhatsApp se omite aquí para mantener la consistencia del portal,
+                 podría añadirse globalmente si se desea -->
+        </section>
+
+        <!-- Sección de Vida Estudiantil - NUEVA E INTEGRADA -->
+        <section id="vida-estudiantil-section" class="content-section">
+            <button class="back-button" data-target-section="modules">Volver</button>
+            <h1 class="section-title">Vida Estudiantil</h1> <!-- Título principal de la sección -->
+            <p style="text-align: center; color: var(--color-texto); margin-bottom: var(--espaciado-lg);">Tu experiencia más allá de la sala de clases.</p>
+
+            <div class="vida-estudiantil-content-wrapper"> <!-- Wrapper para aplicar estilos del main de vida_estudiantil.html -->
+                <section id="actividades-vida"> <!-- ID cambiado para evitar colisión con #actividades si existiera -->
+                    <h2>Actividades y Talleres</h2>
+                    <p>Descubre los clubes y talleres que tenemos para ti. ¡Participa y desarrolla nuevas habilidades!</p>
+                    <div class="grid-container">
+                        <div class="card">
+                            <h3>Club de Programación</h3>
+                            <p>Un espacio para aprender y desarrollar proyectos con otros estudiantes interesados en la tecnología.</p>
+                            <a href="#">Más información</a>
+                        </div>
+                        <div class="card">
+                            <h3>Taller de Fotografía</h3>
+                            <p>Captura los mejores momentos del campus y aprende técnicas de edición profesional.</p>
+                            <a href="#">Más información</a>
+                        </div>
+                        <div class="card">
+                            <h3>Selección de Pin-Pon</h3>
+                            <p>¡Únete al equipo y representa a nuestro CFT en torneos inter-instituciones!</p>
+                            <a href="#">Más información</a>
+                        </div>
+                    </div>
+                </section>
+
+                <hr> 
+
+                <section id="servicios-vida">  <!-- ID cambiado -->
+                    <h2>Servicios Estudiantiles</h2>
+                    <p>Conoce los servicios de apoyo que están a tu disposición para ayudarte durante tu formación.</p>
+                    <div class="grid-container">
+                        <div class="card">
+                            <h3>Biblioteca</h3>
+                            <p>Accede a nuestro catálogo de libros, salas de estudio y recursos en línea.</p>
+                            <a href="#">Ver horarios</a>
+                        </div>
+                        <div class="card">
+                            <h3>Apoyo Académico</h3>
+                            <p>Recibe tutorías y orientación para las asignaturas que necesites.</p>
+                            <a href="#">Solicitar tutoría</a>
+                        </div>
+                        <div class="card">
+                            <h3>Salud y Bienestar</h3>
+                            <p>Información sobre atención médica y apoyo psicológico.</p>
+                            <a href="#">Conoce los servicios</a>
+                        </div>
+                    </div>
+                </section>
+
+                <hr>
+
+                <section id="galeria-vida"> <!-- ID cambiado -->
+                    <h2>Galería de Fotos</h2>
+                    <p>Revive los mejores momentos de nuestra comunidad estudiantil.</p>
+                    <div class="gallery">
+                        <img src="https://www.astex.es/wp-content/uploads/2023/01/graduacion-en-estados-unidos.jpg.webp" alt="Foto de graduación">
+                        <img src="https://www.diariopaillaco.cl/files/files/20241123_161041.jpg" alt="Foto de torneo deportivo">
+                        <img src="https://portaleduca.cl/wp-content/uploads/2023/03/Inauguracion-Talleres-de-robotica-y-Clubes-de-Ciencia-y-Tecnologia-de-Fundacion-Mustakis.jpg" alt="Foto de taller de robótica">
+                        <img src="https://www.rln.cl/wp-content/uploads/2022/05/WhatsApp-Image-2022-05-14-at-12.39.57-PM-1.jpeg" alt="Foto del día del estudiante">
+                    </div>
+                </section>
+
+                <hr>
+
+                <section id="enlaces-vida"> <!-- ID cambiado -->
+                    <h2>Enlaces de Interés</h2>
+                    <p>Accede rápidamente a las plataformas y recursos que más utilizas.</p>
+                    <ul>
+                        <li><a href="#">Portal del Estudiante</a></li>
+                        <li><a href="#">Correo Institucional</a></li>
+                        <li><a href="#">Plataforma de Estudios (Moodle/Blackboard)</a></li>
+                        <li><a href="#">Redes Sociales del CFT</a></li>
+                    </ul>
+                </section>
+
+                <hr>
+
+                <section id="faq-vida"> <!-- ID cambiado -->
+                    <h2>Preguntas Frecuentes (FAQ)</h2>
+                    <p>Encuentra respuestas a las dudas más comunes de los estudiantes.</p>
+                    <div class="faq-item">
+                        <h3>¿Cómo solicito un certificado de alumno regular?</h3>
+                        <p>Puedes solicitarlo a través de tu Portal del Estudiante, en la sección de "Trámites".</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>¿Cómo me inscribo en un taller?</h3>
+                        <p>Las inscripciones se realizan de manera online en el apartado de Actividades Estudiantiles. Se anuncian con anticipación en la página web.</p>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!-- Sección de Noticias - NUEVA E INTEGRADA -->
+        <section id="noticias-section" class="content-section">
+            <button class="back-button" data-target-section="modules">Volver</button>
+            
+            <!-- Contenido adaptado de noticias.html -->
+            <div class="noticias-header-container"> <!-- Cambiado de header-container para evitar colisión de estilos globales -->
+                <div class="container"> <!-- Este container es de Bootstrap, podría necesitar adaptación o ser eliminado si index.html no usa Bootstrap globalmente -->
+                    <div class="text-center">
+                        <div class="logo-container">
+                            <img src="https://scontent.fscl1-1.fna.fbcdn.net/v/t39.30808-6/461394050_983690777101439_5539481001180531299_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=thyOST8Gj1gQ7kNvwEICK7j&_nc_oc=Adkg1EDOuG9UdJhRHPnewfWPIuy0rEnvHuoY6lV6M6G0r4Wo3tlJ875EXHiVJtvaGt4&_nc_zt=23&_nc_ht=scontent.fscl1-1.fna&_nc_gid=zj4fJnvaHahQX9u9IOXSsg&oh=00_AfPT8U-jbsU8hDmtg4BxRauPFiPRU6ah9Wz7dOXhD2j63A&oe=6863453C" alt="Logo CFT Los Ríos">
+                        </div>
+                        <h1 class="header-title">CFT Los Ríos</h1> <!-- Esta clase podría necesitar adaptación -->
+                        <p class="header-subtitle">Noticias de nuestros campus y actividades académicas</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container"> <!-- Este container es de Bootstrap -->
+                <div class="filter-container">
+                    <p class="filter-title">Filtrar noticias por campus:</p>
+                    <!-- Los botones de filtro usarán clases de Bootstrap si están disponibles, o se estilizarán manualmente -->
+                    <div class="d-flex flex-wrap justify-content-center"> 
+                        <button class="filter-btn" data-filter="all">Todos</button>
+                        <button class="filter-btn" data-filter="valdivia">Valdivia</button>
+                        <button class="filter-btn" data-filter="paillaco">Paillaco</button>
+                        <button class="filter-btn" data-filter="panguipulli">Panguipulli</button>
+                        <button class="filter-btn" data-filter="la-union">La Unión</button>
+                    </div>
+                </div>
+
+                <div class="noticias-main-container"> <!-- Cambiado de main-container -->
+                    <div class="news-container">
+                        <div class="news-row g-4"> <!-- Reemplaza row de Bootstrap con una clase personalizada -->
+                            <!-- Noticia 1 - Valdivia -->
+                            <div class="news-col news-card valdivia">  <!-- Reemplaza col-md-6 col-lg-4 -->
+                                <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Laboratorio Valdivia">
+                                <div class="category-tag">Valdivia</div>
+                                <div class="card-body">
+                                    <div class="card-date"><i class="far fa-calendar"></i> 15 Octubre 2023</div>
+                                    <h5 class="card-title">Nuevo laboratorio tecnológico en Valdivia</h5>
+                                    <p class="card-text">Equipamiento de última generación para estudiantes de informática y telecomunicaciones. El espacio cuenta con tecnología de punta para prácticas avanzadas.</p>
+                                    <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            
+                            <!-- Noticia 2 - Paillaco -->
+                            <div class="news-col news-card paillaco">
+                                <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Gastronomía Paillaco">
+                                <div class="category-tag">Paillaco</div>
+                                <div class="card-body">
+                                    <div class="card-date"><i class="far fa-calendar"></i> 12 Octubre 2023</div>
+                                    <h5 class="card-title">Exitosa feria gastronómica en Paillaco</h5>
+                                    <p class="card-text">Evento reunió a más de 500 personas y mostró la diversidad culinaria regional. Estudiantes de gastronomía presentaron innovadoras propuestas.</p>
+                                    <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            
+                            <!-- Noticia 3 - Panguipulli -->
+                            <div class="news-col news-card panguipulli">
+                                <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Forestal Panguipulli">
+                                <div class="category-tag">Panguipulli</div>
+                                <div class="card-body">
+                                    <div class="card-date"><i class="far fa-calendar"></i> 8 Octubre 2023</div>
+                                    <h5 class="card-title">Convenio con empresas forestales</h5>
+                                    <p class="card-text">Acuerdo beneficiará a estudiantes de Técnico Forestal con prácticas profesionales. La alianza incluye programas de capacitación continua.</p>
+                                    <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            
+                            <!-- Noticia 4 - La Unión -->
+                            <div class="news-col news-card la-union">
+                                <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Robótica La Unión">
+                                <div class="category-tag">La Unión</div>
+                                <div class="card-body">
+                                    <div class="card-date"><i class="far fa-calendar"></i> 5 Octubre 2023</div>
+                                    <h5 class="card-title">Destacan en competencia de robótica</h5>
+                                    <p class="card-text">Equipo obtuvo segundo lugar con proyecto de automatización agrícola. El desarrollo busca optimizar procesos en cultivos regionales.</p>
+                                    <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            
+                            <!-- Noticia 5 - General -->
+                            <div class="news-col news-card general">
+                                <img src="https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Becas generales">
+                                <div class="category-tag">General</div>
+                                <div class="card-body">
+                                    <div class="card-date"><i class="far fa-calendar"></i> 1 Octubre 2023</div>
+                                    <h5 class="card-title">Nuevo programa de becas estudiantiles</h5>
+                                    <p class="card-text">Ampliación de programa de apoyo para estudiantes de escasos recursos. Se beneficiarán más de 200 alumnos en toda la región.</p>
+                                    <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            
+                            <!-- Noticia 6 - Valdivia -->
+                            <div class="news-col news-card valdivia">
+                                <img src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Arte Valdivia">
+                                <div class="category-tag">Valdivia</div>
+                                <div class="card-body">
+                                    <div class="card-date"><i class="far fa-calendar"></i> 28 Septiembre 2023</div>
+                                    <h5 class="card-title">Exposición de arte contemporáneo</h5>
+                                    <p class="card-text">Muestra de trabajos de estudiantes de Diseño Gráfico abierta al público. La exposición estará disponible durante todo octubre.</p>
+                                    <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         </div>
     </main>
 
     <footer>
-        <div class="container">
             <p>&copy; 2025 @elwaoo. Todos los derechos reservados.</p>
         </div>
     </footer>
@@ -2925,6 +4154,14 @@
         const menuToggle = document.querySelector('.menu-toggle');
         const navUl = document.querySelector('nav ul');
         const profileNavLink = document.getElementById('profile-nav-link');
+        const carrerasNavLink = document.getElementById('carreras-nav-link'); 
+        const admisionNavLink = document.getElementById('admision-nav-link'); 
+        const vidaEstudiantilNavLink = document.getElementById('vida-estudiantil-nav-link'); 
+        const noticiasNavLink = document.getElementById('noticias-nav-link'); 
+        const themeToggleButton = document.getElementById('theme-toggle-button'); 
+        const navSearchInput = document.getElementById('nav-search-input'); // Input de búsqueda
+        const navSearchButton = document.getElementById('nav-search-button'); // Botón de búsqueda
+        const navSearchLi = document.getElementById('nav-search-li'); // Elemento <li> de la búsqueda para visibilidad
         const navProfilePic = document.getElementById('nav-profile-pic');
 
         // Elementos de contenido y secciones
@@ -2932,12 +4169,15 @@
         const homeSection = document.getElementById('home-section');
         const modulesSection = document.getElementById('modules-section');
         const userProfileDetailSection = document.getElementById('user-profile-detail-section');
-        const directorySection = document.getElementById('directory-section'); // NUEVO
-        const notesAttendanceSection = document.getElementById('notes-attendance-section'); // NUEVO
-        const academicCalendarSection = document.getElementById('academic-calendar-section'); // Agregado para consistencia
-        const notificationsSection = document.getElementById('notifications-section'); // Agregado para consistencia
-        const scholarshipsSection = document.getElementById('scholarships-section'); // NUEVO
-        const reportIssueSection = document.getElementById('report-issue-section'); // NUEVO para el formulario de problemas
+        const directorySection = document.getElementById('directory-section'); 
+        const notesAttendanceSection = document.getElementById('notes-attendance-section'); 
+        const academicCalendarSection = document.getElementById('academic-calendar-section'); 
+        const notificationsSection = document.getElementById('notifications-section'); 
+        const scholarshipsSection = document.getElementById('scholarships-section'); 
+        const reportIssueSection = document.getElementById('report-issue-section'); 
+        const admisionSection = document.getElementById('admision-section'); 
+        const vidaEstudiantilSection = document.getElementById('vida-estudiantil-section'); 
+        const noticiasSection = document.getElementById('noticias-section'); // NUEVO: Sección Noticias
         const backButtons = document.querySelectorAll('.back-button');
 
         // Elementos del Modal de Autenticación (actualizados para el nuevo login)
@@ -3247,19 +4487,29 @@
         function updateAuthUI() {
             const loggedInUser = localStorage.getItem('currentUserEmail');
             if (loggedInUser) {
-                document.body.classList.add('logged-in'); // Añade la clase al body
-                profileNavLink.style.display = 'list-item'; // Muestra el li del perfil
+                document.body.classList.add('logged-in');
+                profileNavLink.style.display = 'list-item';
+                carrerasNavLink.style.display = 'list-item';
+                admisionNavLink.style.display = 'list-item'; 
+                vidaEstudiantilNavLink.style.display = 'list-item'; 
+                noticiasNavLink.style.display = 'list-item'; 
+                navSearchLi.style.display = 'list-item'; // Mostrar contenedor de búsqueda
 
-                const profile = getProfileData(loggedInUser); // Obtiene los datos del perfil
+                const profile = getProfileData(loggedInUser);
                 navProfilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
                 dropdownProfilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
                 dropdownUsername.textContent = profile.name || loggedInUser;
-                showSection('modules'); // Redirige a la sección de módulos al iniciar sesión
+                showSection('modules');
             } else {
-                document.body.classList.remove('logged-in'); // Elimina la clase del body
-                profileNavLink.style.display = 'none'; // Oculta el li del perfil
-                profileDropdown.classList.remove('show'); // Asegura que el dropdown esté oculto
-                showSection('home'); // Redirige a la sección de inicio si no está logueado
+                document.body.classList.remove('logged-in');
+                profileNavLink.style.display = 'none';
+                carrerasNavLink.style.display = 'none';
+                admisionNavLink.style.display = 'none'; 
+                vidaEstudiantilNavLink.style.display = 'none'; 
+                noticiasNavLink.style.display = 'none'; 
+                navSearchLi.style.display = 'none'; // Ocultar contenedor de búsqueda
+                profileDropdown.classList.remove('show');
+                showSection('home');
             }
         }
 
@@ -3884,9 +5134,483 @@
            ====================================================================
         */
         document.addEventListener('DOMContentLoaded', () => {
-            setupEventListeners(); // Configura todos los eventos
-            updateAuthUI(); // Actualiza la interfaz de usuario según el estado de autenticación inicial
+            setupEventListeners(); 
+            setInitialTheme(); // Aplicar tema guardado o default al cargar
+            updateAuthUI(); 
+            initializeAdmisionForm(); 
+            initializeNoticiasFilters(); 
+            
+            // Event listener para el botón de cambio de tema
+            if(themeToggleButton) {
+                themeToggleButton.addEventListener('click', toggleTheme);
+            }
+            if(navSearchButton) {
+                navSearchButton.addEventListener('click', handleSiteSearch);
+            }
+            if(navSearchInput) {
+                navSearchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        handleSiteSearch();
+                    }
+                });
+                 // Opcional: limpiar búsqueda si el input se vacía manualmente
+                navSearchInput.addEventListener('input', function() {
+                    if (this.value.trim() === '') {
+                        // Podríamos llamar a una función que restaure todo
+                        // o simplemente no hacer nada hasta que se presione buscar/enter de nuevo.
+                        // Por ahora, se restaurará al borrar y presionar Enter o el botón.
+                    }
+                });
+            }
         });
+
+        function initializeAdmisionForm() {
+            const carrerasPorSedeAdmision = {
+                valdivia: [{ value: 'refrigeracion', text: 'TNS en Refrigeración y Climatización' }],
+                launion: [{ value: 'agroindustria', text: 'TNS en Agroindustria e Innovación Alimentaria' }, { value: 'admin', text: 'TNS en Administración Pública y Privada' }, { value: 'comunicacion', text: 'TNS en Comunicación y Audiovisual' }],
+                paillaco: [{ value: 'informatica', text: 'TNS en Informática y Data Science' }, { value: 'podologia', text: 'TNS en Podología' }, { value: 'enfermeria', text: 'TNS en Enfermería' }],
+                panguipulli: [{ value: 'admin', text: 'TNS en Administración Pública y Privada' }, { value: 'construccion', text: 'TNS en Construcción mención Eficiencia Energética' }]
+            };
+
+            const sedeSelectAdmision = document.getElementById('admision-sede');
+            const carreraSelectAdmision = document.getElementById('admision-carrera');
+            const telefonoInputAdmision = document.getElementById('admision-telefono');
+            const admisionForm = document.getElementById('admisionForm');
+
+            if (sedeSelectAdmision && carreraSelectAdmision) {
+                sedeSelectAdmision.addEventListener('change', (event) => {
+                    const sedeSeleccionada = event.target.value;
+                    const carreras = carrerasPorSedeAdmision[sedeSeleccionada] || [];
+                    carreraSelectAdmision.innerHTML = '<option value="" disabled selected>-- Elige una carrera --</option>'; 
+                    carreraSelectAdmision.disabled = false;
+                    carreras.forEach(carrera => {
+                        let option = document.createElement('option');
+                        option.value = carrera.value;
+                        // Se elimina el span con estilo para simplificar, el estilo del select debe ser general
+                        option.textContent = carrera.text; 
+                        carreraSelectAdmision.appendChild(option);
+                    });
+                });
+            }
+
+            if (telefonoInputAdmision) {
+                const prefijo = "+56 ";
+                telefonoInputAdmision.addEventListener('input', () => {
+                    let valor = telefonoInputAdmision.value;
+                    if (!valor.startsWith(prefijo)) {
+                        valor = prefijo;
+                    }
+                    let numeros = valor.substring(prefijo.length).replace(/\D/g, '');
+                    if (numeros.length > 9) {
+                        numeros = numeros.substring(0, 9);
+                    }
+                    telefonoInputAdmision.value = prefijo + numeros;
+                });
+
+                telefonoInputAdmision.addEventListener('focus', () => {
+                    if (telefonoInputAdmision.value === "") {
+                        telefonoInputAdmision.value = prefijo;
+                    }
+                });
+            }
+
+            if (admisionForm) {
+                admisionForm.addEventListener('submit', (event) => {
+                    event.preventDefault(); 
+                    // Aquí puedes usar la función showNotification o una alerta simple
+                    showNotification('success', '¡Datos enviados! Nos contactaremos pronto.');
+                    // alert('¡Datos enviados correctamente!\nNos pondremos en contacto contigo pronto.');
+                    admisionForm.reset();
+                    if(carreraSelectAdmision) {
+                        carreraSelectAdmision.innerHTML = '<option value="" disabled selected>-- Primero elige una sede --</option>';
+                        carreraSelectAdmision.disabled = true;
+                    }
+                    if(telefonoInputAdmision) {
+                        telefonoInputAdmision.value = '';
+                    }
+                });
+            }
+        }
+
+        function initializeNoticiasFilters() {
+            const filterBtns = document.querySelectorAll('#noticias-section .filter-btn');
+            const newsCards = document.querySelectorAll('#noticias-section .news-card');
+            const newsContainer = document.querySelector('#noticias-section .news-container');
+
+            if (!filterBtns.length || !newsCards.length || !newsContainer) {
+                // console.warn("Elementos para filtros de noticias no encontrados. Saltando inicialización de filtros.");
+                return;
+            }
+            
+            function filterNews(filter) {
+                newsCards.forEach(card => {
+                    // Forzar la re-evaluación del layout antes de cambiar display para animación
+                    void card.offsetWidth; 
+
+                    if (filter === 'all' || card.classList.contains(filter)) {
+                        card.style.display = 'block'; // O 'flex' o 'grid-item' dependiendo del layout de .news-row
+                        card.style.animation = 'fadeIn 0.5s ease-out forwards';
+                    } else {
+                        card.style.animation = 'fadeOut 0.3s ease-out forwards';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300); // Coincidir con la duración de fadeOut
+                    }
+                });
+            }
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const filterValue = this.getAttribute('data-filter');
+                    filterNews(filterValue);
+                    
+                    // Opcional: Scroll suave al contenedor de noticias si está fuera de vista
+                    // newsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+            
+            // Activar el filtro "Todos" por defecto al cargar la sección
+            const allFilterBtn = document.querySelector('#noticias-section .filter-btn[data-filter="all"]');
+            if (allFilterBtn) {
+                allFilterBtn.classList.add('active');
+                filterNews('all'); // Aplicar filtro inicial
+            }
+
+            // Añadir animaciones fadeIn/fadeOut si no existen
+            const styleSheet = document.styleSheets[0];
+            let fadeInExists = false;
+            let fadeOutExists = false;
+            for (let i = 0; i < styleSheet.cssRules.length; i++) {
+                if (styleSheet.cssRules[i].name === 'fadeIn') fadeInExists = true;
+                if (styleSheet.cssRules[i].name === 'fadeOut') fadeOutExists = true;
+            }
+
+            if (!fadeInExists) {
+                try {
+                    styleSheet.insertRule(`
+                        @keyframes fadeIn {
+                            from { opacity: 0; transform: translateY(15px); }
+                            to { opacity: 1; transform: translateY(0); }
+                        }`, styleSheet.cssRules.length);
+                } catch (e) {
+                    console.error("Error insertando regla fadeIn: ", e);
+                }
+            }
+            if (!fadeOutExists) {
+                 try {
+                    styleSheet.insertRule(`
+                        @keyframes fadeOut {
+                            from { opacity: 1; transform: translateY(0); }
+                            to { opacity: 0; transform: translateY(15px); }
+                        }`, styleSheet.cssRules.length);
+                } catch (e) {
+                    console.error("Error insertando regla fadeOut: ", e);
+                }
+            }
+        }
+
+        // --- Funcionalidad de Cambio de Tema ---
+        function setInitialTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.body.classList.add('theme-dark');
+                themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>'; // Icono de sol para tema oscuro
+            } else {
+                document.body.classList.remove('theme-dark');
+                themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>'; // Icono de luna para tema claro
+            }
+        }
+
+        function toggleTheme() {
+            if (document.body.classList.contains('theme-dark')) {
+                document.body.classList.remove('theme-dark');
+                localStorage.setItem('theme', 'light');
+                themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                document.body.classList.add('theme-dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        }
+        // --- Fin Funcionalidad de Cambio de Tema ---
+
+
+        function initializeNoticiasFilters() {
+            const filterBtns = document.querySelectorAll('#noticias-section .filter-btn');
+            const newsCards = document.querySelectorAll('#noticias-section .news-card');
+            const newsContainer = document.querySelector('#noticias-section .news-container');
+
+            if (!filterBtns.length || !newsCards.length || !newsContainer) {
+                // console.warn("Elementos para filtros de noticias no encontrados. Saltando inicialización de filtros.");
+                return;
+            }
+            
+            function filterNews(filter) {
+                newsCards.forEach(card => {
+                    // Forzar la re-evaluación del layout antes de cambiar display para animación
+                    void card.offsetWidth; 
+
+                    if (filter === 'all' || card.classList.contains(filter)) {
+                        card.style.display = 'block'; // O 'flex' o 'grid-item' dependiendo del layout de .news-row
+                        card.style.animation = 'fadeIn 0.5s ease-out forwards';
+                    } else {
+                        card.style.animation = 'fadeOut 0.3s ease-out forwards';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300); // Coincidir con la duración de fadeOut
+                    }
+                });
+            }
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const filterValue = this.getAttribute('data-filter');
+                    filterNews(filterValue);
+                    
+                    // Opcional: Scroll suave al contenedor de noticias si está fuera de vista
+                    // newsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+            
+            // Activar el filtro "Todos" por defecto al cargar la sección
+            const allFilterBtn = document.querySelector('#noticias-section .filter-btn[data-filter="all"]');
+            if (allFilterBtn) {
+                allFilterBtn.classList.add('active');
+                // filterNews('all'); // Aplicar filtro inicial - Se comenta para que no se ejecute antes de que la sección sea visible
+            }
+
+            // Añadir animaciones fadeIn/fadeOut si no existen
+            const styleSheet = document.styleSheets[0];
+            let fadeInExists = false;
+            let fadeOutExists = false;
+            if (styleSheet) { // Asegurarse que styleSheet existe
+                for (let i = 0; i < styleSheet.cssRules.length; i++) {
+                    if (styleSheet.cssRules[i].name === 'fadeIn') fadeInExists = true;
+                    if (styleSheet.cssRules[i].name === 'fadeOut') fadeOutExists = true;
+                }
+
+                if (!fadeInExists) {
+                    try {
+                        styleSheet.insertRule(`
+                            @keyframes fadeIn {
+                                from { opacity: 0; transform: translateY(15px); }
+                                to { opacity: 1; transform: translateY(0); }
+                            }`, styleSheet.cssRules.length);
+                    } catch (e) {
+                        console.error("Error insertando regla fadeIn: ", e);
+                    }
+                }
+                if (!fadeOutExists) {
+                     try {
+                        styleSheet.insertRule(`
+                            @keyframes fadeOut {
+                                from { opacity: 1; transform: translateY(0); }
+                                to { opacity: 0; transform: translateY(15px); }
+                            }`, styleSheet.cssRules.length);
+                    } catch (e) {
+                        console.error("Error insertando regla fadeOut: ", e);
+                    }
+                }
+            }
+        }
+
+        // --- Funcionalidad de Búsqueda ---
+        function handleSiteSearch() {
+            const searchTerm = navSearchInput.value.trim().toLowerCase();
+            if (!searchTerm) {
+                // Si no hay término de búsqueda, restaurar la visibilidad de todos los elementos relevantes
+                // Esto es una simplificación; una implementación más robusta podría recordar el estado anterior.
+                document.querySelectorAll('.news-card, .module-card, #carreras-info-section li, #vida-estudiantil-section .card, #vida-estudiantil-section .faq-item').forEach(el => {
+                    el.style.display = ''; // Restablecer display
+                    el.classList.remove('search-highlight'); // Remover resaltado
+                });
+                // También asegurarse de que las secciones activas se muestren correctamente si la búsqueda las ocultó.
+                // Por ahora, no ocultaremos secciones enteras, solo elementos dentro de ellas.
+                return;
+            }
+
+            let foundItems = 0;
+
+            // 1. Búsqueda en Tarjetas de Noticias (título y texto)
+            document.querySelectorAll('#noticias-section .news-card').forEach(card => {
+                const title = card.querySelector('.card-title')?.textContent.toLowerCase() || '';
+                const text = card.querySelector('.card-text')?.textContent.toLowerCase() || '';
+                if (title.includes(searchTerm) || text.includes(searchTerm)) {
+                    card.style.display = 'block'; // O el display original
+                    card.classList.add('search-highlight');
+                    foundItems++;
+                } else {
+                    card.style.display = 'none';
+                    card.classList.remove('search-highlight');
+                }
+            });
+            
+            // 2. Búsqueda en Módulos (título y descripción)
+            document.querySelectorAll('#modules-section .module-card').forEach(card => {
+                const title = card.querySelector('h3')?.textContent.toLowerCase() || '';
+                const text = card.querySelector('p')?.textContent.toLowerCase() || '';
+                 if (title.includes(searchTerm) || text.includes(searchTerm)) {
+                    card.style.display = 'block'; // O 'grid' si es item de grid
+                    card.classList.add('search-highlight');
+                    foundItems++;
+                } else {
+                    card.style.display = 'none';
+                    card.classList.remove('search-highlight');
+                }
+            });
+
+            // 3. Búsqueda en lista de Carreras
+            document.querySelectorAll('#carreras-info-section li').forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    item.style.display = 'list-item';
+                    item.classList.add('search-highlight');
+                    foundItems++;
+                } else {
+                    item.style.display = 'none';
+                    item.classList.remove('search-highlight');
+                }
+            });
+            
+            // 4. Búsqueda en Vida Estudiantil (títulos de cards y FAQ)
+            document.querySelectorAll('#vida-estudiantil-section .card, #vida-estudiantil-section .faq-item').forEach(item => {
+                const title = item.querySelector('h3')?.textContent.toLowerCase() || '';
+                const textContent = item.querySelector('p')?.textContent.toLowerCase() || '';
+                if (title.includes(searchTerm) || textContent.includes(searchTerm)) {
+                    item.style.display = 'block'; // O 'grid-item' para cards
+                    item.classList.add('search-highlight');
+                    foundItems++;
+                } else {
+                    item.style.display = 'none';
+                    item.classList.remove('search-highlight');
+                }
+            });
+
+            // Podríamos mostrar un mensaje si no se encuentran resultados
+            if (foundItems === 0 && searchTerm) {
+                // Idealmente, mostrar esto en un lugar visible, no solo consola.
+                console.log(`No se encontraron resultados para "${navSearchInput.value.trim()}".`);
+                 // showNotification('info', `No se encontraron resultados para "${navSearchInput.value.trim()}".`);
+            }
+            
+            // Importante: esta búsqueda es muy básica. No maneja bien el cambio de secciones.
+            // Si el usuario está en "Módulos" y busca algo que está en "Noticias",
+            // los elementos de noticias se mostrarán/ocultarán, pero el usuario no será llevado a esa sección.
+            // Una implementación más completa requeriría cambiar a la sección donde se encontró el resultado.
+        }
+        // --- Fin Funcionalidad de Búsqueda ---
+
+
+        // --- Funcionalidad de Cambio de Tema ---
+        function setInitialTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.body.classList.add('theme-dark');
+                themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>'; // Icono de sol para tema oscuro
+            } else {
+                document.body.classList.remove('theme-dark');
+                themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>'; // Icono de luna para tema claro
+            }
+        }
+
+        function toggleTheme() {
+            if (document.body.classList.contains('theme-dark')) {
+                document.body.classList.remove('theme-dark');
+                localStorage.setItem('theme', 'light');
+                themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                document.body.classList.add('theme-dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        }
+        // --- Fin Funcionalidad de Cambio de Tema ---
+
+
+        function initializeNoticiasFilters() {
+            const filterBtns = document.querySelectorAll('#noticias-section .filter-btn');
+            const newsCards = document.querySelectorAll('#noticias-section .news-card');
+            const newsContainer = document.querySelector('#noticias-section .news-container');
+
+            if (!filterBtns.length || !newsCards.length || !newsContainer) {
+                // console.warn("Elementos para filtros de noticias no encontrados. Saltando inicialización de filtros.");
+                return;
+            }
+            
+            function filterNews(filter) {
+                newsCards.forEach(card => {
+                    // Forzar la re-evaluación del layout antes de cambiar display para animación
+                    void card.offsetWidth; 
+
+                    if (filter === 'all' || card.classList.contains(filter)) {
+                        card.style.display = 'block'; // O 'flex' o 'grid-item' dependiendo del layout de .news-row
+                        card.style.animation = 'fadeIn 0.5s ease-out forwards';
+                    } else {
+                        card.style.animation = 'fadeOut 0.3s ease-out forwards';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300); // Coincidir con la duración de fadeOut
+                    }
+                });
+            }
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const filterValue = this.getAttribute('data-filter');
+                    filterNews(filterValue);
+                    
+                    // Opcional: Scroll suave al contenedor de noticias si está fuera de vista
+                    // newsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+            
+            // Activar el filtro "Todos" por defecto al cargar la sección
+            const allFilterBtn = document.querySelector('#noticias-section .filter-btn[data-filter="all"]');
+            if (allFilterBtn) {
+                allFilterBtn.classList.add('active');
+                // filterNews('all'); // Aplicar filtro inicial - Se comenta para que no se ejecute antes de que la sección sea visible
+            }
+
+            // Añadir animaciones fadeIn/fadeOut si no existen
+            const styleSheet = document.styleSheets[0];
+            let fadeInExists = false;
+            let fadeOutExists = false;
+            if (styleSheet) { // Asegurarse que styleSheet existe
+                for (let i = 0; i < styleSheet.cssRules.length; i++) {
+                    if (styleSheet.cssRules[i].name === 'fadeIn') fadeInExists = true;
+                    if (styleSheet.cssRules[i].name === 'fadeOut') fadeOutExists = true;
+                }
+
+                if (!fadeInExists) {
+                    try {
+                        styleSheet.insertRule(`
+                            @keyframes fadeIn {
+                                from { opacity: 0; transform: translateY(15px); }
+                                to { opacity: 1; transform: translateY(0); }
+                            }`, styleSheet.cssRules.length);
+                    } catch (e) {
+                        console.error("Error insertando regla fadeIn: ", e);
+                    }
+                }
+                if (!fadeOutExists) {
+                     try {
+                        styleSheet.insertRule(`
+                            @keyframes fadeOut {
+                                from { opacity: 1; transform: translateY(0); }
+                                to { opacity: 0; transform: translateY(15px); }
+                            }`, styleSheet.cssRules.length);
+                    } catch (e) {
+                        console.error("Error insertando regla fadeOut: ", e);
+                    }
+                }
+            }
+        }
     </script>
 </body>
 </html>
