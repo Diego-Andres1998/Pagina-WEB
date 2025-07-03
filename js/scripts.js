@@ -34,18 +34,11 @@
         const homeSection = document.getElementById('home-section');
         const modulesSection = document.getElementById('modules-section');
         const userProfileDetailSection = document.getElementById('user-profile-detail-section');
-        const directorySection = document.getElementById('directory-section');
-        const notesAttendanceSection = document.getElementById('notes-attendance-section');
-        const academicCalendarSection = document.getElementById('academic-calendar-section');
-        const notificationsSection = document.getElementById('notifications-section');
-        const scholarshipsSection = document.getElementById('scholarships-section');
-        const reportIssueSection = document.getElementById('report-issue-section');
-        const admisionSection = document.getElementById('admision-section');
-        const vidaEstudiantilSection = document.getElementById('vida-estudiantil-section');
-        const noticiasSectionElement = document.getElementById('noticias-section'); // Renamed to avoid conflict
         const backButtons = document.querySelectorAll('.back-button');
+
         const loginModal = document.getElementById('login-modal');
         const loginContainerMain = document.getElementById('loginContainerMain');
+
         const errorNotification = document.getElementById('errorNotification');
         const successNotification = document.getElementById('successNotification');
         const errorMessageSpan = document.getElementById('errorMessage');
@@ -53,6 +46,7 @@
         const profileDropdown = document.getElementById('profile-dropdown');
         const dropdownProfilePic = document.getElementById('dropdown-profile-pic');
         const dropdownUsername = document.getElementById('dropdown-username');
+
         const profileForm = document.getElementById('profile-form');
         const profilePic = document.getElementById('profile-pic');
         const profileImageUpload = document.getElementById('profile-image-upload');
@@ -65,15 +59,11 @@
         const saveProfileBtn = document.getElementById('save-profile-btn');
         const cancelEditBtn = document.getElementById('cancel-edit-btn');
         const profileMessage = document.getElementById('profile-message');
+
         const contactDetailsModal = document.getElementById('contact-details-modal');
         const closeContactDetailsModalBtn = document.getElementById('close-contact-details-modal');
         const contactDetailsTitle = document.getElementById('contact-details-title');
         const contactDetailsOutput = document.getElementById('contact-details-output');
-
-        // Variables for elements that might be loaded dynamically (need to be careful with these)
-        let notificationForm, emailNotificationInput, phoneNotificationInput, messageNotificationInput, responseMessageNotificationDiv;
-        let directoryList;
-        let reportIssueForm, formMessage, submitReportBtn; // For report issue section
 
         const DEFAULT_AVATAR_PATH = 'https://placehold.co/120x120/D3D3D3/000?text=Avatar';
         let isRegistering = false;
@@ -132,22 +122,24 @@
                 sectionId = loggedInUser ? 'modules' : 'home';
             }
 
-            // Pre-cargar contenido de home si es la primera vez o está vacío
             const homeTarget = document.getElementById('home-section');
-            if (homeTarget && (sectionId === 'home' || (protectedSections.includes(sectionId) && !loggedInUser)) &&
-                (!homeTarget.innerHTML.trim() || homeTarget.innerHTML.includes("Cargando..."))) {
-                await loadHtmlContent('sections/home-section-content.html', 'home-section');
-                const homeLoginButton = homeTarget.querySelector('.btn-primario[data-action="open-login-modal"]');
-                if (homeLoginButton && !homeLoginButton.hasAttribute('data-listener-set')) {
-                    homeLoginButton.addEventListener('click', openLoginModal);
-                    homeLoginButton.setAttribute('data-listener-set', 'true');
-                }
-            }
 
             if (protectedSections.includes(sectionId) && !loggedInUser) {
                 hideAllSections();
-                if (homeTarget) homeTarget.classList.add('active-section');
-                openLoginModal(); // openLoginModal ahora es async y maneja su propia carga de HTML
+                if (homeTarget) {
+                    if (!homeTarget.innerHTML.trim() || homeTarget.innerHTML.includes("Cargando...")) {
+                        const homeLoaded = await loadHtmlContent('sections/home-section-content.html', 'home-section');
+                        if (homeLoaded) {
+                             const homeLoginButton = homeTarget.querySelector('.btn-primario[data-action="open-login-modal"]');
+                             if (homeLoginButton && !homeLoginButton.hasAttribute('data-listener-set')) {
+                                 homeLoginButton.addEventListener('click', openLoginModal);
+                                 homeLoginButton.setAttribute('data-listener-set', 'true');
+                             }
+                        }
+                    }
+                    homeTarget.classList.add('active-section');
+                }
+                openLoginModal();
                 showNotification('error', 'Debes iniciar sesión para acceder a esta función.');
                 return;
             }
@@ -156,59 +148,68 @@
             const targetSectionElement = document.getElementById(`${sectionId}-section`);
 
             if (targetSectionElement) {
-                let contentJustLoaded = false;
-                if (!targetSectionElement.innerHTML.trim() || targetSectionElement.innerHTML.includes("Cargando...")) {
-                    if (sectionId === 'home') { // Ya se cargó arriba si era necesario
-                        contentJustLoaded = htmlCache['sections/home-section-content.html'] ? true : false;
-                    } else if (sectionId === 'modules') {
-                        contentJustLoaded = await loadHtmlContent('sections/modules-section-content.html', 'modules-section');
+                let contentJustLoaded = false; // Flag para saber si el contenido se cargó en ESTA llamada
+                // Solo cargar si el contenido está vacío, o es el placeholder de "Cargando..." o de "Error..."
+                if (!targetSectionElement.innerHTML.trim() ||
+                    targetSectionElement.innerHTML.includes("Cargando...") ||
+                    targetSectionElement.innerHTML.includes("Error al cargar contenido")) {
+
+                    let filePathToLoad = null;
+                    if (sectionId === 'home') filePathToLoad = 'sections/home-section-content.html';
+                    else if (sectionId === 'modules') filePathToLoad = 'sections/modules-section-content.html';
+                    // Aquí se añadirían más 'else if' para las otras secciones cuando se separen.
+                    // Ejemplo: else if (sectionId === 'user-profile-detail') filePathToLoad = 'sections/user-profile-detail-content.html';
+
+                    if (filePathToLoad) {
+                        contentJustLoaded = await loadHtmlContent(filePathToLoad, `${sectionId}-section`);
+                    } else {
+                        // Si no es una sección con HTML externo conocido, asumimos que su contenido ya está o no necesita carga.
+                        contentJustLoaded = true; // Para que proceda a inicializar listeners si es necesario.
                     }
-                    // Futuras secciones:
-                    // else if (sectionId === 'user-profile-detail') {
-                    //    contentJustLoaded = await loadHtmlContent('sections/user-profile-detail-content.html', 'user-profile-detail-section');
-                    //    if(contentJustLoaded) setupUserProfileDetailEventListeners();
-                    // }
-                    // ... etc. para otras secciones
+                } else {
+                    contentJustLoaded = true; // El contenido ya estaba presente.
                 }
 
                 targetSectionElement.classList.add('active-section');
 
-                // Inicializar o re-adjuntar listeners para contenido recién cargado o ya existente
-                if (sectionId === 'home') {
-                    const homeLoginButton = homeSection.querySelector('.btn-primario[data-action="open-login-modal"]');
-                    if (homeLoginButton && !homeLoginButton.hasAttribute('data-listener-set')) {
-                        homeLoginButton.addEventListener('click', openLoginModal);
-                        homeLoginButton.setAttribute('data-listener-set', 'true');
-                    }
-                } else if (sectionId === 'modules') {
-                    document.querySelectorAll('#modules-section .module-card').forEach(card => {
-                        if (!card.hasAttribute('data-listener-set')) {
-                            card.addEventListener('click', () => {
-                                const targetSect = card.dataset.section;
-                                if (targetSect) showSection(targetSect);
-                            });
-                            card.setAttribute('data-listener-set', 'true');
+                if(contentJustLoaded){
+                    // (Re)Inicializar listeners específicos de la sección DESPUÉS de cargar/confirmar y mostrar
+                    if (sectionId === 'home') {
+                        const homeLoginButton = homeSection.querySelector('.btn-primario[data-action="open-login-modal"]');
+                        if (homeLoginButton && !homeLoginButton.hasAttribute('data-listener-set')) {
+                            homeLoginButton.addEventListener('click', openLoginModal);
+                            homeLoginButton.setAttribute('data-listener-set', 'true');
                         }
-                    });
-                } else if (sectionId === 'directory') {
-                    renderDirectory(); // Asume que el HTML base del directorio está, renderDirectory lo llena.
-                } else if (sectionId === 'notes-attendance') {
-                    initializeNotesSection();
-                } else if (sectionId === 'noticias') {
-                    initializeNoticiasFilters(); // Asegura que los filtros se inicialicen
+                    } else if (sectionId === 'modules') {
+                        document.querySelectorAll('#modules-section .module-card').forEach(card => {
+                            if (!card.hasAttribute('data-listener-set')) {
+                                card.addEventListener('click', () => {
+                                    const targetSect = card.dataset.section;
+                                    if (targetSect) showSection(targetSect);
+                                });
+                                card.setAttribute('data-listener-set', 'true');
+                            }
+                        });
+                    } else if (sectionId === 'directory') {
+                        renderDirectory();
+                    } else if (sectionId === 'notes-attendance') {
+                        initializeNotesSection();
+                    } else if (sectionId === 'noticias') {
+                        initializeNoticiasFilters();
+                    } else if (sectionId === 'user-profile-detail' && loggedInUser) {
+                         loadProfileData(loggedInUser);
+                         setProfileFormState(false);
+                         // Los listeners para el form de perfil están en setupEventListeners globales por ahora
+                    } else if (sectionId === 'admision') {
+                        initializeAdmisionForm();
+                    } else if (sectionId === 'scholarships'){
+                        // Los onclick="toggleBeca(this)" están en el HTML, si scholarships.html se carga dinámicamente,
+                        // necesitaríamos adjuntar listeners con JS después de la carga.
+                    }
+                } else {
+                    // Si la carga falló, loadHtmlContent ya mostró un mensaje de error dentro de targetSectionElement
+                    // y targetSectionElement ya está visible.
                 }
-                // ... otras inicializaciones
-            }
-
-            if (loggedInUser && sectionId === 'modules') {
-                modulesSection.classList.add('active-section');
-            } else if (sectionId !== 'modules') {
-                modulesSection.classList.remove('active-section');
-            }
-
-            if (sectionId === 'user-profile-detail' && loggedInUser) {
-                loadProfileData(loggedInUser);
-                setProfileFormState(false);
             }
 
             backButtons.forEach(button => {
@@ -231,9 +232,18 @@
             setTimeout(() => notificationElement.classList.remove('show', type), 3000);
         }
 
-        // showFormMessage y showReportFormMessage (si se usan para secciones dinámicas, necesitarían re-seleccionar sus elementos)
-        // Por ahora, se asume que las secciones que usan estas funciones (notifications, report-issue) aún no son dinámicas
-        // o que los elementos de mensaje son estáticos en index.html.
+        function showFormMessage(message, type, formMsgElement) {
+            if (!formMsgElement) {
+                // console.warn("Elemento para mensajes de formulario no encontrado.");
+                return;
+            }
+            formMsgElement.textContent = message;
+            formMsgElement.className = `message ${type}`;
+            formMsgElement.style.display = 'block';
+            if (type === 'success' || type === 'info') {
+                setTimeout(() => { formMsgElement.style.display = 'none'; }, 5000);
+            }
+        }
 
         /*
            ====================================================================
@@ -244,7 +254,7 @@
             const modalContentContainerId = 'loginContainerMain';
             const loginModalFilePath = 'sections/login-modal-content.html';
 
-            loginModal.classList.add('show'); // Mostrar el modal inmediatamente
+            loginModal.classList.add('show');
 
             const loadedSuccessfully = await loadHtmlContent(loginModalFilePath, modalContentContainerId);
 
@@ -256,19 +266,21 @@
                 if (currentPasswordInput) currentPasswordInput.value = '';
                 setFormToLoginMode();
             } else {
-                console.warn("[openLoginModal] El contenido del modal no se cargó.");
+                // console.warn("[openLoginModal] El contenido del modal no se cargó.");
             }
         }
 
         function setupModalEventListeners() {
-            if (!loginContainerMain) return; // Contenedor principal del contenido del modal
+            if (!loginContainerMain || !loginContainerMain.firstChild || loginContainerMain.innerHTML.includes("Cargando...") || loginContainerMain.innerHTML.includes("Error al cargar")) {
+                return;
+            }
 
             const newCloseModalButton = loginContainerMain.querySelector('.close-button');
             const newAuthForm = loginContainerMain.querySelector('#auth-form');
-            const newLoginBtn = loginContainerMain.querySelector('#loginBtn'); // Referencia local
+            const newLoginBtn = loginContainerMain.querySelector('#loginBtn');
             const newModalToggleFormLink = loginContainerMain.querySelector('#modal-toggle-form');
-            const newEmailInput = loginContainerMain.querySelector('#email'); // Referencia local
-            const newPasswordInput = loginContainerMain.querySelector('#password'); // Referencia local
+            const newEmailInput = loginContainerMain.querySelector('#email');
+            const newPasswordInput = loginContainerMain.querySelector('#password');
 
             if (newCloseModalButton && !newCloseModalButton.hasAttribute('data-listener-set')) {
                 newCloseModalButton.addEventListener('click', closeLoginModal);
@@ -278,14 +290,8 @@
             if (newAuthForm && !newAuthForm.hasAttribute('data-listener-set')) {
                 newAuthForm.addEventListener('submit', (e) => {
                     e.preventDefault();
-
-                    // Usar las referencias locales a los elementos del formulario
-                    if (newLoginBtn) { // setLoading ahora usa la referencia local del botón
-                        newLoginBtn.classList.add('loading');
-                        newLoginBtn.disabled = true;
-                    }
+                    if (newLoginBtn) { newLoginBtn.classList.add('loading'); newLoginBtn.disabled = true; }
                     loginContainerMain.classList.remove('shake');
-
                     const email = newEmailInput.value.trim();
                     const password = newPasswordInput.value.trim();
 
@@ -295,13 +301,12 @@
                         if (newLoginBtn) { newLoginBtn.classList.remove('loading'); newLoginBtn.disabled = false; }
                         return;
                     }
-
-                    if (isRegistering) {
+                     if (isRegistering) {
                         const userExists = users.some(user => user.email === email);
                         if (userExists || localStorage.getItem(email)) {
                             showNotification('error', 'Este email ya está registrado o en uso.');
                             loginContainerMain.classList.add('shake');
-                            if (newLoginBtn) { newLoginBtn.classList.remove('loading'); newLoginBtn.disabled = false; }
+                             if (newLoginBtn) { newLoginBtn.classList.remove('loading'); newLoginBtn.disabled = false; }
                         } else {
                             localStorage.setItem(email, password);
                             users.push({ name: 'Nuevo Estudiante', email: email, password: password });
@@ -354,65 +359,66 @@
 
         function setFormToLoginMode() {
             isRegistering = false;
-            if (!loginContainerMain) return;
-            const titleEl = loginContainerMain.querySelector('#modal-title'); // Buscamos dentro del contenido cargado
+            if (!loginContainerMain || !loginContainerMain.firstChild) return;
+            const titleEl = loginContainerMain.querySelector('#modal-title');
             const subtitleEl = loginContainerMain.querySelector('.login-subtitle');
-            const btnEl = loginContainerMain.querySelector('#loginBtn .btn-text'); // Buscamos el span dentro del botón
+            const btnTextEl = loginContainerMain.querySelector('#loginBtn .btn-text');
             const toggleLinkEl = loginContainerMain.querySelector('#modal-toggle-form');
 
             if (titleEl) titleEl.textContent = 'Intranet CFT Los Ríos';
             if (subtitleEl) subtitleEl.textContent = 'Ingresa tus credenciales para acceder';
-            if (btnEl) btnEl.textContent = 'Iniciar Sesión';
+            if (btnTextEl) btnTextEl.textContent = 'Iniciar Sesión';
             if (toggleLinkEl) toggleLinkEl.textContent = '¿No tienes cuenta? Regístrate aquí';
 
-            errorMessageSpan.textContent = ''; successMessageSpan.textContent = '';
-            errorNotification.classList.remove('show'); successNotification.classList.remove('show');
+            if(errorMessageSpan) errorMessageSpan.textContent = '';
+            if(successMessageSpan) successMessageSpan.textContent = '';
+            if(errorNotification) errorNotification.classList.remove('show');
+            if(successNotification) successNotification.classList.remove('show');
         }
 
         function setFormToRegisterMode() {
             isRegistering = true;
-            if (!loginContainerMain) return;
+            if (!loginContainerMain || !loginContainerMain.firstChild) return;
             const titleEl = loginContainerMain.querySelector('#modal-title');
             const subtitleEl = loginContainerMain.querySelector('.login-subtitle');
-            const btnEl = loginContainerMain.querySelector('#loginBtn .btn-text');
+            const btnTextEl = loginContainerMain.querySelector('#loginBtn .btn-text');
             const toggleLinkEl = loginContainerMain.querySelector('#modal-toggle-form');
 
             if (titleEl) titleEl.textContent = 'Registrarse en CFT Los Ríos';
             if (subtitleEl) subtitleEl.textContent = 'Crea tu cuenta para acceder';
-            if (btnEl) btnEl.textContent = 'Registrarse';
+            if (btnTextEl) btnTextEl.textContent = 'Registrarse';
             if (toggleLinkEl) toggleLinkEl.textContent = 'Ya tengo cuenta, Iniciar Sesión';
 
-            errorMessageSpan.textContent = ''; successMessageSpan.textContent = '';
-            errorNotification.classList.remove('show'); successNotification.classList.remove('show');
+            if(errorMessageSpan) errorMessageSpan.textContent = '';
+            if(successMessageSpan) successMessageSpan.textContent = '';
+            if(errorNotification) errorNotification.classList.remove('show');
+            if(successNotification) successNotification.classList.remove('show');
         }
-
-        // setLoading ya no es necesaria porque el handler del submit usa su propia referencia al botón
-        // function setLoading(isLoading) { ... }
 
         function updateAuthUI() {
             const loggedInUser = localStorage.getItem('currentUserEmail');
             if (loggedInUser) {
                 document.body.classList.add('logged-in');
-                profileNavLink.style.display = 'list-item';
-                carrerasNavLink.style.display = 'list-item';
-                admisionNavLink.style.display = 'list-item';
-                vidaEstudiantilNavLink.style.display = 'list-item';
-                noticiasNavLink.style.display = 'list-item';
-                navSearchLi.style.display = 'list-item';
+                if(profileNavLink) profileNavLink.style.display = 'list-item';
+                if(carrerasNavLink) carrerasNavLink.style.display = 'list-item';
+                if(admisionNavLink) admisionNavLink.style.display = 'list-item';
+                if(vidaEstudiantilNavLink) vidaEstudiantilNavLink.style.display = 'list-item';
+                if(noticiasNavLink) noticiasNavLink.style.display = 'list-item';
+                if(navSearchLi) navSearchLi.style.display = 'list-item';
                 const profile = getProfileData(loggedInUser);
-                navProfilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
-                dropdownProfilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
-                dropdownUsername.textContent = profile.name || loggedInUser;
+                if(navProfilePic) navProfilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
+                if(dropdownProfilePic) dropdownProfilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
+                if(dropdownUsername) dropdownUsername.textContent = profile.name || loggedInUser;
                 showSection('modules');
             } else {
                 document.body.classList.remove('logged-in');
-                profileNavLink.style.display = 'none';
-                carrerasNavLink.style.display = 'none';
-                admisionNavLink.style.display = 'none';
-                vidaEstudiantilNavLink.style.display = 'none';
-                noticiasNavLink.style.display = 'none';
-                navSearchLi.style.display = 'none';
-                profileDropdown.classList.remove('show');
+                if(profileNavLink) profileNavLink.style.display = 'none';
+                if(carrerasNavLink) carrerasNavLink.style.display = 'none';
+                if(admisionNavLink) admisionNavLink.style.display = 'none';
+                if(vidaEstudiantilNavLink) vidaEstudiantilNavLink.style.display = 'none';
+                if(noticiasNavLink) noticiasNavLink.style.display = 'none';
+                if(navSearchLi) navSearchLi.style.display = 'none';
+                if(profileDropdown) profileDropdown.classList.remove('show');
                 showSection('home');
             }
         }
@@ -429,43 +435,43 @@
             const userInDb = users.find(user => user.email === email);
             return { name: userInDb ? userInDb.name : 'Estudiante CFT', email: email, phone: '+56 9 1234 5678', rut: userInDb ? userInDb.password : '12.345.678-K', profilePic: DEFAULT_AVATAR_PATH };
         }
-
         function saveProfileData(email, profile) {
             localStorage.setItem(`profile_${email}`, JSON.stringify(profile));
             if (localStorage.getItem('currentUserEmail') === email) {
-                navProfilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
-                dropdownProfilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
-                dropdownUsername.textContent = profile.name || email;
+                if(navProfilePic) navProfilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
+                if(dropdownProfilePic) dropdownProfilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
+                if(dropdownUsername) dropdownUsername.textContent = profile.name || email;
             }
         }
-
         function loadProfileData(email) {
             const profile = getProfileData(email);
-            profileNameInput.value = profile.name;
-            profileEmailInput.value = profile.email;
-            profilePhoneInput.value = profile.phone;
-            profileRutInput.value = profile.rut;
-            profilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
-            const isDefaultPic = profilePic.src.includes(DEFAULT_AVATAR_PATH.substring(DEFAULT_AVATAR_PATH.lastIndexOf('/') + 1));
-            deleteProfilePicBtn.style.display = isDefaultPic ? 'none' : 'inline-block';
-            profileMessage.textContent = '';
+            if(profileNameInput) profileNameInput.value = profile.name;
+            if(profileEmailInput) profileEmailInput.value = profile.email;
+            if(profilePhoneInput) profilePhoneInput.value = profile.phone;
+            if(profileRutInput) profileRutInput.value = profile.rut;
+            if(profilePic) profilePic.src = profile.profilePic || DEFAULT_AVATAR_PATH;
+            if(profilePic && deleteProfilePicBtn) {
+                const isDefaultPic = profilePic.src.includes(DEFAULT_AVATAR_PATH.substring(DEFAULT_AVATAR_PATH.lastIndexOf('/') + 1));
+                deleteProfilePicBtn.style.display = isDefaultPic ? 'none' : 'inline-block';
+            }
+            if(profileMessage) profileMessage.textContent = '';
         }
-
         function setProfileFormState(isEditing) {
-            profileNameInput.disabled = !isEditing;
-            profilePhoneInput.disabled = !isEditing;
-            profileRutInput.disabled = !isEditing;
-            profilePic.style.cursor = isEditing ? 'pointer' : 'default';
-            editProfileBtn.style.display = isEditing ? 'none' : 'inline-block';
-            saveProfileBtn.style.display = isEditing ? 'inline-block' : 'none';
-            cancelEditBtn.style.display = isEditing ? 'inline-block' : 'none';
-            const isDefaultPic = profilePic.src.includes(DEFAULT_AVATAR_PATH.substring(DEFAULT_AVATAR_PATH.lastIndexOf('/') + 1));
-            deleteProfilePicBtn.style.display = (isEditing && !isDefaultPic) ? 'inline-block' : 'none';
-        }
-
+            if(profileNameInput) profileNameInput.disabled = !isEditing;
+            if(profilePhoneInput) profilePhoneInput.disabled = !isEditing;
+            if(profileRutInput) profileRutInput.disabled = !isEditing;
+            if(profilePic) profilePic.style.cursor = isEditing ? 'pointer' : 'default';
+            if(editProfileBtn) editProfileBtn.style.display = isEditing ? 'none' : 'inline-block';
+            if(saveProfileBtn) saveProfileBtn.style.display = isEditing ? 'inline-block' : 'none';
+            if(cancelEditBtn) cancelEditBtn.style.display = isEditing ? 'inline-block' : 'none';
+            if(profilePic && deleteProfilePicBtn){
+                const isDefaultPic = profilePic.src.includes(DEFAULT_AVATAR_PATH.substring(DEFAULT_AVATAR_PATH.lastIndexOf('/') + 1));
+                deleteProfilePicBtn.style.display = (isEditing && !isDefaultPic) ? 'inline-block' : 'none';
+            }
+         }
         function handleProfileImageUpload(e) {
             const file = e.target.files[0];
-            if (file) {
+            if (file && profilePic) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     profilePic.src = event.target.result;
@@ -474,25 +480,28 @@
                         const currentProfile = getProfileData(loggedInUser);
                         currentProfile.profilePic = event.target.result;
                         saveProfileData(loggedInUser, currentProfile);
-                        profileMessage.textContent = 'Foto de perfil cargada. Haz clic en "Guardar Cambios".';
-                        profileMessage.style.color = getCssVariable('--color-advertencia');
-                        deleteProfilePicBtn.style.display = 'inline-block';
+                        if(profileMessage) {
+                            profileMessage.textContent = 'Foto de perfil cargada. Haz clic en "Guardar Cambios".';
+                            profileMessage.style.color = getCssVariable('--color-advertencia');
+                        }
+                        if(deleteProfilePicBtn) deleteProfilePicBtn.style.display = 'inline-block';
                     }
                 };
                 reader.readAsDataURL(file);
             }
         }
-
         function handleDeleteProfilePic() {
             const loggedInUser = localStorage.getItem('currentUserEmail');
-            if (loggedInUser) {
+            if (loggedInUser && profilePic) {
                 const currentProfile = getProfileData(loggedInUser);
                 currentProfile.profilePic = DEFAULT_AVATAR_PATH;
                 profilePic.src = DEFAULT_AVATAR_PATH;
                 saveProfileData(loggedInUser, currentProfile);
-                profileMessage.textContent = 'Foto de perfil eliminada. Haz clic en "Guardar Cambios".';
-                profileMessage.style.color = getCssVariable('--color-advertencia');
-                deleteProfilePicBtn.style.display = 'none';
+                if(profileMessage){
+                    profileMessage.textContent = 'Foto de perfil eliminada. Haz clic en "Guardar Cambios".';
+                    profileMessage.style.color = getCssVariable('--color-advertencia');
+                }
+                if(deleteProfilePicBtn) deleteProfilePicBtn.style.display = 'none';
             }
         }
 
@@ -502,14 +511,14 @@
            ====================================================================
         */
         function renderDirectory() {
-            directoryList = document.getElementById('directory-list'); // Asegurarse de que esté definido aquí si la sección es dinámica
-            if (!directoryList) return;
-            directoryList.innerHTML = '';
+            const localDirectoryList = document.getElementById('directory-list');
+            if (!localDirectoryList) return;
+            localDirectoryList.innerHTML = '';
             for (const sede in directoryDataBySede) {
                 if (directoryDataBySede.hasOwnProperty(sede)) {
                     const sedeHeading = document.createElement('h2');
                     sedeHeading.classList.add('sede-title'); sedeHeading.textContent = sede;
-                    directoryList.appendChild(sedeHeading);
+                    localDirectoryList.appendChild(sedeHeading);
                     const sedeContactsGrid = document.createElement('div');
                     sedeContactsGrid.classList.add('directory-grid');
                     directoryDataBySede[sede].forEach((contact, index) => {
@@ -519,21 +528,18 @@
                         card.innerHTML = `<span class="icon">${contact.icon}</span><div><h3>${contact.name}</h3><p>${contact.position}</p></div>`;
                         sedeContactsGrid.appendChild(card);
                     });
-                    directoryList.appendChild(sedeContactsGrid);
+                    localDirectoryList.appendChild(sedeContactsGrid);
                 }
             }
-        }
-
+         }
         function showContactDetailsModal(contact) {
-            contactDetailsTitle.textContent = `Detalles de ${contact.name}`;
-            contactDetailsOutput.innerHTML = `<p><strong>Cargo:</strong> ${contact.position}</p><p><strong>Departamento:</strong> ${contact.department}</p><p><strong>Email:</strong> <a href="mailto:${contact.email}">${contact.email}</a></p><p><strong>Teléfono:</strong> <a href="tel:${contact.phone}">${contact.phone}</a></p>`;
-            contactDetailsModal.classList.add('show');
+            if(contactDetailsTitle) contactDetailsTitle.textContent = `Detalles de ${contact.name}`;
+            if(contactDetailsOutput) contactDetailsOutput.innerHTML = `<p><strong>Cargo:</strong> ${contact.position}</p><p><strong>Departamento:</strong> ${contact.department}</p><p><strong>Email:</strong> <a href="mailto:${contact.email}">${contact.email}</a></p><p><strong>Teléfono:</strong> <a href="tel:${contact.phone}">${contact.phone}</a></p>`;
+            if(contactDetailsModal) contactDetailsModal.classList.add('show');
         }
-
         function closeContactDetailsModal() {
-            contactDetailsModal.classList.remove('show');
-        }
-
+            if(contactDetailsModal) contactDetailsModal.classList.remove('show');
+         }
         function initializeNotesSection() {
             document.querySelectorAll('#notes-attendance-section .nota-value').forEach(nota => {
                 const value = parseFloat(nota.textContent);
@@ -546,7 +552,6 @@
                 setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 100 * index);
             });
         }
-
         function toggleBeca(element) {
             const content = element.nextElementSibling;
             const icon = element.querySelector('.toggle-icon');
@@ -565,7 +570,12 @@
         function setupEventListeners() {
             if (menuToggle) menuToggle.addEventListener('click', () => { navUl.classList.toggle('active'); profileDropdown.classList.remove('show'); });
             if (profileNavLink) profileNavLink.addEventListener('click', (e) => { e.stopPropagation(); e.preventDefault(); if (navUl.classList.contains('active')) { navUl.classList.remove('active'); showSection('user-profile-detail'); } else { profileDropdown.classList.toggle('show'); } });
-            document.querySelector('header .container').addEventListener('click', (e) => { let target = e.target; if ((target.tagName === 'IMG' && target.closest('.logo')) || target.classList.contains('logo')) target = target.closest('.logo'); if (target.tagName === 'A' && target.dataset.section) { e.preventDefault(); navUl.classList.remove('active'); showSection(target.dataset.section); } });
+
+            const headerContainer = document.querySelector('header .container');
+            if(headerContainer) {
+                headerContainer.addEventListener('click', (e) => { let target = e.target; if ((target.tagName === 'IMG' && target.closest('.logo')) || target.classList.contains('logo')) target = target.closest('.logo'); if (target.tagName === 'A' && target.dataset.section) { e.preventDefault(); navUl.classList.remove('active'); showSection(target.dataset.section); } });
+            }
+
             if (profileDropdown) profileDropdown.addEventListener('click', (e) => { e.stopPropagation(); const target = e.target; if (target.tagName === 'A') { e.preventDefault(); profileDropdown.classList.remove('show'); navUl.classList.remove('active'); if (target.dataset.section === 'user-profile-detail') showSection('user-profile-detail'); else if (target.dataset.action === 'logout') { localStorage.removeItem('currentUserEmail'); updateAuthUI(); } } });
 
             window.addEventListener('click', (e) => { if (e.target === loginModal) closeLoginModal(); if (e.target === contactDetailsModal) closeContactDetailsModal(); });
@@ -573,34 +583,33 @@
             if (editProfileBtn) editProfileBtn.addEventListener('click', () => { setProfileFormState(true); profileMessage.textContent = ''; });
             if (cancelEditBtn) cancelEditBtn.addEventListener('click', () => { const loggedInUser = localStorage.getItem('currentUserEmail'); if (loggedInUser) loadProfileData(loggedInUser); setProfileFormState(false); profileMessage.textContent = 'Edición cancelada.'; profileMessage.style.color = getCssVariable('--color-advertencia'); });
             if (profileForm) profileForm.addEventListener('submit', (e) => { e.preventDefault(); const loggedInUser = localStorage.getItem('currentUserEmail'); if (!loggedInUser) { profileMessage.textContent = 'Error: Debes iniciar sesión para guardar tu perfil.'; profileMessage.style.color = getCssVariable('--color-error'); return; } if (!profileNameInput.value.trim() || !profileEmailInput.value.trim() || !profileEmailInput.value.includes('@')) { profileMessage.textContent = 'Por favor, completa los campos requeridos con datos válidos.'; profileMessage.style.color = getCssVariable('--color-error'); return; } const updatedProfile = { name: profileNameInput.value.trim(), email: profileEmailInput.value.trim(), phone: profilePhoneInput.value.trim(), rut: profileRutInput.value.trim(), profilePic: profilePic.src }; saveProfileData(loggedInUser, updatedProfile); profileMessage.textContent = '¡Perfil actualizado exitosamente!'; profileMessage.style.color = getCssVariable('--color-exito'); setProfileFormState(false); });
-            if (profilePic) profilePic.addEventListener('click', () => { if (!profileNameInput.disabled) profileImageUpload.click(); });
+            if (profilePic) profilePic.addEventListener('click', () => { if (profileNameInput && !profileNameInput.disabled) profileImageUpload.click(); });
             if (profileImageUpload) profileImageUpload.addEventListener('change', handleProfileImageUpload);
             if (deleteProfilePicBtn) deleteProfilePicBtn.addEventListener('click', handleDeleteProfilePic);
             backButtons.forEach(button => button.addEventListener('click', () => { const loggedInUser = localStorage.getItem('currentUserEmail'); showSection(loggedInUser ? 'modules' : 'home'); }));
             document.addEventListener('click', (e) => { if (profileNavLink && !profileNavLink.contains(e.target) && profileDropdown && profileDropdown.classList.contains('show') && navUl && !navUl.classList.contains('active')) { profileDropdown.classList.remove('show'); } });
 
-            // Re-seleccionar elementos para forms que podrían no estar en el DOM al inicio
-            notificationForm = document.getElementById('notificationForm');
-            if (notificationForm) {
-                emailNotificationInput = document.getElementById('email_notification');
-                phoneNotificationInput = document.getElementById('phone_notification');
-                messageNotificationInput = document.getElementById('message_notification');
-                responseMessageNotificationDiv = document.getElementById('responseMessageNotification');
-                notificationForm.addEventListener('submit', async (event) => { event.preventDefault(); const email = emailNotificationInput.value; const phone = phoneNotificationInput.value; const message = messageNotificationInput.value; if (!email || !phone || !message) { showFormMessage('Por favor, completa todos los campos.', 'error'); return; } const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; if (!emailRegex.test(email)) { showFormMessage('Por favor, introduce un correo electrónico válido.', 'error'); return; } showFormMessage('Enviando notificación...', 'info'); await new Promise(resolve => setTimeout(resolve, 1500)); showFormMessage(`Notificación ficticia enviada a: Correo (${email}), Teléfono (${phone}). Mensaje: "${message}"`, 'success'); notificationForm.reset(); });
+            const currentNotificationForm = document.getElementById('notificationForm');
+            if (currentNotificationForm) {
+                const currentEmailInput = document.getElementById('email_notification');
+                const currentPhoneInput = document.getElementById('phone_notification');
+                const currentMessageInput = document.getElementById('message_notification');
+                const currentResponseMessageDiv = document.getElementById('responseMessageNotification');
+                currentNotificationForm.addEventListener('submit', async (event) => { event.preventDefault(); const email = currentEmailInput.value; const phone = currentPhoneInput.value; const message = currentMessageInput.value; if (!email || !phone || !message) { showFormMessage('Por favor, completa todos los campos.', 'error', currentResponseMessageDiv); return; } const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; if (!emailRegex.test(email)) { showFormMessage('Por favor, introduce un correo electrónico válido.', 'error', currentResponseMessageDiv); return; } showFormMessage('Enviando notificación...', 'info', currentResponseMessageDiv); await new Promise(resolve => setTimeout(resolve, 1500)); showFormMessage(`Notificación ficticia enviada a: Correo (${email}), Teléfono (${phone}). Mensaje: "${message}"`, 'success', currentResponseMessageDiv); currentNotificationForm.reset(); });
             }
 
             if (closeContactDetailsModalBtn) closeContactDetailsModalBtn.addEventListener('click', closeContactDetailsModal);
 
-            directoryList = document.getElementById('directory-list');
-            if (directoryList) {
-                directoryList.addEventListener('click', (e) => { const card = e.target.closest('.directory-card'); if (card) { const contactId = card.dataset.contactId; let foundContact = null; for (const sede in directoryDataBySede) { const contactIndex = parseInt(contactId.split('-').pop()); if (contactId.startsWith(sede.replace(/\s/g, '')) && directoryDataBySede[sede][contactIndex]) { foundContact = directoryDataBySede[sede][contactIndex]; break; } } if (foundContact) showContactDetailsModal(foundContact); } });
+            const localDirectoryList = document.getElementById('directory-list');
+            if (localDirectoryList) {
+                localDirectoryList.addEventListener('click', (e) => { const card = e.target.closest('.directory-card'); if (card) { const contactId = card.dataset.contactId; let foundContact = null; for (const sede in directoryDataBySede) { const contactIndex = parseInt(contactId.split('-').pop()); if (contactId.startsWith(sede.replace(/\s/g, '')) && directoryDataBySede[sede][contactIndex]) { foundContact = directoryDataBySede[sede][contactIndex]; break; } } if (foundContact) showContactDetailsModal(foundContact); } });
             }
 
-            reportIssueForm = document.getElementById('reportIssueForm');
-            if (reportIssueForm) {
-                formMessage = document.getElementById('formMessage');
-                submitReportBtn = document.getElementById('submitReportBtn');
-                reportIssueForm.addEventListener('submit', async (e) => { e.preventDefault(); submitReportBtn.disabled = true; submitReportBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...'; const nombre = document.getElementById('nombreEstudiante').value; const carrera = document.getElementById('carreraEstudiante').value; const profesor = document.getElementById('profesorCarrera').value; const motivo = document.getElementById('motivoReporte').value; if (!nombre || !carrera || carrera === "" || !motivo) { showReportFormMessage('Por favor, completa todos los campos requeridos (Nombre, Carrera, Motivo).', 'error'); submitReportBtn.disabled = false; submitReportBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Reporte'; return; } showReportFormMessage('Enviando reporte...', 'info'); await new Promise(resolve => setTimeout(resolve, 1500)); showReportFormMessage('Reporte enviado con éxito. ¡Gracias por tu retroalimentación!', 'success'); reportIssueForm.reset(); submitReportBtn.disabled = false; submitReportBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Reporte'; });
+            const localReportIssueForm = document.getElementById('reportIssueForm');
+            if (localReportIssueForm) {
+                const localFormMessage = localReportIssueForm.querySelector('#formMessage');
+                const localSubmitReportBtn = localReportIssueForm.querySelector('#submitReportBtn');
+                localReportIssueForm.addEventListener('submit', async (e) => { e.preventDefault(); if(localSubmitReportBtn) {localSubmitReportBtn.disabled = true; localSubmitReportBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';} const nombre = localReportIssueForm.querySelector('#nombreEstudiante').value; const carrera = localReportIssueForm.querySelector('#carreraEstudiante').value; const profesor = localReportIssueForm.querySelector('#profesorCarrera').value; const motivo = localReportIssueForm.querySelector('#motivoReporte').value; if (!nombre || !carrera || carrera === "" || !motivo) { showFormMessage('Por favor, completa todos los campos requeridos (Nombre, Carrera, Motivo).', 'error', localFormMessage); if(localSubmitReportBtn){localSubmitReportBtn.disabled = false; localSubmitReportBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Reporte';} return; } showFormMessage('Enviando reporte...', 'info', localFormMessage); await new Promise(resolve => setTimeout(resolve, 1500)); showFormMessage('Reporte enviado con éxito. ¡Gracias por tu retroalimentación!', 'success', localFormMessage); localReportIssueForm.reset(); if(localSubmitReportBtn){localSubmitReportBtn.disabled = false; localSubmitReportBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Reporte';} });
             }
         }
 
@@ -611,9 +620,9 @@
         */
         document.addEventListener('DOMContentLoaded', () => {
             setInitialTheme();
-            updateAuthUI(); // Llama a showSection, que carga HTML inicial
+            updateAuthUI();
             initializeAdmisionForm();
-            setupEventListeners(); // Configurar listeners globales y para elementos estáticos
+            setupEventListeners();
 
             if(themeToggleButton) themeToggleButton.addEventListener('click', toggleTheme);
             if(navSearchButton) navSearchButton.addEventListener('click', handleSiteSearch);
@@ -624,7 +633,6 @@
         });
 
         function initializeAdmisionForm() {
-            // ... (contenido de initializeAdmisionForm sin cambios)
             const carrerasPorSedeAdmision = {
                 valdivia: [{ value: 'refrigeracion', text: 'TNS en Refrigeración y Climatización' }],
                 launion: [{ value: 'agroindustria', text: 'TNS en Agroindustria e Innovación Alimentaria' }, { value: 'admin', text: 'TNS en Administración Pública y Privada' }, { value: 'comunicacion', text: 'TNS en Comunicación y Audiovisual' }],
@@ -649,36 +657,15 @@
         }
 
         function initializeNoticiasFilters() {
-            // Esta función ahora se llama desde showSection cuando la sección de noticias es visible
-            // y su contenido (incluyendo los botones de filtro) está cargado.
             const noticiasSectionNode = document.getElementById('noticias-section');
             if (!noticiasSectionNode || !noticiasSectionNode.classList.contains('active-section')) return;
-
             const filterBtns = noticiasSectionNode.querySelectorAll('.filter-btn');
             const newsCards = noticiasSectionNode.querySelectorAll('.news-card');
-
             if (!filterBtns.length || !newsCards.length) return;
-
-            function filterNews(filter) {
-                newsCards.forEach(card => {
-                    void card.offsetWidth;
-                    const isVisible = (filter === 'all' || card.classList.contains(filter));
-                    if (isVisible) { card.style.display = ''; card.style.animation = 'fadeIn 0.5s ease-out forwards'; }
-                    else { card.style.animation = 'fadeOut 0.3s ease-out forwards'; setTimeout(() => { if (card.style.animationName === 'fadeOut') card.style.display = 'none'; }, 300); }
-                });
-            }
-
-            filterBtns.forEach(btn => {
-                if (!btn.hasAttribute('data-listener-set')) {
-                    btn.addEventListener('click', function() { filterBtns.forEach(b => b.classList.remove('active')); this.classList.add('active'); filterNews(this.dataset.filter); });
-                    btn.setAttribute('data-listener-set', 'true');
-                }
-            });
-
+            function filterNews(filter) { newsCards.forEach(card => { void card.offsetWidth; const isVisible = (filter === 'all' || card.classList.contains(filter)); if (isVisible) { card.style.display = ''; card.style.animation = 'fadeIn 0.5s ease-out forwards'; } else { card.style.animation = 'fadeOut 0.3s ease-out forwards'; setTimeout(() => { if (card.style.animationName === 'fadeOut') card.style.display = 'none'; }, 300); } }); }
+            filterBtns.forEach(btn => { if (!btn.hasAttribute('data-listener-set')) { btn.addEventListener('click', function() { filterBtns.forEach(b => b.classList.remove('active')); this.classList.add('active'); filterNews(this.dataset.filter); }); btn.setAttribute('data-listener-set', 'true'); } });
             const allFilterBtn = noticiasSectionNode.querySelector('.filter-btn[data-filter="all"]');
-            if (allFilterBtn && !allFilterBtn.classList.contains('active')) {
-                 allFilterBtn.click();
-            }
+            if (allFilterBtn && !allFilterBtn.classList.contains('active')) allFilterBtn.click();
         }
 
         function handleSiteSearch() {
@@ -696,11 +683,18 @@
 
         function setInitialTheme() {
             const savedTheme = localStorage.getItem('theme') || 'light';
-            if (savedTheme === 'dark') { document.body.classList.add('theme-dark'); if(themeToggleButton) themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>'; }
-            else { document.body.classList.remove('theme-dark'); if(themeToggleButton) themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>'; }
+            if (themeToggleButton) { // Verificar que el botón exista
+                if (savedTheme === 'dark') { document.body.classList.add('theme-dark'); themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>'; }
+                else { document.body.classList.remove('theme-dark'); themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>'; }
+            } else {
+                // Fallback si el botón no está, aplicar tema al body de todas formas
+                if (savedTheme === 'dark') document.body.classList.add('theme-dark');
+                else document.body.classList.remove('theme-dark');
+            }
         }
-
         function toggleTheme() {
-            if (document.body.classList.contains('theme-dark')) { document.body.classList.remove('theme-dark'); localStorage.setItem('theme', 'light'); if(themeToggleButton) themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>'; }
-            else { document.body.classList.add('theme-dark'); localStorage.setItem('theme', 'dark'); if(themeToggleButton) themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>'; }
+            if (themeToggleButton) { // Verificar que el botón exista
+                if (document.body.classList.contains('theme-dark')) { document.body.classList.remove('theme-dark'); localStorage.setItem('theme', 'light'); themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>'; }
+                else { document.body.classList.add('theme-dark'); localStorage.setItem('theme', 'dark'); themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>'; }
+            }
         }
