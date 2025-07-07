@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Estudiantil Minimalista - Horario de Clases</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Incluye Tailwind CSS para el estilo rápido y responsivo del calendario -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="#" class="logo" data-section="main-menu">
+                <img src="https://cftdelosrios.cl/wp-content/uploads/2021/09/cropped-Recurso-2.png" alt="Logo CFT Los Ríos">
+            </a>
+            <button class="menu-toggle" aria-label="Abrir menú">&#9776;</button>
+            <nav>
+                <ul>
+                    <li><a href="https://cftdelosrios.cl/" target="_blank" class="btn-nav-link">Página Oficial</a></li>
+                    <li><a href="#" data-section="info-cft" class="btn-nav-link">Información CFT</a></li>
+                    <li id="carreras-nav-link" style="display: none;"><a href="#" data-section="carreras-info" class="btn-nav-link">Carreras</a></li>
+                    <li id="admision-nav-link" style="display: none;"><a href="#" data-section="admision" class="btn-nav-link">Admisión</a></li>
+                    <li id="vida-estudiantil-nav-link" style="display: none;"><a href="#" data-section="vida-estudiantil" class="btn-nav-link">Vida Estudiantil</a></li>
+                    <li id="noticias-nav-link" style="display: none;"><a href="#" data-section="noticias" class="btn-nav-link">Noticias</a></li>
+
+                    <!-- Contenedor de Búsqueda en Navegación -->
+                    <li id="nav-search-li" style="display: none;">
+                        <div class="nav-search-container">
+                            <input type="search" id="nav-search-input" placeholder="Buscar en el sitio...">
+                            <button id="nav-search-button"><i class="fas fa-search"></i></button>
+                        </div>
+                    </li>
+
+                    <!-- Botón de Cambio de Tema -->
+                    <li id="theme-toggle-li" style="display: list-item; margin-left: auto;">
+                         <button id="theme-toggle-button" aria-label="Cambiar tema">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+
+                    <li id="profile-nav-link" style="display: none;">
+                        <a href="#">
+                            <img id="nav-profile-pic" src="https://placehold.co/35x35/D3D3D3/000?text=Avatar" alt="Mi Perfil">
+                        </a>
+                        <div id="profile-dropdown" class="profile-dropdown-content">
+                            <div class="dropdown-header">
+                                <img id="dropdown-profile-pic" src="https://placehold.co/40x40/D3D3D3/000?text=Avatar" alt="Foto de Perfil">
+                                <span id="dropdown-username"></span>
+                            </div>
+                            <a href="#" data-section="user-profile-detail">Ver Perfil Completo</a>
+                            <a href="#" data-action="logout">Cerrar Sesión</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section id="home-section" class="content-section active-section">
+                <h1>Bienvenido, CFTINO!</h1>
+                <p>Tu portal de CFT viene mas cerca que nunca.</p>
+                <button class="btn-primario" data-action="open-login-modal">Iniciar Sesión</button>
+            </section>
+
+            <section id="profile-section" class="content-section" style="display: none;">
+                <h1>Mi Perfil</h1>
+                <p>Bienvenido/a, <span id="user-email-display"></span>!</p>
+                <p>Aquí verás tus datos personales y otra información.</p>
+            </section>
+
+            <section id="user-profile-detail-section" class="content-section">
+                <button class="back-button" data-target-section="modules">Volver</button>
+                <div class="profile-detail-card">
+                    <h2>Detalles de mi Perfil</h2>
+                    <form id="profile-form">
+                        <div class="profile-pic-container">
+                            <img id="profile-pic" src="https://placehold.co/120x120/D3D3D3/000?text=Avatar" alt="Foto de Perfil">
+                            <input type="file" id="profile-image-upload" accept="image/*">
+                            <br>
+                            <button type="button" class="btn-delete-pic" id="delete-profile-pic-btn" style="display:none;">Eliminar Foto</button>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profile-name">Nombre Completo:</label>
+                            <input type="text" id="profile-name" value="Nombre del Estudiante" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-email">Correo Electrónico:</label>
+                            <input type="email" id="profile-email" value="estudiante@cftlosrios.cl" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-phone">Número de Teléfono:</label>
+                            <input type="tel" id="profile-phone" value="+56 9 1234 5678" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-rut">RUT Chileno:</label>
+                            <input type="text" id="profile-rut" value="12.345.678-K" disabled placeholder="Ej: 12.345.678-K">
+                            <small style="color: var(--color-texto-claro);">Este campo es solo decorativo y no se validará.</small>
+                        </div>
+                        <div class="button-group">
+                            <button type="button" class="btn-primario" id="edit-profile-btn">Editar Perfil</button>
+                            <button type="submit" class="btn-primario" id="save-profile-btn" style="display: none;">Guardar Cambios</button>
+                            <button type="button" class="btn-secundario" id="cancel-edit-btn" style="display: none;">Cancelar</button>
+                        </div>
+                        <p id="profile-message" style="margin-top: 15px;"></p>
+                    </form>
+                </div>
+            </section>
+
+            <section id="modules-section" class="modules-grid">
+                 <div class="module-card hover-blue" data-section="notes-attendance">
+                    <span class="icon">&#128220;</span> <h3>Notas y Asistencia</h3>
+                    <p>Accede rápidamente a tus calificaciones y registro de asistencia.</p>
+                </div>
+                <div class="module-card hover-orange" data-section="academic-calendar">
+                    <span class="icon">&#128197;</span> <h3>Calendario Académico</h3>
+                    <p>Mantente al día con los eventos y fechas importantes.</p>
+                </div>
+                <div class="module-card hover-green" data-section="notifications">
+                    <span class="icon">&#128276;</span> <h3>Notificaciones</h3>
+                    <p>Revisa avisos y comunicados importantes del sistema.</p>
+                </div>
+                <div class="module-card hover-blue" data-section="directory">
+                    <span class="icon">&#128204;</span> <h3>Directorio</h3>
+                    <p>Encuentra información de docentes y personal administrativo.</p>
+                </div>
+                <div class="module-card hover-orange" data-section="scholarships">
+                    <span class="icon">&#128188;</span> <h3>Becas y Beneficios</h3>
+                    <p>Información relevante sobre ayudas económicas.</p>
+                </div>
+                <div class="module-card hover-green" data-section="report-issue">
+                    <span class="icon">&#128736;</span> <h3>Reportar Problema</h3>
+                    <p>Ayúdanos a mejorar reportando cualquier error del sistema.</p>
+                </div>
+            </section>
+
+            <section id="carreras-info-section" class="content-section" style="text-align: left; color: var(--color-texto);">
+                <button class="back-button" data-target-section="modules">Volver</button>
+                <h1>Oferta de Carreras CFT Estatal de Los Ríos</h1>
+                <p style="color: var(--color-texto); font-size: 1.1em; margin-bottom: var(--espaciado-md);">A continuación, se detalla la oferta de carreras:</p>
+                <ul style="list-style-type: disc; margin-left: 20px; color: var(--color-texto); margin-bottom: var(--espaciado-md);">
+                    <li>TNS en Podología Clínica</li>
+                    <li>TNS en Electricidad mención Energías Renovables</li>
+                    <li>TNS en Enfermería</li>
+                    <li>TNS en Comunicación Audiovisual</li>
+                    <li>TNS en Automatización</li>
+                    <li>TNS en Construcción mención Eficiencia Energética</li>
+                    <li>TNS en Agroindustria e Innovación Alimentaria</li>
+                    <li>TNS en Informática y Data Science</li>
+                    <li>TNS en Refrigeración y Climatización</li>
+                    <li>TNS en Administración Pública Privada</li>
+                    <li>TNS en Turismo de Intereses Especiales</li>
+                </ul>
+
+                <h2 style="color: var(--color-primario); margin-bottom: var(--espaciado-sm); margin-top: var(--espaciado-lg); font-size: 1.8em;">Nuevas Carreras para 2025</h2>
+                <p style="color: var(--color-texto); font-size: 1.1em; margin-bottom: var(--espaciado-md);">Para el año académico 2025, se han destacado algunas nuevas carreras:</p>
+                <ul style="list-style-type: disc; margin-left: 20px; color: var(--color-texto); margin-bottom: var(--espaciado-md);">
+                    <li><strong>TNS en Agroindustria e Innovación Alimentaria</strong> es una nueva carrera para el 2025.</li>
+                    <li><strong>TNS en Informática y Data Science</strong> también se presenta como una nueva carrera para el 2025.</li>
+                    <li>En la Sede Paillaco, se ofrece como <strong>NUEVA CARRERA</strong> la <strong>TNS en Administración Pública y Privada</strong>.</li>
+                </ul>
+
+                <h2 style="color: var(--color-primario); margin-bottom: var(--espaciado-sm); margin-top: var(--espaciado-lg); font-size: 1.8em;">Información Adicional</h2>
+                <p style="color: var(--color-texto); font-size: 1.1em; margin-bottom: var(--espaciado-sm);">
+                    El CFT Estatal de Los Ríos está adscrito a Gratuidad, lo que permite a los estudiantes formarse en sus sedes ubicadas en La Unión, Paillaco, Panguipulli y Valdivia.
+                </p>
+                <p style="color: var(--color-texto); font-size: 1.1em; margin-bottom: var(--espaciado-sm);">
+                    La institución busca formar técnicos que lideren el desarrollo de la Región de los Ríos.
+                </p>
+                <p style="color: var(--color-texto); font-size: 1.1em; margin-bottom: var(--espaciado-md);">
+                    Su sello educativo promueve el desarrollo de Habilidades Sociales, Innovación y Emprendimiento en sus estudiantes.
+                </p>
+            </section>
+
+            <section id="info-cft-section" class="content-section" style="text-align: left; color: var(--color-texto);">
+                <button class="back-button" data-target-section="modules">Volver</button>
+                <h1>Información General del CFT Los Ríos</h1>
+                <p>El Centro de Formación Técnica Estatal de la Región de Los Ríos es una institución de educación superior pública, creada para contribuir al desarrollo productivo y social de la región.</p>
+                <h2 style="color: var(--color-primario); margin-top: var(--espaciado-lg);">Misión</h2>
+                <p>Formar técnicos de nivel superior de excelencia, con un fuerte compromiso con el desarrollo regional, la innovación y el emprendimiento, que contribuyan al progreso de la Región de Los Ríos y del país.</p>
+                <h2 style="color: var(--color-primario); margin-top: var(--espaciado-lg);">Visión</h2>
+                <p>Ser una institución líder en la formación técnico profesional, reconocida por su calidad académica, su vinculación con el medio productivo y social, y su aporte al desarrollo sostenible de la región.</p>
+                <h2 style="color: var(--color-primario); margin-top: var(--espaciado-lg);">Valores Institucionales</h2>
+                <ul>
+                    <li><strong>Excelencia:</strong> Búsqueda constante de la calidad en todos los ámbitos.</li>
+                    <li><strong>Compromiso Regional:</strong> Contribución activa al desarrollo de la Región de Los Ríos.</li>
+                    <li><strong>Innovación:</strong> Fomento de la creatividad y la adaptación a nuevos desafíos.</li>
+                    <li><strong>Emprendimiento:</strong> Estímulo a la iniciativa y la creación de valor.</li>
+                    <li><strong>Inclusión:</strong> Acceso equitativo a la educación para todos.</li>
+                    <li><strong>Respeto:</strong> Valoración de la diversidad y la dignidad de las personas.</li>
+                </ul>
+                <h2 style="color: var(--color-primario); margin-top: var(--espaciado-lg);">Acreditación</h2>
+                <p>El CFT Estatal de Los Ríos se encuentra acreditado por la Comisión Nacional de Acreditación (CNA), lo que garantiza la calidad de sus procesos formativos y de gestión.</p>
+            </section>
+
+            <section id="notes-attendance-section" class="content-section">
+                <button class="back-button" data-target-section="modules">Volver</button>
+                <h1 class="dashboard-title"><i class="fas fa-book-open"></i> Rendimiento Académico</h1>
+
+                <div class="materias-grid">
+                    <!-- Materia 1 -->
+                    <div class="materia-card">
+                        <div class="materia-header">
+                            <h3><i class="fas fa-calculator"></i> Nivelación de Matemáticas</h3>
+                        </div>
+                        <div class="materia-content">
+                            <div class="unidades-container">
+                                <div class="unidad">
+                                    <h4>Unidad 1 <span>Asistencia: 82.3%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">4.5</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">5.2</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">4.85</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 2 <span>Asistencia: 89.7%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">5.8</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">6.3</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">6.05</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 3 <span>Asistencia: 76.5%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">3.9</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">4.7</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">4.30</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 4 <span>Asistencia: 94.2%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">6.2</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">5.8</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">6.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="asistencia">
+                            <span>Asistencia Total:</span>
+                            <span class="asistencia-value">85.7%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 85.7%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Materia 2 -->
+                    <div class="materia-card">
+                        <div class="materia-header">
+                            <h3><i class="fas fa-laptop-code"></i> Introducción a Programación</h3>
+                        </div>
+                        <div class="materia-content">
+                            <div class="unidades-container">
+                                <div class="unidad">
+                                    <h4>Unidad 1 <span>Asistencia: 95.8%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">6.5</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">7.0</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">6.75</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 2 <span>Asistencia: 98.4%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">7.0</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">6.9</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">6.95</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 3 <span>Asistencia: 92.1%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">5.7</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">6.8</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">6.25</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 4 <span>Asistencia: 99.0%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">6.9</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">7.0</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">6.95</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="asistencia">
+                            <span>Asistencia Total:</span>
+                            <span class="asistencia-value">96.3%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 96.3%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Materia 3 -->
+                    <div class="materia-card">
+                        <div class="materia-header">
+                            <h3><i class="fas fa-chart-line"></i> Fundamentos de Data Science</h3>
+                        </div>
+                        <div class="materia-content">
+                            <div class="unidades-container">
+                                <div class="unidad">
+                                    <h4>Unidad 1 <span>Asistencia: 78.9%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">3.5</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">4.1</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">3.80</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 2 <span>Asistencia: 85.3%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">5.0</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">6.0</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">5.50</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 3 <span>Asistencia: 91.7%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">6.5</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">5.8</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">6.15</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 4 <span>Asistencia: 96.5%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">6.8</span>
+                                            </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">7.0</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">6.90</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="asistencia">
+                            <span>Asistencia Total:</span>
+                            <span class="asistencia-value">88.1%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 88.1%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Materia 4 -->
+                    <div class="materia-card">
+                        <div class="materia-header">
+                            <h3><i class="fas fa-briefcase"></i> Apresto Laboral</h3>
+                        </div>
+                        <div class="materia-content">
+                            <div class="unidades-container">
+                                <div class="unidad">
+                                    <h4>Unidad 1 <span>Asistencia: 83.4%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">4.0</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">5.0</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">4.50</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 2 <span>Asistencia: 88.9%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">5.5</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">6.1</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">5.80</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 3 <span>Asistencia: 94.7%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">6.2</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">7.0</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">6.60</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 4 <span>Asistencia: 97.3%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">6.5</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">6.8</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">6.65</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="asistencia">
+                            <span>Asistencia Total:</span>
+                            <span class="asistencia-value">91.1%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 91.1%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Materia 5 -->
+                    <div class="materia-card">
+                        <div class="materia-header">
+                            <h3><i class="fas fa-language"></i> Inglés I</h3>
+                        </div>
+                        <div class="materia-content">
+                            <div class="unidades-container">
+                                <div class="unidad">
+                                    <h4>Unidad 1 <span>Asistencia: 86.2%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">5.2</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">4.8</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">5.00</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 2 <span>Asistencia: 80.5%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">4.0</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">4.6</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">4.30</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 3 <span>Asistencia: 98.9%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">6.7</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">7.0</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">6.85</span>
+                                    </div>
+                                </div>
+                                <div class="unidad">
+                                    <h4>Unidad 4 <span>Asistencia: 100%</span></h4>
+                                    <div class="notas-container">
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 1</span>
+                                            <span class="nota-value">7.0</span>
+                                        </div>
+                                        <div class="nota">
+                                            <span class="nota-label">Nota 2</span>
+                                            <span class="nota-value">6.9</span>
+                                        </div>
+                                    </div>
+                                    <div class="promedio-container">
+                                        <span class="promedio-label">Promedio:</span>
+                                        <span class="promedio-value">6.95</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="asistencia">
+                            <span>Asistencia Total:</span>
+                            <span class="asistencia-value">91.4%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 91.4%"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="academic-calendar-section" class="content-section">
+                <button class="back-button" data-target-section="modules">Volver</button>
+                <div class="schedule-container">
+                    <h1 class="schedule-title">Horario de Clases</h1>
+
+                    <!-- Filtros por asignatura -->
+                    <div class="schedule-filter">
+                        <button class="filter-button active" data-filter="all">Todas</button>
+                        <button class="filter-button" data-filter="matematicas">Matemáticas</button>
+                        <button class="filter-button" data-filter="programacion">Programación</button>
+                        <button class="filter-button" data-filter="ingles">Inglés</button>
+                        <button class="filter-button" data-filter="apresto">Apresto Laboral</button>
+                        <button class="filter-button" data-filter="data">Data Science</button>
+                        <button class="filter-button" data-filter="tic">TIC</button>
+                    </div>
+
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Mod</th>
+                                <th>Hora</th>
+                                <th>Lunes</th>
+                                <th>Martes</th>
+                                <th>Miércoles</th>
+                                <th>Jueves</th>
+                                <th>Viernes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Mod 1 -->
+                            <tr>
+                                <td class="time-slot">1</td>
+                                <td class="time-slot">08:30-09:15</td>
+                                <td class="empty-cell"></td>
+                                <td class="empty-cell"></td>
+                                <td class="empty-cell"></td>
+                                <td class="empty-cell"></td>
+                                <td class="empty-cell"></td>
+                            </tr>
+                            <!-- Mod 2 -->
+                            <tr>
+                                <td class="time-slot">2</td>
+                                <td class="time-slot">09:15-10:00</td>
+                                <td><div class="subject-cell" data-subject="apresto">TALLER DE APRESTO LABORAL</div></td>
+                                <td><div class="subject-cell" data-subject="matematicas">NIVELACIÓN DE MATEMÁTICAS</div></td>
+                                <td class="empty-cell"></td>
+                                <td><div class="subject-cell" data-subject="programacion">INTRODUCCIÓN A LA PROGRAMACIÓN</div></td>
+                                <td class="empty-cell"></td>
+                            </tr>
+                            <!-- Mod 3 -->
+                            <tr>
+                                <td class="time-slot">3</td>
+                                <td class="time-slot">10:15-11:00</td>
+                                <td><div class="subject-cell" data-subject="apresto">TALLER DE APRESTO LABORAL</div></td>
+                                <td><div class="subject-cell" data-subject="matematicas">NIVELACIÓN DE MATEMÁTICAS</div></td>
+                                <td class="empty-cell"></td>
+                                <td><div class="subject-cell" data-subject="programacion">INTRODUCCIÓN A LA PROGRAMACIÓN</div></td>
+                                <td class="empty-cell"></td>
+                            </tr>
+                            <!-- Mod 4 -->
+                            <tr>
+                                <td class="time-slot">4</td>
+                                <td class="time-slot">11:00-11:45</td>
+                                <td><div class="subject-cell" data-subject="matematicas">NIVELACIÓN DE MATEMÁTICAS</div></td>
+                                <td class="empty-cell"></td>
+                                <td><div class="subject-cell" data-subject="apresto">TALLER DE APRESTO LABORAL</div></td>
+                                <td><div class="subject-cell" data-subject="programacion">INTRODUCCIÓN A LA PROGRAMACIÓN</div></td>
+                                <td class="empty-cell"></td>
+                            </tr>
+                            <!-- Mod 5 -->
+                            <tr>
+                                <td class="time-slot">5</td>
+                                <td class="time-slot">11:55-12:40</td>
+                                <td><div class="subject-cell" data-subject="matematicas">NIVELACIÓN DE MATEMÁTICAS</div></td>
+                                <td><div class="subject-cell" data-subject="programacion">INTRODUCCIÓN A LA PROGRAMACIÓN</div></td>
+                                <td><div class="subject-cell" data-subject="apresto">TALLER DE APRESTO LABORAL</div></td>
+                                <td><div class="subject-cell" data-subject="tic">TIC</div></td>
+                                <td class="empty-cell"></td>
+                            </tr>
+                            <!-- Mod 6 -->
+                            <tr>
+                                <td class="time-slot">6</td>
+                                <td class="time-slot">12:40-13:20</td>
+                                <td class="empty-cell"></td>
+                                <td><div class="subject-cell" data-subject="programacion">INTRODUCCIÓN A LA PROGRAMACIÓN</div></td>
+                                <td><div class="subject-cell" data-subject="data">FUNDAMENTOS DATA SCIENCE</div></td>
+                                <td><div class="subject-cell" data-subject="tic">TIC</div></td>
+                                <td class="empty-cell"></td>
+                            </tr>
+                            <!-- Mod 7 -->
+                            <tr>
+                                <td class="time-slot">7</td>
+                                <td class="time-slot">13:35-14:20</td>
+                                <td><div class="subject-cell" data-subject="ingles">INGLÉS I</div></td>
+                                <td class="empty-cell"></td>
+                                <td><div class="subject-cell" data-subject="data">FUNDAMENTOS DATA SCIENCE</div></td>
+                                <td><div class="subject-cell" data-subject="tic">TIC</div></td>
+                                <td class="empty-cell"></td>
+                            </tr>
+                            <!-- Mod 8 -->
+                            <tr>
+                                <td class="time-slot">8</td>
+                                <td class="time-slot">14:20-15:05</td>
+                                <td><div class="subject-cell" data-subject="ingles">INGLÉS I</div></td>
+                                <td class="empty-cell"></td>
+                                <td><div class="subject-cell" data-subject="data">FUNDAMENTOS DATA SCIENCE</div></td>
+                                <td class="empty-cell"></td>
+                                <td class="empty-cell"></td>
+                            </tr>
+                            <!-- Mod 9 -->
+                            <tr>
+                                <td class="time-slot">9</td>
+                                <td class="time-slot">15:15-16:00</td>
+                                <td><div class="subject-cell" data-subject="ingles">INGLÉS I</div></td>
+                                <td class="empty-cell"></td>
+                                <td><div class="subject-cell" data-subject="data">FUNDAMENTOS DATA SCIENCE</div></td>
+                                <td><div class="subject-cell" data-subject="ingles">INGLÉS I</div></td>
+                                <td class="empty-cell"></td>
+                            </tr>
+                            <!-- Mod 10 -->
+                            <tr>
+                                <td class="time-slot">10</td>
+                                <td class="time-slot">16:00-16:45</td>
+                                <td class="empty-cell"></td>
+                                <td class="empty-cell"></td>
+                                <td class="empty-cell"></td>
+                                <td><div class="subject-cell" data-subject="ingles">INGLÉS I</div></td>
+                                <td class="empty-cell"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Leyenda del horario -->
+                    <div class="schedule-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #e3f2fd;"></div>
+                            <span>Clases regulares</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #f8f9fa;"></div>
+                            <span>Horas libres</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de Notificaciones -->
+            <section id="notifications-section" class="content-section">
+                <button class="back-button" data-target-section="modules">Volver</button>
+                <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md border border-gray-200 mx-auto mt-8">
+                    <div class="text-center mb-6">
+                        <!-- Icono de campana de notificaciones -->
+                        <svg class="mx-auto h-16 w-16 text-indigo-500 mb-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                        <h1 class="text-3xl font-extrabold text-gray-800 mb-2">Enviar Notificaciones</h1>
+                        <p class="text-gray-600">Envía avisos importantes por correo y SMS.</p>
+                    </div>
+
+                    <form id="notificationForm" class="space-y-4">
+                        <div>
+                            <label for="email_notification" class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+                            <input type="email" id="email_notification" name="email_notification" placeholder="tu.correo@ejemplo.com" required
+                                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 ease-in-out">
+                        </div>
+                        <div>
+                            <label for="phone_notification" class="block text-sm font-medium text-gray-700 mb-1">Número de Teléfono</label>
+                            <input type="tel" id="phone_notification" name="phone_notification" placeholder="+56 9 1234 5678" required
+                                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 ease-in-out">
+                        </div>
+                        <div>
+                            <label for="message_notification" class="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
+                            <textarea id="message_notification" name="message_notification" rows="4" placeholder="Escribe tu notificación aquí..." required
+                                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 resize-y transition duration-200 ease-in-out"></textarea>
+                        </div>
+
+                        <button type="submit"
+                                class="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg font-semibold text-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-300 ease-in-out transform hover:scale-105">
+                            Enviar Notificación
+                        </button>
+                    </form>
+
+                    <!-- Área para mostrar mensajes al usuario -->
+                    <div id="responseMessageNotification" class="mt-6 p-4 rounded-lg text-center hidden"></div>
+                </div>
+            </section>
+
+            <!-- Sección de Directorio -->
+            <section id="directory-section" class="content-section">
+                <button class="back-button" data-target-section="modules">Volver</button>
+                <h1>Directorio del CFT Los Ríos</h1>
+                <p>Encuentra fácilmente la información de contacto de docentes y personal.</p>
+                <div id="directory-list">
+                </div>
+            </section>
+
+            <!-- Sección de Becas y Beneficios -->
+            <section id="scholarships-section" class="content-section">
+                <button class="back-button" data-target-section="modules">Volver</button>
+                <h1>Guía de Becas para la Educación Superior en Chile (Ministerio de Educación)</h1>
+                <p>¡Hola! Como interesado en la educación superior en Chile, he recopilado la información esencial sobre las becas que ofrece el Ministerio de Educación (Mineduc) para que puedas dar el siguiente paso en tu formación. Esta guía te ayudará a entender los distintos beneficios disponibles para el año académico 2025.</p>
+
+                <div class="highlight">
+                    <h2>Puntos Clave para Postular:</h2>
+                    <ul>
+                        <li>La mayoría de las becas se postulan a través del <a href="https://fuas.cl/" target="_blank">Formulario Único de Acreditación Socioeconómica (FUAS)</a>.</li>
+                        <li>Es fundamental tener tu <a href="https://www.registrosocial.gob.cl/" target="_blank">Registro Social de Hogares (RSH)</a> actualizado.</li>
+                        <li>Las fechas de postulación son publicadas anualmente por el Mineduc. Revisa constantemente el portal de Beneficios Estudiantiles.</li>
+                        <li>La acreditación de la institución y/o carrera es un requisito común.</li>
+                    </ul>
+                </div>
+
+                <h2>Becas de Arancel del Mineduc</h2>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Gratuidad</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Cubre el 100% del arancel y la matrícula de la carrera, para estudiantes que cumplan con los requisitos socioeconómicos y se matriculen en una institución adscrita.</p>
+                        <p><strong>Requisitos principales:</strong></p>
+                        <ul>
+                            <li>Pertenecer al 60% de los hogares de menores ingresos según el RSH.</li>
+                            <li>Estar matriculado en una institución de educación superior adscrita a la Gratuidad.</li>
+                            <li>Ser chileno o extranjero con permanencia definitiva/residencia y enseñanza media completa en Chile.</li>
+                            <li>No haber excedido la duración formal de la carrera (para estudiantes de cursos superiores).</li>
+                        </ul>
+                        <p><strong>Monto:</strong> Cubre el 100% del arancel y matrícula referencial.</p>
+                        <p><strong>Compatibilidad:</strong> No es compatible con otras becas de arancel del Mineduc.</p>
+                    </div>
+                </div>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Beca Bicentenario (BB)</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Apoya el pago de tu carrera en universidades con al menos cuatro años de acreditación.</p>
+                        <p><strong>Requisitos principales:</strong></p>
+                        <ul>
+                            <li>Pertenecer al 70% de la población de menores ingresos según el RSH.</li>
+                            <li>Haber obtenido 500 puntos o más en la PAES (o PSU/PDT).</li>
+                            <li>Para renovantes: 60% de ramos aprobados en 1er año, 70% desde 2do año.</li>
+                            <li>No tener un título profesional o técnico superior.</li>
+                        </ul>
+                        <p><strong>Monto:</strong> Hasta el 100% del arancel de referencia (varía entre $500.000 y el arancel de referencia máximo).</p>
+                    </div>
+                </div>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Beca Nuevo Milenio (BNM)</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Financia carreras técnico profesionales en CFT o IP acreditados.</p>
+                        <p><strong>Requisitos principales:</strong></p>
+                        <ul>
+                            <li>Pertenecer al 70% de la población de menores ingresos según el RSH.</li>
+                            <li>Promedio NEM igual o superior a 5.0 (BNM I) o pertenecer a los deciles 5 y 6 (BNM II).</li>
+                        </ul>
+                        <p><strong>Monto:</strong> Hasta $600.000 (BNM I) o hasta $860.000 (BNM II) anuales.</p>
+                    </div>
+                </div>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Beca Juan Gómez Millas (BJGM)</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Apoyo para financiar tus estudios en cualquier institución de educación superior acreditada.</p>
+                        <p><strong>Requisitos principales:</strong></p>
+                        <ul>
+                            <li>Pertenecer al 70% de la población de menores ingresos según el RSH.</li>
+                            <li>Haber obtenido 500 puntos o más en la PAES (o PSU/PDT).</li>
+                            <li>No tener un título profesional o técnico superior.</li>
+                        </ul>
+                        <p><strong>Monto:</strong> Hasta $1.150.000 anuales.</p>
+                    </div>
+                </div>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Beca Vocación de Profesor (BVP)</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Cubre el costo total de la carrera de Pedagogía. Varias modalidades:</p>
+                        <ul>
+                            <li><strong>BVP Pedagogías:</strong> Para estudiantes que ingresan a Pedagogía con alto puntaje PAES (más de 625 puntos).</li>
+                            <li><strong>BVP Licenciados y Profesionales:</strong> Para quienes ya tienen un título y quieren formarse como docentes.</li>
+                            <li><strong>BVP Licenciaturas:</strong> Para estudiantes renovantes que continúan su formación pedagógica desde una licenciatura.</li>
+                        </ul>
+                        <p><strong>Monto:</strong> Cubre el costo total de la carrera.</p>
+                    </div>
+                </div>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Beca Distinción a las Trayectorias Educativas (DTE)</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Para estudiantes que obtuvieron una de las Distinciones a las Trayectorias Educativas (DTE) en la PAES.</p>
+                        <p><strong>Requisitos:</strong> Haber obtenido una DTE en la PAES.</p>
+                        <p><strong>Monto:</strong> Financiamiento del arancel de la carrera.</p>
+                    </div>
+                </div>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Beca Excelencia Académica (BEA)</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Para estudiantes con las notas más altas de su generación en la enseñanza media.</p>
+                        <p><strong>Requisitos:</strong> Pertenecer al 80% de la población de menores ingresos y tener un NEM destacado.</p>
+                        <p><strong>Monto:</strong> Varía, ayuda a financiar el arancel.</p>
+                    </div>
+                </div>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Beca Excelencia Técnica (BET)</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Apoya a los mejores egresados de Enseñanza Media que ingresan a carreras técnico profesionales.</p>
+                        <p><strong>Requisitos:</strong> Pertenecer al 80% de la población de menores ingresos y tener un NEM destacado.</p>
+                        <p><strong>Monto:</strong> Varía.</p>
+                    </div>
+                </div>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Beca para Hijas e Hijos de Profesionales de la Educación (BHP)</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Para hijos e hijas de profesionales o asistentes de la educación.</p>
+                        <p><strong>Requisitos:</strong> Ser hijo/a de profesional o asistente docente con contrato vigente, pertenecer al 80% de menores ingresos, y obtener 500 puntos o más en la PAES (o PSU/PDT).</p>
+                        <p><strong>Monto:</strong> Hasta $500.000 anuales.</p>
+                    </div>
+                </div>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Beca de Articulación</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Para quienes tienen un título técnico y desean obtener un título profesional en la misma área.</p>
+                        <p><strong>Requisitos:</strong> Tener título técnico de nivel superior, pertenecer al 70% de menores ingresos, y matricularse en carrera profesional afín.</p>
+                        <p><strong>Monto:</strong> Varía.</p>
+                    </div>
+                </div>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Beca para Estudiantes en Situación de Discapacidad</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Beca especial para estudiantes en situación de discapacidad.</p>
+                        <p><strong>Requisitos:</strong> Contar con certificado de discapacidad del RND y cumplir requisitos generales.</p>
+                        <p><strong>Monto:</strong> Varía.</p>
+                    </div>
+                </div>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Becas de Reparación (Valech I y Valech II)</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Para personas en el listado de la Comisión Valech o sus descendientes directos.</p>
+                        <p><strong>Requisitos:</strong> Estar en el listado Valech o ser hijo/a/nieto/a de alguien en el listado.</p>
+                        <p><strong>Monto:</strong> Cubre el 100% del arancel y matrícula.</p>
+                    </div>
+                </div>
+
+                <h2>Otros Beneficios Estudiantiles</h2>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Fondo Solidario de Crédito Universitario (FSCU)</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Crédito para estudiantes de universidades del Consejo de Rectores.</p>
+                        <p><strong>Requisitos:</strong> Pertenecer a los deciles 1 al 8 de ingreso y cumplir con requisitos académicos. Se postula vía FUAS.</p>
+                    </div>
+                </div>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Crédito con Garantía Estatal (CAE)</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Crédito para financiar estudios en instituciones acreditadas, gestionado por la Comisión Ingresa.</p>
+                        <p><strong>Requisitos:</strong> Postulación a través del sitio de Ingresa.cl.</p>
+                    </div>
+                </div>
+
+                <div class="beca-item">
+                    <div class="beca-header" onclick="toggleBeca(this)">
+                        <h3>Becas JUNAEB (Mantención y Alimentación)</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="beca-content">
+                        <p><strong>Descripción:</strong> Aportes económicos para gastos de mantención y alimentación.</p>
+                        <ul>
+                            <li><strong>Beca de Alimentación para la Educación Superior (BAES):</strong> Tarjeta para comprar alimentos.</li>
+                            <li><strong>Beca Indígena (BI):</strong> Para estudiantes de ascendencia indígena.</li>
+                            <li><strong>Beca Presidente de la República (BPR):</strong> Para estudiantes con alto rendimiento y bajos recursos.</li>
+                            <li><strong>Beca de Mantención para la Educación Superior (BMES):</strong> Aporte en dinero para gastos de mantención.</li>
+                        </ul>
+                        <p><strong>Postulación:</strong> Generalmente se postulan y/o renuevan a través del Portal de Becas JUNAEB (<a href="https://portalbecas.junaeb.cl/" target="_blank">portalbecas.junaeb.cl</a>).</p>
+                    </div>
+                </div>
+
+                <h2>¿Cómo Postular?</h2>
+                <p>El proceso de postulación a la mayoría de las becas y beneficios del Mineduc comienza con el llenado del <a href="https://fuas.cl/" target="_blank">Formulario Único de Acreditación Socioeconómica (FUAS)</a> en los períodos que el Mineduc define anualmente.</p>
+                <p>Una vez completado el FUAS, el Mineduc realiza la preselección y asignación de los beneficios. Es importante estar atento a los resultados y, si es necesario, a los períodos de apelación.</p>
+
+                <h2>Más Información y Contacto</h2>
+                <p>Para información oficial y actualizada sobre fechas, requisitos específicos y el estado de tu postulación, te recomiendo visitar los siguientes sitios web:</p>
+                <ul>
+                    <li><a href="https://portal.beneficiosestudiantiles.cl/" target="_blank">Portal de Beneficios Estudiantiles (Mineduc)</a></li>
+                    <li><a href="https://fuas.cl/" target="_blank">FUAS.cl</a></li>
+                    <li>Call Center Ayuda Mineduc: <strong>600 600 2626</strong></li>
+                    <li><a href="https://www.junaeb.cl/" target="_blank">JUNAEB.cl</a> (para becas de mantención y alimentación)</li>
+                </ul>
+            </section>
+
+            <!-- Sección de Reportar Problema -->
+            <section id="report-issue-section" class="content-section">
+                <button class="back-button" data-target-section="modules">Volver</button>
+                <div class="report-problem-container">
+                    <h1><i class="fas fa-exclamation-triangle"></i> Reportar un Problema</h1>
+
+                    <form id="reportIssueForm">
+                        <div class="form-group">
+                            <label for="nombreEstudiante">Tu Nombre:</label>
+                            <input type="text" id="nombreEstudiante" name="nombreEstudiante" placeholder="Ej: Juan Pérez" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="carreraEstudiante">Tu Carrera:</label>
+                            <select id="carreraEstudiante" name="carreraEstudiante" required>
+                                <option value="">-- Selecciona tu Carrera --</option>
+                                <option value="Programacion y Data Science">Programación y Data Science</option>
+                                <option value="Enfermeria">Enfermería</option>
+                                <option value="Podologia">Podología</option>
+                                <option value="Administracion">Administración</option>
+                                <option value="Electricidad">Electricidad</option>
+                                <option value="Construccion">Construcción</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profesorCarrera">Nombre del Profesor</label>
+                            <input type="text" id="profesorCarrera" name="profesorCarrera" placeholder="Opcional">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="motivoReporte">Describe el Problema:</label>
+                            <textarea id="motivoReporte" name="motivoReporte" rows="5" placeholder="Explica detalladamente el problema que deseas reportar..." required></textarea>
+                        </div>
+
+                        <button type="submit" id="submitReportBtn"><i class="fas fa-paper-plane"></i> Enviar Reporte</button>
+
+                        <div id="formMessage" class="message"></div>
+                    </form>
+                </div>
+            </section>
+
+        <!-- Sección de Admisión -->
+        <section id="admision-section" class="content-section">
+            <button class="back-button" data-target-section="modules">Volver</button>
+            <div class="form-container">
+                <h2>¿Qué carrera te interesa?</h2>
+                <div class="divider"></div>
+                <form id="admisionForm" action="#" method="POST">
+                    <div class="form-fields">
+                        <div class="input-group">
+                            <label for="admision-nombre">Nombre *</label>
+                            <input type="text" id="admision-nombre" name="nombre" required>
+                        </div>
+                        <div class="input-group">
+                             <label for="admision-sede">Selecciona una Sede *</label>
+                            <select id="admision-sede" name="sede" required>
+                                <option value="" disabled selected>-- Elige una sede --</option>
+                                <option value="valdivia">Sede Valdivia</option>
+                                <option value="launion">Sede La Unión</option>
+                                <option value="paillaco">Sede Paillaco</option>
+                                <option value="panguipulli">Sede Panguipulli</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="admision-apellido">Apellido *</label>
+                            <input type="text" id="admision-apellido" name="apellido" required>
+                        </div>
+                        <div class="input-group">
+                             <label for="admision-carrera">Selecciona una Carrera *</label>
+                            <select id="admision-carrera" name="carrera" required disabled>
+                                <option value="" disabled selected>-- Primero elige una sede --</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="admision-telefono">Teléfono *</label>
+                            <input type="tel" id="admision-telefono" name="telefono" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="admision-email">Email *</label>
+                            <input type="email" id="admision-email" name="email" required>
+                        </div>
+                         <button type="submit" class="submit-button">Enviar Info</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Sección de Vida Estudiantil -->
+        <section id="vida-estudiantil-section" class="content-section">
+            <button class="back-button" data-target-section="modules">Volver</button>
+            <h1 class="section-title">Vida Estudiantil</h1>
+            <p style="text-align: center; color: var(--color-texto); margin-bottom: var(--espaciado-lg);">Tu experiencia más allá de la sala de clases.</p>
+
+            <div class="vida-estudiantil-content-wrapper">
+                <section id="actividades-vida">
+                    <h2>Actividades y Talleres</h2>
+                    <p>Descubre los clubes y talleres que tenemos para ti. ¡Participa y desarrolla nuevas habilidades!</p>
+                    <div class="grid-container">
+                        <div class="card">
+                            <img src="https://talachadigital.wordpress.com/wp-content/uploads/2016/07/f_blog_club2.jpg?w=1180&h=435&crop=1" alt="Imagen de Club de Programación" style="width:100%; height:150px; object-fit:cover; margin-bottom:10px; border-radius:8px;">
+                            <h3>Club de Programación</h3>
+                            <p>Un espacio para aprender y desarrollar proyectos con otros estudiantes interesados en la tecnología.</p>
+                            <a href="#">Más información</a>
+                        </div>
+                        <div class="card">
+                            <img src="https://picsum.photos/id/250/300/200" alt="Imagen de Taller de Fotografía" style="width:100%; height:150px; object-fit:cover; margin-bottom:10px; border-radius:8px;">
+                            <h3>Taller de Fotografía</h3>
+                            <p>Captura los mejores momentos del campus y aprende técnicas de edición profesional.</p>
+                            <a href="#">Más información</a>
+                        </div>
+                        <div class="card">
+                            <img src="https://de2.sportal365images.com/process/smp-betway-images/betway.com/29072023/6866b68c-55fa-4cf3-97a4-946215cb40a9.jpg" alt="Imagen de Selección de Pin-Pon" style="width:100%; height:150px; object-fit:cover; margin-bottom:10px; border-radius:8px;">
+                            <h3>Selección de Pin-Pon</h3>
+                            <p>¡Únete al equipo y representa a nuestro CFT en torneos inter-instituciones!</p>
+                            <a href="#">Más información</a>
+                        </div>
+                    </div>
+                </section>
+
+                <hr>
+
+                <section id="servicios-vida">
+                    <h2>Servicios Estudiantiles</h2>
+                    <p>Conoce los servicios de apoyo que están a tu disposición para ayudarte durante tu formación.</p>
+                    <div class="grid-container">
+                        <div class="card">
+                            <img src="https://static.nationalgeographicla.com/files/styles/image_3200/public/006-library-biblioteca-angelica-a-roma_0002.jpg?w=1600" alt="Imagen de Biblioteca" style="width:100%; height:150px; object-fit:cover; margin-bottom:10px; border-radius:8px;">
+                            <h3>Biblioteca</h3>
+                            <p>Accede a nuestro catálogo de libros, salas de estudio y recursos en línea.</p>
+                            <a href="#">Ver horarios</a>
+                        </div>
+                        <div class="card">
+                            <img src="https://www.sinews.es/wp-content/uploads/2024/06/%C2%BFQue-es-el-apoyo-academico-y-que-hace-un-terapeuta-de-apoyo-2-scaled.jpg" alt="Imagen de Apoyo Académico" style="width:100%; height:150px; object-fit:cover; margin-bottom:10px; border-radius:8px;">
+                            <h3>Apoyo Académico</h3>
+                            <p>Recibe tutorías y orientación para las asignaturas que necesites.</p>
+                            <a href="#">Solicitar tutoría</a>
+                        </div>
+                        <div class="card">
+                            <img src="https://revista.colegiomedico.cl/wp-content/uploads/2023/07/Nos-cuidamos.jpg" alt="Imagen de Salud y Bienestar" style="width:100%; height:150px; object-fit:cover; margin-bottom:10px; border-radius:8px;">
+                            <h3>Salud y Bienestar</h3>
+                            <p>Información sobre atención médica y apoyo psicológico.</p>
+                            <a href="#">Conoce los servicios</a>
+                        </div>
+                    </div>
+                </section>
+
+                <hr>
+
+                <section id="galeria-vida">
+                    <h2>Galería de Fotos</h2>
+                    <p>Revive los mejores momentos de nuestra comunidad estudiantil.</p>
+                    <div class="gallery">
+                        <img src="https://www.astex.es/wp-content/uploads/2023/01/graduacion-en-estados-unidos.jpg.webp" alt="Foto de graduación">
+                        <img src="https://www.diariopaillaco.cl/files/files/20241123_161041.jpg" alt="Foto de torneo deportivo">
+                        <img src="https://portaleduca.cl/wp-content/uploads/2023/03/Inauguracion-Talleres-de-robotica-y-Clubes-de-Ciencia-y-Tecnologia-de-Fundacion-Mustakis.jpg" alt="Foto de taller de robótica">
+                        <img src="https://www.rln.cl/wp-content/uploads/2022/05/WhatsApp-Image-2022-05-14-at-12.39.57-PM-1.jpeg" alt="Foto del día del estudiante">
+                    </div>
+                </section>
+
+                <hr>
+
+                <section id="enlaces-vida">
+                    <h2>Enlaces de Interés</h2>
+                    <p>Accede rápidamente a las plataformas y recursos que más utilizas.</p>
+                    <ul>
+                        <li><a href="#">Portal del Estudiante</a></li>
+                        <li><a href="#">Correo Institucional</a></li>
+                        <li><a href="#">Plataforma de Estudios (Moodle/Blackboard)</a></li>
+                        <li><a href="#footer">Redes Sociales del CFT</a></li>
+                    </ul>
+                </section>
+
+                <hr>
+
+                <section id="faq-vida">
+                    <h2>Preguntas Frecuentes (FAQ)</h2>
+                    <p>Encuentra respuestas a las dudas más comunes de los estudiantes.</p>
+                    <div class="faq-item">
+                        <h3>¿Cómo solicito un certificado de alumno regular?</h3>
+                        <p>Puedes solicitarlo a través de tu Portal del Estudiante, en la sección de "Trámites".</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>¿Cómo me inscribo en un taller?</h3>
+                        <p>Las inscripciones se realizan de manera online en el apartado de Actividades Estudiantiles. Se anuncian con anticipación en la página web.</p>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!-- Sección de Noticias -->
+        <section id="noticias-section" class="content-section">
+            <button class="back-button" data-target-section="modules">Volver</button>
+
+            <!-- Contenido adaptado de noticias.html -->
+            <div class="noticias-header-container">
+                <div class="container">
+                    <div class="text-center">
+                        <div class="logo-container">
+                            <img src="https://cftdelosrios.cl/wp-content/uploads/2021/09/cropped-Recurso-2.png" alt="Logo CFT Los Ríos">
+                        </div>
+                        <h1 class="header-title">CFT Los Ríos</h1>
+                        <p class="header-subtitle">Noticias de nuestros campus y actividades académicas</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="filter-container">
+                    <p class="filter-title">Filtrar noticias por campus:</p>
+                    <div class="filter-btn-wrapper">
+                        <button class="filter-btn" data-filter="all">Todos</button>
+                        <button class="filter-btn" data-filter="valdivia">Valdivia</button>
+                        <button class="filter-btn" data-filter="paillaco">Paillaco</button>
+                        <button class="filter-btn" data-filter="panguipulli">Panguipulli</button>
+                        <button class="filter-btn" data-filter="la-union">La Unión</button>
+                    </div>
+                </div>
+
+                <div class="noticias-main-container">
+                    <div class="news-container">
+                        <div class="news-row g-4">
+                            <!-- Noticia 1 - Valdivia -->
+                            <div class="news-col news-card valdivia">
+                                <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Laboratorio Valdivia">
+                                <div class="category-tag">Valdivia</div>
+                                <div class="card-body">
+                                    <div class="card-date"><i class="far fa-calendar"></i> 15 Octubre 2023</div>
+                                    <h5 class="card-title">Nuevo laboratorio tecnológico en Valdivia</h5>
+                                    <p class="card-text">Equipamiento de última generación para estudiantes de informática y telecomunicaciones. El espacio cuenta con tecnología de punta para prácticas avanzadas.</p>
+                                    <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+
+                            <!-- Noticia 2 - Paillaco -->
+                            <div class="news-col news-card paillaco">
+                                <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Gastronomía Paillaco">
+                                <div class="category-tag">Paillaco</div>
+                                <div class="card-body">
+                                    <div class="card-date"><i class="far fa-calendar"></i> 12 Octubre 2023</div>
+                                    <h5 class="card-title">Exitosa feria gastronómica en Paillaco</h5>
+                                    <p class="card-text">Evento reunió a más de 500 personas y mostró la diversidad culinaria regional. Estudiantes de gastronomía presentaron innovadoras propuestas.</p>
+                                    <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+
+                            <!-- Noticia 3 - Panguipulli -->
+                            <div class="news-col news-card panguipulli">
+                                <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Forestal Panguipulli">
+                                <div class="category-tag">Panguipulli</div>
+                                <div class="card-body">
+                                    <div class="card-date"><i class="far fa-calendar"></i> 8 Octubre 2023</div>
+                                    <h5 class="card-title">Convenio con empresas forestales</h5>
+                                    <p class="card-text">Acuerdo beneficiará a estudiantes de Técnico Forestal con prácticas profesionales. La alianza incluye programas de capacitación continua.</p>
+                                    <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+
+                            <!-- Noticia 4 - La Unión -->
+                            <div class="news-col news-card la-union">
+                                <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Robótica La Unión">
+                                <div class="category-tag">La Unión</div>
+                                <div class="card-body">
+                                    <div class="card-date"><i class="far fa-calendar"></i> 5 Octubre 2023</div>
+                                    <h5 class="card-title">Destacan en competencia de robótica</h5>
+                                    <p class="card-text">Equipo obtuvo segundo lugar con proyecto de automatización agrícola. El desarrollo busca optimizar procesos en cultivos regionales.</p>
+                                    <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+
+                            <!-- Noticia 5 - General -->
+                            <div class="news-col news-card general">
+                                <img src="https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Becas generales">
+                                <div class="category-tag">General</div>
+                                <div class="card-body">
+                                    <div class="card-date"><i class="far fa-calendar"></i> 1 Octubre 2023</div>
+                                    <h5 class="card-title">Nuevo programa de becas estudiantiles</h5>
+                                    <p class="card-text">Ampliación de programa de apoyo para estudiantes de escasos recursos. Se beneficiarán más de 200 alumnos en toda la región.</p>
+                                    <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+
+                            <!-- Noticia 6 - Valdivia -->
+                            <div class="news-col news-card valdivia">
+                                <img src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Arte Valdivia">
+                                <div class="category-tag">Valdivia</div>
+                                <div class="card-body">
+                                    <div class="card-date"><i class="far fa-calendar"></i> 28 Septiembre 2023</div>
+                                    <h5 class="card-title">Exposición de arte contemporáneo</h5>
+                                    <p class="card-text">Muestra de trabajos de estudiantes de Diseño Gráfico abierta al público. La exposición estará disponible durante todo octubre.</p>
+                                    <a href="#" class="read-more">Leer más <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        </div>
+    </main>
+
+    <footer id="footer">
+            <div class="social-container">
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/@cftdelosrios" target="_blank" class="social-btn youtube">
+                    <div class="icon"></div>
+                    YouTube
+                </a>
+        
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/cftdelosrios/" target="_blank" class="social-btn instagram">
+                    <div class="icon"></div>
+                    Instagram
+                </a>
+        
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/cftdelosrios" target="_blank" class="social-btn facebook">
+                    <div class="icon"></div>
+                    Facebook
+                </a>
+            </div>
+            <p>&copy; 2025 Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Detalles del Contacto -->
+    <div id="contact-details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-contact-details-modal">&times;</span>
+            <h2 id="contact-details-title"></h2>
+            <div id="contact-details-output"></div>
+        </div>
+    </div>
+
+
+    <div id="login-modal" class="modal">
+        <!-- Contenido del modal de login -->
+        <div class="modal-content" id="loginContainerMain">
+            <span class="close-button">&times;</span>
+            <div class="login-header">
+                <div class="login-logo">
+                    <div class="logo-circle">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                </div>
+                <h1 class="login-title" id="modal-title">Intranet CFT Los Ríos</h1>
+                <p class="login-subtitle">Ingresa tus credenciales para acceder</p>
+            </div>
+
+            <form class="login-form" id="auth-form">
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder="usuario@cftrl.cl" required>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña (RUT)</label>
+                    <div class="input-group">
+                        <input type="password" id="password" placeholder="Ingresa tu RUT sin puntos con guión" required>
+                        <i class="fas fa-lock"></i>
+                        <span class="toggle-password" id="toggle-password"><i class="fas fa-eye"></i></span>
+                    </div>
+                </div>
+
+                <div class="remember-me-group">
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me">Mantener sesión iniciada por 7 días</label>
+                </div>
+
+                <button class="btn-login" id="loginBtn" type="submit">
+                    <span class="loading-spinner"></span>
+                    <span class="btn-text">Iniciar Sesión</span>
+                </button>
+
+                <div class="forgot-password">
+                    <a href="#" id="modal-toggle-form">¿No tienes cuenta? Regístrate aquí</a>
+                </div>
+            </form>
+
+            <div class="login-footer">
+                <span>&copy; 2023 CFT Los Ríos. Todos los derechos reservados.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificaciones -->
+    <div class="notification error" id="errorNotification">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="errorMessage"></span>
+    </div>
+
+    <div class="notification success" id="successNotification">
+        <i class="fas fa-check-circle"></i>
+        <span id="successMessage"></span>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
