@@ -801,6 +801,7 @@
 
                     const filter = button.dataset.filter;
                     const allSubjects = document.querySelectorAll('.subject-cell');
+                    const allTeacherCards = document.querySelectorAll('.teacher-card'); // Obtener todas las tarjetas de docentes
 
                     if (filter === 'all') {
                         allSubjects.forEach(subject => {
@@ -809,6 +810,9 @@
                         });
                         document.querySelectorAll('.empty-cell').forEach(cell => {
                             cell.style.display = '';
+                        });
+                        allTeacherCards.forEach(card => { // Mostrar todas las tarjetas de docentes
+                            card.style.display = 'block';
                         });
                     } else {
                         allSubjects.forEach(subject => {
@@ -833,6 +837,14 @@
                                     cell.style.display = hasVisibleSubject ? 'none' : '';
                                 }
                             });
+                        });
+
+                        allTeacherCards.forEach(card => { // Filtrar tarjetas de docentes
+                            if (card.dataset.subject === filter) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
                         });
                     }
                     highlightCurrentTime(); // Re-highlight after filtering
